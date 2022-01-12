@@ -15,43 +15,24 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.core.expression.parse.builder;
 
-import java.util.List;
-
+import com.ureport.ureportkeep.core.Utils;
+import com.ureport.ureportkeep.core.dsl.ReportParserParser;
+import com.ureport.ureportkeep.core.exception.ReportParseException;
+import com.ureport.ureportkeep.core.expression.ExpressionUtils;
+import com.ureport.ureportkeep.core.expression.model.Expression;
+import com.ureport.ureportkeep.core.expression.model.Op;
+import com.ureport.ureportkeep.core.expression.model.condition.*;
+import com.ureport.ureportkeep.core.expression.model.expr.*;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
-import com.bstek.ureport.Utils;
-import com.bstek.ureport.dsl.ReportParserParser.CellNameExprConditionContext;
-import com.bstek.ureport.dsl.ReportParserParser.ConditionContext;
-import com.bstek.ureport.dsl.ReportParserParser.ConditionsContext;
-import com.bstek.ureport.dsl.ReportParserParser.CurrentValueConditionContext;
-import com.bstek.ureport.dsl.ReportParserParser.ExprConditionContext;
-import com.bstek.ureport.dsl.ReportParserParser.ExprContext;
-import com.bstek.ureport.dsl.ReportParserParser.JoinContext;
-import com.bstek.ureport.dsl.ReportParserParser.PropertyConditionContext;
-import com.bstek.ureport.dsl.ReportParserParser.SimpleValueContext;
-import com.bstek.ureport.exception.ReportParseException;
-import com.bstek.ureport.expression.ExpressionUtils;
-import com.bstek.ureport.expression.model.Expression;
-import com.bstek.ureport.expression.model.Op;
-import com.bstek.ureport.expression.model.condition.BaseCondition;
-import com.bstek.ureport.expression.model.condition.BothExpressionCondition;
-import com.bstek.ureport.expression.model.condition.CellExpressionCondition;
-import com.bstek.ureport.expression.model.condition.CurrentValueExpressionCondition;
-import com.bstek.ureport.expression.model.condition.Join;
-import com.bstek.ureport.expression.model.condition.PropertyExpressionCondition;
-import com.bstek.ureport.expression.model.expr.BaseExpression;
-import com.bstek.ureport.expression.model.expr.BooleanExpression;
-import com.bstek.ureport.expression.model.expr.IntegerExpression;
-import com.bstek.ureport.expression.model.expr.NullExpression;
-import com.bstek.ureport.expression.model.expr.NumberExpression;
-import com.bstek.ureport.expression.model.expr.StringExpression;
+import java.util.List;
 
 /**
  * @author Jacky.gao
  * @since 2016年12月26日
  */
 public abstract class BaseExpressionBuilder implements ExpressionBuilder{
-	protected BaseExpression parseSimpleValueContext(SimpleValueContext valueContext) {
+	protected BaseExpression parseSimpleValueContext(ReportParserParser.SimpleValueContext valueContext) {
 		if(valueContext.BOOLEAN()!=null){
 			return new BooleanExpression(Boolean.valueOf(valueContext.getText()));
 		}else if(valueContext.INTEGER()!=null){
@@ -69,13 +50,13 @@ public abstract class BaseExpressionBuilder implements ExpressionBuilder{
 	}
 
 	
-	protected BaseCondition buildConditions(ConditionsContext conditionsContext) {
-		List<ConditionContext> conditionContextList=conditionsContext.condition();
-		List<JoinContext> joins=conditionsContext.join();
+	protected BaseCondition buildConditions(ReportParserParser.ConditionsContext conditionsContext) {
+		List<ReportParserParser.ConditionContext> conditionContextList=conditionsContext.condition();
+		List<ReportParserParser.JoinContext> joins=conditionsContext.join();
 		BaseCondition condition=null;
 		BaseCondition topCondition=null;
 		int opIndex=0;
-		for(ConditionContext conditionCtx:conditionContextList){
+		for(ReportParserParser.ConditionContext conditionCtx:conditionContextList){
 			if(condition==null){
 				condition=parseCondition(conditionCtx);
 				topCondition=condition;
@@ -89,14 +70,14 @@ public abstract class BaseExpressionBuilder implements ExpressionBuilder{
 		}
 		return topCondition;
 	}
-	private BaseCondition parseCondition(ConditionContext context){
-		if(context instanceof ExprConditionContext){
-			ExprConditionContext ctx=(ExprConditionContext)context;
+	private BaseCondition parseCondition(ReportParserParser.ConditionContext context){
+		if(context instanceof ReportParserParser.ExprConditionContext){
+			ReportParserParser.ExprConditionContext ctx=(ReportParserParser.ExprConditionContext)context;
 			BothExpressionCondition condition=new BothExpressionCondition();
-			List<ExprContext> exprContexts=ctx.expr();
+			List<ReportParserParser.ExprContext> exprContexts=ctx.expr();
 			String left=exprContexts.get(0).getText();
 			condition.setLeft(left);
-			Expression leftExpr=ExpressionUtils.parseExpression(left);
+			Expression leftExpr= ExpressionUtils.parseExpression(left);
 			condition.setLeftExpression(leftExpr);
 			String rightExpr=exprContexts.get(1).getText();
 			condition.setRight(rightExpr);
@@ -104,16 +85,16 @@ public abstract class BaseExpressionBuilder implements ExpressionBuilder{
 			condition.setOp(parseOp(ctx.OP()));
 			condition.setOperation(ctx.OP().getText());
 			return condition;
-		}else if(context instanceof CurrentValueConditionContext){
-			CurrentValueConditionContext ctx=(CurrentValueConditionContext)context;
+		}else if(context instanceof ReportParserParser.CurrentValueConditionContext){
+			ReportParserParser.CurrentValueConditionContext ctx=(ReportParserParser.CurrentValueConditionContext)context;
 			CurrentValueExpressionCondition condition=new CurrentValueExpressionCondition();
 			String rightExpr=ctx.expr().getText();
 			condition.setRight(rightExpr);
 			condition.setRightExpression(ExpressionUtils.parseExpression(rightExpr));
 			condition.setOp(parseOp(ctx.OP()));
 			return condition;
-		}else if(context instanceof PropertyConditionContext){
-			PropertyConditionContext ctx=(PropertyConditionContext)context;
+		}else if(context instanceof ReportParserParser.PropertyConditionContext){
+			ReportParserParser.PropertyConditionContext ctx=(ReportParserParser.PropertyConditionContext)context;
 			PropertyExpressionCondition condition=new PropertyExpressionCondition();
 			String left=ctx.property().getText();
 			condition.setLeft(left);
@@ -123,8 +104,8 @@ public abstract class BaseExpressionBuilder implements ExpressionBuilder{
 			condition.setRightExpression(ExpressionUtils.parseExpression(rightExpr));
 			condition.setOp(parseOp(ctx.OP()));
 			return condition;
-		}else if(context instanceof CellNameExprConditionContext){
-			CellNameExprConditionContext ctx=(CellNameExprConditionContext)context;
+		}else if(context instanceof ReportParserParser.CellNameExprConditionContext){
+			ReportParserParser.CellNameExprConditionContext ctx=(ReportParserParser.CellNameExprConditionContext)context;
 			CellExpressionCondition condition=new CellExpressionCondition();
 			String left=ctx.Cell().getText();
 			condition.setLeft(left);

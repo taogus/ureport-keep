@@ -15,24 +15,26 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.core.expression.function.math;
 
+import com.ureport.ureportkeep.core.Utils;
+import com.ureport.ureportkeep.core.build.Context;
+import com.ureport.ureportkeep.core.exception.ReportComputeException;
+import com.ureport.ureportkeep.core.expression.model.data.ExpressionData;
+import com.ureport.ureportkeep.core.expression.model.data.ObjectExpressionData;
+import com.ureport.ureportkeep.core.model.Cell;
+import org.springframework.stereotype.Component;
+
 import java.math.BigDecimal;
 import java.util.List;
-
-import com.bstek.ureport.Utils;
-import com.bstek.ureport.build.Context;
-import com.bstek.ureport.exception.ReportComputeException;
-import com.bstek.ureport.expression.model.data.ExpressionData;
-import com.bstek.ureport.expression.model.data.ObjectExpressionData;
-import com.bstek.ureport.model.Cell;
 
 /**
  * @author Jacky.gao
  * @since 2017年1月23日
  */
+@Component
 public class PowFunction extends MathFunction {
 
 	@Override
-	public Object execute(List<ExpressionData<?>> dataList, Context context,Cell currentCell) {
+	public Object execute(List<ExpressionData<?>> dataList, Context context, Cell currentCell) {
 		BigDecimal data=buildBigDecimal(dataList);
 		int pos=0;
 		if(dataList.size()==2){
@@ -43,7 +45,7 @@ public class PowFunction extends MathFunction {
 				if(obj==null){
 					throw new ReportComputeException("Pow Function second parameter can not be null.");
 				}
-				pos=Utils.toBigDecimal(obj).intValue();
+				pos= Utils.toBigDecimal(obj).intValue();
 			}
 		}
 		return Math.pow(data.doubleValue(),pos);

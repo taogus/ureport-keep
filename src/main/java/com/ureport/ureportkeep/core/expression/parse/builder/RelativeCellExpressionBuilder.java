@@ -15,10 +15,9 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.core.expression.parse.builder;
 
-import com.bstek.ureport.dsl.ReportParserParser.RelativeCellContext;
-import com.bstek.ureport.dsl.ReportParserParser.UnitContext;
-import com.bstek.ureport.expression.model.expr.BaseExpression;
-import com.bstek.ureport.expression.model.expr.RelativeCellExpression;
+import com.ureport.ureportkeep.core.dsl.ReportParserParser;
+import com.ureport.ureportkeep.core.expression.model.expr.BaseExpression;
+import com.ureport.ureportkeep.core.expression.model.expr.RelativeCellExpression;
 
 /**
  * @author Jacky.gao
@@ -27,14 +26,14 @@ import com.bstek.ureport.expression.model.expr.RelativeCellExpression;
 public class RelativeCellExpressionBuilder implements ExpressionBuilder {
 
 	@Override
-	public BaseExpression build(UnitContext unitContext) {
-		RelativeCellContext ctx=unitContext.relativeCell();
+	public BaseExpression build(ReportParserParser.UnitContext unitContext) {
+		ReportParserParser.RelativeCellContext ctx=unitContext.relativeCell();
 		RelativeCellExpression expr=new RelativeCellExpression(ctx.Cell().getText());
 		return expr;
 	}
 
 	@Override
-	public boolean support(UnitContext unitContext) {
+	public boolean support(ReportParserParser.UnitContext unitContext) {
 		return unitContext.relativeCell()!=null;
 	}
 }

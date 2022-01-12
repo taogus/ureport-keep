@@ -15,9 +15,10 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.core.definition.value;
 
-import java.util.List;
 
-import org.codehaus.jackson.annotate.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import java.util.List;
 
 /**
  * @author Jacky.gao

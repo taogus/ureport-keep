@@ -15,24 +15,26 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.core.expression.function.math;
 
+import com.ureport.ureportkeep.core.build.Context;
+import com.ureport.ureportkeep.core.expression.model.data.ExpressionData;
+import com.ureport.ureportkeep.core.model.Cell;
+import org.springframework.stereotype.Component;
+
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import com.bstek.ureport.build.Context;
-import com.bstek.ureport.expression.model.data.ExpressionData;
-import com.bstek.ureport.model.Cell;
 
 /**
  * 求众数
  * @author Jacky.gao
  * @since 2017年1月23日
  */
+@Component
 public class ModeFunction extends MathFunction {
 
 	@Override
-	public Object execute(List<ExpressionData<?>> dataList, Context context,Cell currentCell) {
+	public Object execute(List<ExpressionData<?>> dataList, Context context, Cell currentCell) {
 		int max=0;
 		BigDecimal result=null;
 		List<BigDecimal> list=buildDataList(dataList);

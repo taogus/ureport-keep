@@ -15,10 +15,10 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.core.expression.parse.builder;
 
-import com.bstek.ureport.dsl.ReportParserParser.CellPositionContext;
-import com.bstek.ureport.dsl.ReportParserParser.UnitContext;
-import com.bstek.ureport.expression.model.expr.BaseExpression;
-import com.bstek.ureport.expression.model.expr.CellPositionExpression;
+
+import com.ureport.ureportkeep.core.dsl.ReportParserParser;
+import com.ureport.ureportkeep.core.expression.model.expr.BaseExpression;
+import com.ureport.ureportkeep.core.expression.model.expr.CellPositionExpression;
 
 /**
  * @author Jacky.gao
@@ -27,14 +27,14 @@ import com.bstek.ureport.expression.model.expr.CellPositionExpression;
 public class CellPositionExpressionBuilder implements ExpressionBuilder {
 
 	@Override
-	public BaseExpression build(UnitContext unitContext) {
-		CellPositionContext ctx=unitContext.cellPosition();
+	public BaseExpression build(ReportParserParser.UnitContext unitContext) {
+		ReportParserParser.CellPositionContext ctx=unitContext.cellPosition();
 		CellPositionExpression expr=new CellPositionExpression(ctx.Cell().getText());
 		return expr;
 	}
 
 	@Override
-	public boolean support(UnitContext unitContext) {
+	public boolean support(ReportParserParser.UnitContext unitContext) {
 		return unitContext.cellPosition()!=null;
 	}
 }

@@ -15,14 +15,15 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.core.build.paging;
 
+
+import com.ureport.ureportkeep.core.definition.Band;
+import com.ureport.ureportkeep.core.definition.Orientation;
+import com.ureport.ureportkeep.core.definition.Paper;
+import com.ureport.ureportkeep.core.model.Report;
+import com.ureport.ureportkeep.core.model.Row;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import com.bstek.ureport.definition.Band;
-import com.bstek.ureport.definition.Orientation;
-import com.bstek.ureport.definition.Paper;
-import com.bstek.ureport.model.Report;
-import com.bstek.ureport.model.Row;
 
 /**
  * @author Jacky.gao

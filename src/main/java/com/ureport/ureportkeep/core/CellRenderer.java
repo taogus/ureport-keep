@@ -15,9 +15,10 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.core;
 
-import java.util.Map;
 
-import com.bstek.ureport.model.ReportCell;
+import com.ureport.ureportkeep.core.model.ReportCell;
+
+import java.util.Map;
 
 /**
  * @author Jacky.gao

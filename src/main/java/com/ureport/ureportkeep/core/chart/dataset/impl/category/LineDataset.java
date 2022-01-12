@@ -15,8 +15,9 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.core.chart.dataset.impl.category;
 
-import com.bstek.ureport.build.Context;
-import com.bstek.ureport.model.Cell;
+
+import com.ureport.ureportkeep.core.build.Context;
+import com.ureport.ureportkeep.core.model.Cell;
 
 /**
  * @author Jacky.gao
@@ -25,7 +26,7 @@ import com.bstek.ureport.model.Cell;
 public class LineDataset extends CategoryDataset{
 	private double lineTension=0.2;
 	@Override
-	public String buildDataJson(Context context,Cell cell) {
+	public String buildDataJson(Context context, Cell cell) {
 		String props="\"lineTension\":"+lineTension;
 		String datasetJson=buildDatasetJson(context, cell,props);
 		StringBuilder sb=new StringBuilder();

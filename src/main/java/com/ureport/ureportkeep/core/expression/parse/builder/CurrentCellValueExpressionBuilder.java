@@ -15,9 +15,10 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.core.expression.parse.builder;
 
-import com.bstek.ureport.dsl.ReportParserParser.UnitContext;
-import com.bstek.ureport.expression.model.expr.BaseExpression;
-import com.bstek.ureport.expression.model.expr.CurrentCellValueExpression;
+
+import com.ureport.ureportkeep.core.dsl.ReportParserParser;
+import com.ureport.ureportkeep.core.expression.model.expr.BaseExpression;
+import com.ureport.ureportkeep.core.expression.model.expr.CurrentCellValueExpression;
 
 /**
  * @author Jacky.gao
@@ -26,12 +27,12 @@ import com.bstek.ureport.expression.model.expr.CurrentCellValueExpression;
 public class CurrentCellValueExpressionBuilder implements ExpressionBuilder {
 
 	@Override
-	public BaseExpression build(UnitContext unitContext) {
+	public BaseExpression build(ReportParserParser.UnitContext unitContext) {
 		return new CurrentCellValueExpression();
 	}
 
 	@Override
-	public boolean support(UnitContext unitContext) {
+	public boolean support(ReportParserParser.UnitContext unitContext) {
 		return unitContext.currentCellValue()!=null;
 	}
 

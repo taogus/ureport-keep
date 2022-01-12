@@ -15,18 +15,19 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.core.expression.function.math;
 
+
+import com.ureport.ureportkeep.core.Utils;
+import com.ureport.ureportkeep.core.build.BindData;
+import com.ureport.ureportkeep.core.exception.ReportComputeException;
+import com.ureport.ureportkeep.core.expression.function.Function;
+import com.ureport.ureportkeep.core.expression.model.data.BindDataListExpressionData;
+import com.ureport.ureportkeep.core.expression.model.data.ExpressionData;
+import com.ureport.ureportkeep.core.expression.model.data.ObjectExpressionData;
+import com.ureport.ureportkeep.core.expression.model.data.ObjectListExpressionData;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-
-import com.bstek.ureport.Utils;
-import com.bstek.ureport.build.BindData;
-import com.bstek.ureport.exception.ReportComputeException;
-import com.bstek.ureport.expression.function.Function;
-import com.bstek.ureport.expression.model.data.BindDataListExpressionData;
-import com.bstek.ureport.expression.model.data.ExpressionData;
-import com.bstek.ureport.expression.model.data.ObjectExpressionData;
-import com.bstek.ureport.expression.model.data.ObjectListExpressionData;
 
 /**
  * @author Jacky.gao
@@ -42,7 +43,7 @@ public abstract class MathFunction implements Function {
 			if(data instanceof ObjectListExpressionData){
 				ObjectListExpressionData objList=(ObjectListExpressionData)data;
 				for(Object obj:objList.getData()){
-					BigDecimal bigData=Utils.toBigDecimal(obj);
+					BigDecimal bigData= Utils.toBigDecimal(obj);
 					if(bigData!=null){
 						list.add(bigData);						
 					}

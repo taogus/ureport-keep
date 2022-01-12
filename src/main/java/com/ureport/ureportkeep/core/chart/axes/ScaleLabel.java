@@ -15,7 +15,7 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.core.chart.axes;
 
-import com.bstek.ureport.chart.FontStyle;
+import com.ureport.ureportkeep.core.chart.FontStyle;
 
 /**
  * @author Jacky.gao
@@ -26,7 +26,7 @@ public class ScaleLabel {
 	private String labelString="";
 	private String fontColor="#666";
 	private int fontSize=12;
-	private FontStyle fontStyle=FontStyle.normal;
+	private FontStyle fontStyle= FontStyle.normal;
 	
 	public String toJson(){
 		StringBuilder sb=new StringBuilder();

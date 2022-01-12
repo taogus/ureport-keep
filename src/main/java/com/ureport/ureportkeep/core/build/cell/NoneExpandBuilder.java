@@ -15,12 +15,13 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.core.build.cell;
 
-import java.util.List;
 
-import com.bstek.ureport.build.BindData;
-import com.bstek.ureport.build.Context;
-import com.bstek.ureport.definition.ConditionPropertyItem;
-import com.bstek.ureport.model.Cell;
+import com.ureport.ureportkeep.core.build.BindData;
+import com.ureport.ureportkeep.core.build.Context;
+import com.ureport.ureportkeep.core.definition.ConditionPropertyItem;
+import com.ureport.ureportkeep.core.model.Cell;
+
+import java.util.List;
 
 /**
  * @author Jacky.gao

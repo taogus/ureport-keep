@@ -15,7 +15,7 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.core.utils;
 
-import com.bstek.ureport.Utils;
+import com.ureport.ureportkeep.core.Utils;
 
 /**
  * @author Jacky.gao

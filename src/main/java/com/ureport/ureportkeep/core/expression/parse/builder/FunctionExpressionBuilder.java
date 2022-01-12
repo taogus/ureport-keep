@@ -15,16 +15,14 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.core.expression.parse.builder;
 
+
+import com.ureport.ureportkeep.core.dsl.ReportParserParser;
+import com.ureport.ureportkeep.core.expression.ExpressionUtils;
+import com.ureport.ureportkeep.core.expression.model.expr.BaseExpression;
+import com.ureport.ureportkeep.core.expression.model.expr.FunctionExpression;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import com.bstek.ureport.dsl.ReportParserParser.FunctionContext;
-import com.bstek.ureport.dsl.ReportParserParser.FunctionParameterContext;
-import com.bstek.ureport.dsl.ReportParserParser.ItemContext;
-import com.bstek.ureport.dsl.ReportParserParser.UnitContext;
-import com.bstek.ureport.expression.ExpressionUtils;
-import com.bstek.ureport.expression.model.expr.BaseExpression;
-import com.bstek.ureport.expression.model.expr.FunctionExpression;
 
 /**
  * @author Jacky.gao
@@ -32,19 +30,19 @@ import com.bstek.ureport.expression.model.expr.FunctionExpression;
  */
 public class FunctionExpressionBuilder extends BaseExpressionBuilder {
 	@Override
-	public BaseExpression build(UnitContext unitContext) {
-		FunctionContext ctx=unitContext.function();
+	public BaseExpression build(ReportParserParser.UnitContext unitContext) {
+		ReportParserParser.FunctionContext ctx=unitContext.function();
 		FunctionExpression expr=new FunctionExpression();
 		expr.setExpr(ctx.getText());
 		expr.setName(ctx.Identifier().getText());
-		FunctionParameterContext functionParameterContext=ctx.functionParameter();
+		ReportParserParser.FunctionParameterContext functionParameterContext=ctx.functionParameter();
 		if(functionParameterContext!=null){
 			List<BaseExpression> exprList=new ArrayList<BaseExpression>();
-			List<ItemContext> itemContexts=functionParameterContext.item();
+			List<ReportParserParser.ItemContext> itemContexts=functionParameterContext.item();
 			if(itemContexts!=null){
 				for(int i=0;i<itemContexts.size();i++){
-					ItemContext itemContext=itemContexts.get(i);
-					BaseExpression baseExpr=ExpressionUtils.getExprVisitor().parseItemContext(itemContext);
+					ReportParserParser.ItemContext itemContext=itemContexts.get(i);
+					BaseExpression baseExpr= ExpressionUtils.getExprVisitor().parseItemContext(itemContext);
 					exprList.add(baseExpr);
 				}
 			}
@@ -54,7 +52,7 @@ public class FunctionExpressionBuilder extends BaseExpressionBuilder {
 	}
 
 	@Override
-	public boolean support(UnitContext unitContext) {
+	public boolean support(ReportParserParser.UnitContext unitContext) {
 		return unitContext.function()!=null;
 	}
 }

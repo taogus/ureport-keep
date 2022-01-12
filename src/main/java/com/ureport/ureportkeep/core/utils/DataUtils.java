@@ -15,28 +15,29 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.core.utils;
 
+
+import com.ureport.ureportkeep.core.Utils;
+import com.ureport.ureportkeep.core.build.Context;
+import com.ureport.ureportkeep.core.definition.value.DatasetValue;
+import com.ureport.ureportkeep.core.definition.value.ExpressionValue;
+import com.ureport.ureportkeep.core.definition.value.Value;
+import com.ureport.ureportkeep.core.exception.ReportComputeException;
+import com.ureport.ureportkeep.core.expression.model.Expression;
+import com.ureport.ureportkeep.core.expression.model.expr.BaseExpression;
+import com.ureport.ureportkeep.core.expression.model.expr.JoinExpression;
+import com.ureport.ureportkeep.core.expression.model.expr.ParenExpression;
+import com.ureport.ureportkeep.core.expression.model.expr.dataset.DatasetExpression;
+import com.ureport.ureportkeep.core.model.Cell;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import com.bstek.ureport.Utils;
-import com.bstek.ureport.build.Context;
-import com.bstek.ureport.definition.value.DatasetValue;
-import com.bstek.ureport.definition.value.ExpressionValue;
-import com.bstek.ureport.definition.value.Value;
-import com.bstek.ureport.exception.ReportComputeException;
-import com.bstek.ureport.expression.model.Expression;
-import com.bstek.ureport.expression.model.expr.BaseExpression;
-import com.bstek.ureport.expression.model.expr.JoinExpression;
-import com.bstek.ureport.expression.model.expr.ParenExpression;
-import com.bstek.ureport.expression.model.expr.dataset.DatasetExpression;
-import com.bstek.ureport.model.Cell;
 
 /**
  * @author Jacky.gao
  * @since 2017年6月12日
  */
 public class DataUtils {
-	public static List<?> fetchData(Cell cell, Context context,String datasetName) {
+	public static List<?> fetchData(Cell cell, Context context, String datasetName) {
 		Cell leftCell=fetchLeftCell(cell, context, datasetName);
 		Cell topCell=fetchTopCell(cell, context, datasetName);
 		List<Object> leftList=null,topList=null;
@@ -78,7 +79,7 @@ public class DataUtils {
 			}
 			List<Object> result=new ArrayList<Object>();
 			for(Object obj:list){
-				Object o=Utils.getProperty(obj, prop);
+				Object o= Utils.getProperty(obj, prop);
 				if((o==null && data==null)){
 					result.add(obj);
 				}else if(o!=null && o.equals(data)){

@@ -15,23 +15,26 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.core.expression.function;
 
+import com.ureport.ureportkeep.core.build.Context;
+import com.ureport.ureportkeep.core.expression.model.data.BindDataListExpressionData;
+import com.ureport.ureportkeep.core.expression.model.data.ExpressionData;
+import com.ureport.ureportkeep.core.expression.model.data.ObjectExpressionData;
+import com.ureport.ureportkeep.core.expression.model.data.ObjectListExpressionData;
+import com.ureport.ureportkeep.core.model.Cell;
+import org.springframework.stereotype.Component;
+
 import java.util.List;
 
-import com.bstek.ureport.build.Context;
-import com.bstek.ureport.expression.model.data.BindDataListExpressionData;
-import com.bstek.ureport.expression.model.data.ExpressionData;
-import com.bstek.ureport.expression.model.data.ObjectExpressionData;
-import com.bstek.ureport.expression.model.data.ObjectListExpressionData;
-import com.bstek.ureport.model.Cell;
 
 /**
  * @author Jacky.gao
  * @since 2016年12月27日
  */
+@Component
 public class CountFunction implements Function {
 
 	@Override
-	public Object execute(List<ExpressionData<?>> dataList, Context context,Cell currentCell) {
+	public Object execute(List<ExpressionData<?>> dataList, Context context, Cell currentCell) {
 		if(dataList==null || dataList.size()==0){
 			return null;
 		}

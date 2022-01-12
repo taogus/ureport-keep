@@ -15,28 +15,31 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.core.expression.function;
 
+
+import com.ureport.ureportkeep.core.Utils;
+import com.ureport.ureportkeep.core.build.BindData;
+import com.ureport.ureportkeep.core.build.Context;
+import com.ureport.ureportkeep.core.exception.ReportComputeException;
+import com.ureport.ureportkeep.core.expression.model.data.BindDataListExpressionData;
+import com.ureport.ureportkeep.core.expression.model.data.ExpressionData;
+import com.ureport.ureportkeep.core.expression.model.data.ObjectExpressionData;
+import com.ureport.ureportkeep.core.expression.model.data.ObjectListExpressionData;
+import com.ureport.ureportkeep.core.model.Cell;
+import org.springframework.stereotype.Component;
+
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.List;
-
-import com.bstek.ureport.Utils;
-import com.bstek.ureport.build.BindData;
-import com.bstek.ureport.build.Context;
-import com.bstek.ureport.exception.ReportComputeException;
-import com.bstek.ureport.expression.model.data.BindDataListExpressionData;
-import com.bstek.ureport.expression.model.data.ExpressionData;
-import com.bstek.ureport.expression.model.data.ObjectExpressionData;
-import com.bstek.ureport.expression.model.data.ObjectListExpressionData;
-import com.bstek.ureport.model.Cell;
 
 /**
  * @author Jacky.gao
  * @since 2017年5月23日
  */
+@Component
 public class FormatNumberFunction implements Function {
 	private final String defaultPattern="#";
 	@Override
-	public Object execute(List<ExpressionData<?>> dataList, Context context,Cell currentCell) {
+	public Object execute(List<ExpressionData<?>> dataList, Context context, Cell currentCell) {
 		if(dataList==null){
 			return "";
 		}
@@ -55,7 +58,7 @@ public class FormatNumberFunction implements Function {
 		if(obj==null){
 			throw new ReportComputeException("Function [formatnumber] need a number parameter at least");
 		}else{
-			BigDecimal bigData=Utils.toBigDecimal(obj);
+			BigDecimal bigData= Utils.toBigDecimal(obj);
 			DecimalFormat df=new DecimalFormat(pattern);
 			return df.format(bigData.doubleValue());
 		}

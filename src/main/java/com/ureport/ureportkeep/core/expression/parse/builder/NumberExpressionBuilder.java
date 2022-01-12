@@ -15,12 +15,12 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.core.expression.parse.builder;
 
-import java.math.BigDecimal;
+import com.ureport.ureportkeep.core.Utils;
+import com.ureport.ureportkeep.core.dsl.ReportParserParser;
+import com.ureport.ureportkeep.core.expression.model.expr.BaseExpression;
+import com.ureport.ureportkeep.core.expression.model.expr.NumberExpression;
 
-import com.bstek.ureport.Utils;
-import com.bstek.ureport.dsl.ReportParserParser.UnitContext;
-import com.bstek.ureport.expression.model.expr.BaseExpression;
-import com.bstek.ureport.expression.model.expr.NumberExpression;
+import java.math.BigDecimal;
 
 /**
  * @author Jacky.gao
@@ -28,13 +28,13 @@ import com.bstek.ureport.expression.model.expr.NumberExpression;
  */
 public class NumberExpressionBuilder implements ExpressionBuilder {
 	@Override
-	public BaseExpression build(UnitContext unitContext) {
-		BigDecimal value=Utils.toBigDecimal(unitContext.NUMBER().getText());
+	public BaseExpression build(ReportParserParser.UnitContext unitContext) {
+		BigDecimal value= Utils.toBigDecimal(unitContext.NUMBER().getText());
 		return new NumberExpression(value);
 	}
 
 	@Override
-	public boolean support(UnitContext unitContext) {
+	public boolean support(ReportParserParser.UnitContext unitContext) {
 		return unitContext.NUMBER()!=null;
 	}
 }

@@ -15,14 +15,15 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.core.expression.model.condition;
 
-import java.util.List;
 
-import com.bstek.ureport.Utils;
-import com.bstek.ureport.build.Context;
-import com.bstek.ureport.exception.ReportComputeException;
-import com.bstek.ureport.expression.model.Expression;
-import com.bstek.ureport.expression.model.data.ExpressionData;
-import com.bstek.ureport.model.Cell;
+import com.ureport.ureportkeep.core.Utils;
+import com.ureport.ureportkeep.core.build.Context;
+import com.ureport.ureportkeep.core.exception.ReportComputeException;
+import com.ureport.ureportkeep.core.expression.model.Expression;
+import com.ureport.ureportkeep.core.expression.model.data.ExpressionData;
+import com.ureport.ureportkeep.core.model.Cell;
+
+import java.util.List;
 
 /**
  * @author Jacky.gao
@@ -37,7 +38,7 @@ public class CellExpressionCondition extends BaseCondition {
 		if(cellName.equals(currentCell.getName())){
 			return currentCell.getData();
 		}else{
-			List<Cell> cells=Utils.fetchTargetCells(cell, context, cellName);
+			List<Cell> cells= Utils.fetchTargetCells(cell, context, cellName);
 			int size=cells.size();
 			if(cells==null || size==0){
 				return new ReportComputeException("Unknow cell : "+cellName);

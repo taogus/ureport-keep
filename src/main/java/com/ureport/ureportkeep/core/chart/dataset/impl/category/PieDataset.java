@@ -15,11 +15,12 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.core.chart.dataset.impl.category;
 
+
+import com.ureport.ureportkeep.core.build.Context;
+import com.ureport.ureportkeep.core.model.Cell;
+
 import java.util.List;
 import java.util.Map;
-
-import com.bstek.ureport.build.Context;
-import com.bstek.ureport.model.Cell;
 
 /**
  * @author Jacky.gao
@@ -27,7 +28,7 @@ import com.bstek.ureport.model.Cell;
  */
 public class PieDataset extends CategoryDataset {
 	@Override
-	public String buildDataJson(Context context,Cell cell) {
+	public String buildDataJson(Context context, Cell cell) {
 		String datasetJson=buildDatasetJson(context, cell,null);
 		StringBuilder sb=new StringBuilder();
 		sb.append("{");
@@ -38,7 +39,7 @@ public class PieDataset extends CategoryDataset {
 		return sb.toString();
 	}
 	@Override
-	protected String buildDatasets(Map<Object,Map<Object,List<Object>>> map,String props){
+	protected String buildDatasets(Map<Object, Map<Object, List<Object>>> map, String props){
 		StringBuilder sb=new StringBuilder();
 		int i=0; 
 		for(Object series:map.keySet()){

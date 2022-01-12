@@ -15,13 +15,13 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.core.definition.searchform;
 
+
+import com.ureport.ureportkeep.core.Utils;
+import com.ureport.ureportkeep.core.build.Dataset;
+import com.ureport.ureportkeep.core.exception.DatasetUndefinitionException;
+import org.apache.commons.lang.StringUtils;
+
 import java.util.List;
-
-import org.apache.commons.lang3.StringUtils;
-
-import com.bstek.ureport.Utils;
-import com.bstek.ureport.build.Dataset;
-import com.bstek.ureport.exception.DatasetUndefinitionException;
 
 /**
  * @author Jacky.gao
@@ -45,7 +45,7 @@ public class SelectInputComponent extends InputComponent {
 				throw new DatasetUndefinitionException(dataset);
 			}
 			for(Object obj:ds.getData()){
-				Object label=Utils.getProperty(obj, labelField);
+				Object label= Utils.getProperty(obj, labelField);
 				Object value=Utils.getProperty(obj, valueField);
 				String selected=value.equals(pvalue) ? "selected" : "";
 				sb.append("<option value='"+value+"' "+selected+">"+label+"</option>");		

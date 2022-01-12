@@ -15,17 +15,18 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.core.expression.model.expr;
 
+
+import com.ureport.ureportkeep.core.Utils;
+import com.ureport.ureportkeep.core.build.Context;
+import com.ureport.ureportkeep.core.exception.ReportComputeException;
+import com.ureport.ureportkeep.core.expression.model.data.ExpressionData;
+import com.ureport.ureportkeep.core.expression.model.data.ObjectExpressionData;
+import com.ureport.ureportkeep.core.expression.model.data.ObjectListExpressionData;
+import com.ureport.ureportkeep.core.expression.model.expr.set.CellExpression;
+import com.ureport.ureportkeep.core.model.Cell;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import com.bstek.ureport.Utils;
-import com.bstek.ureport.build.Context;
-import com.bstek.ureport.exception.ReportComputeException;
-import com.bstek.ureport.expression.model.data.ExpressionData;
-import com.bstek.ureport.expression.model.data.ObjectExpressionData;
-import com.bstek.ureport.expression.model.data.ObjectListExpressionData;
-import com.bstek.ureport.expression.model.expr.set.CellExpression;
-import com.bstek.ureport.model.Cell;
 
 /**
  * @author Jacky.gao
@@ -41,8 +42,8 @@ public class RelativeCellExpression extends CellExpression {
 		return false;
 	}
 	@Override
-	protected ExpressionData<?> compute(Cell cell,Cell currentCell, Context context) {
-		List<Cell> targetCells=Utils.fetchTargetCells(currentCell, context, cellName);
+	protected ExpressionData<?> compute(Cell cell, Cell currentCell, Context context) {
+		List<Cell> targetCells= Utils.fetchTargetCells(currentCell, context, cellName);
 		int size=targetCells.size();
 		if(size==0){
 			throw new ReportComputeException("Unknow cell "+cellName);
@@ -63,7 +64,7 @@ public class RelativeCellExpression extends CellExpression {
 				for(Cell c:targetCells){
 					list.add(c.getData()); 
 				}
-				return new ObjectListExpressionData(list);							
+				return new ObjectListExpressionData(list);
 			}
 		}
 	}

@@ -15,27 +15,29 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.core.expression.function;
 
+
+import com.ureport.ureportkeep.core.Utils;
+import com.ureport.ureportkeep.core.build.BindData;
+import com.ureport.ureportkeep.core.build.Context;
+import com.ureport.ureportkeep.core.expression.model.data.BindDataListExpressionData;
+import com.ureport.ureportkeep.core.expression.model.data.ExpressionData;
+import com.ureport.ureportkeep.core.expression.model.data.ObjectExpressionData;
+import com.ureport.ureportkeep.core.expression.model.data.ObjectListExpressionData;
+import com.ureport.ureportkeep.core.model.Cell;
+import org.apache.commons.lang.StringUtils;
+import org.springframework.stereotype.Component;
+
 import java.math.BigDecimal;
 import java.util.List;
-
-import org.apache.commons.lang3.StringUtils;
-
-import com.bstek.ureport.Utils;
-import com.bstek.ureport.build.BindData;
-import com.bstek.ureport.build.Context;
-import com.bstek.ureport.expression.model.data.BindDataListExpressionData;
-import com.bstek.ureport.expression.model.data.ExpressionData;
-import com.bstek.ureport.expression.model.data.ObjectExpressionData;
-import com.bstek.ureport.expression.model.data.ObjectListExpressionData;
-import com.bstek.ureport.model.Cell;
 
 /**
  * @author Jacky.gao
  * @since 2017年1月20日
  */
+@Component
 public class AvgFunction implements Function {
 	@Override
-	public Object execute(List<ExpressionData<?>> dataList, Context context,Cell currentCell) {
+	public Object execute(List<ExpressionData<?>> dataList, Context context, Cell currentCell) {
 		if(dataList==null || dataList.size()==0){
 			return null;
 		}
@@ -51,7 +53,7 @@ public class AvgFunction implements Function {
 						continue;
 					}
 					singleData=obj;
-					BigDecimal bigData=Utils.toBigDecimal(obj);
+					BigDecimal bigData= Utils.toBigDecimal(obj);
 					total=total.add(bigData);
 					size++;
 				}

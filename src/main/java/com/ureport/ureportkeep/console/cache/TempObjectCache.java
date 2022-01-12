@@ -15,14 +15,14 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.console.cache;
 
+import com.ureport.ureportkeep.console.RequestHolder;
+
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-
-import com.bstek.ureport.console.RequestHolder;
 
 
 /**
@@ -44,7 +44,7 @@ public class TempObjectCache{
 	}
 	
 	public void remove(String key){
-		HttpServletRequest req=RequestHolder.getRequest();
+		HttpServletRequest req= RequestHolder.getRequest();
 		if(req==null){
 			return;
 		}

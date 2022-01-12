@@ -15,14 +15,14 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.core.parser.impl.value;
 
+
+import com.ureport.ureportkeep.core.definition.value.ImageValue;
+import com.ureport.ureportkeep.core.definition.value.Source;
+import com.ureport.ureportkeep.core.definition.value.Value;
+import com.ureport.ureportkeep.core.expression.ExpressionUtils;
+import com.ureport.ureportkeep.core.expression.model.Expression;
 import org.apache.commons.lang.StringUtils;
 import org.dom4j.Element;
-
-import com.bstek.ureport.definition.value.Source;
-import com.bstek.ureport.definition.value.ImageValue;
-import com.bstek.ureport.definition.value.Value;
-import com.bstek.ureport.expression.ExpressionUtils;
-import com.bstek.ureport.expression.model.Expression;
 
 /**
  * @author Jacky.gao
@@ -41,7 +41,7 @@ public class ImageValueParser extends ValueParser {
 		if(StringUtils.isNotBlank(height)){
 			value.setHeight(Integer.valueOf(height));
 		}
-		Source source=Source.valueOf(element.attributeValue("source"));
+		Source source= Source.valueOf(element.attributeValue("source"));
 		value.setSource(source);
 		for(Object obj:element.elements()){
 			if(obj==null || !(obj instanceof Element)){
@@ -59,7 +59,7 @@ public class ImageValueParser extends ValueParser {
 		}
 		if(source.equals(Source.expression)){
 			String expr=value.getExpr();
-			Expression expression=ExpressionUtils.parseExpression(expr);
+			Expression expression= ExpressionUtils.parseExpression(expr);
 			value.setExpression(expression);
 		}
 		return value;

@@ -15,15 +15,16 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.core.expression.model.expr;
 
+
+import com.ureport.ureportkeep.core.build.Context;
+import com.ureport.ureportkeep.core.exception.ReportComputeException;
+import com.ureport.ureportkeep.core.expression.model.data.ExpressionData;
+import com.ureport.ureportkeep.core.expression.model.data.ObjectExpressionData;
+import com.ureport.ureportkeep.core.expression.model.expr.set.CellExpression;
+import com.ureport.ureportkeep.core.model.Cell;
+
 import java.util.List;
 import java.util.Map;
-
-import com.bstek.ureport.build.Context;
-import com.bstek.ureport.exception.ReportComputeException;
-import com.bstek.ureport.expression.model.data.ExpressionData;
-import com.bstek.ureport.expression.model.data.ObjectExpressionData;
-import com.bstek.ureport.expression.model.expr.set.CellExpression;
-import com.bstek.ureport.model.Cell;
 
 /**
  * @author Jacky.gao
@@ -40,7 +41,7 @@ public class CellPositionExpression extends CellExpression {
 		return false;
 	}
 	@Override
-	protected ExpressionData<?> compute(Cell cell,Cell currentCell, Context context) {
+	protected ExpressionData<?> compute(Cell cell, Cell currentCell, Context context) {
 		List<Cell> targetCells=fetchCellsByLeftParent(context,cell,cellName);
 		if(targetCells==null || targetCells.size()==0){
 			targetCells=fetchCellsByTopParent(context,cell,cellName);
@@ -71,7 +72,7 @@ public class CellPositionExpression extends CellExpression {
 		}
 		if(index>-1){
 			index++;
-			return new ObjectExpressionData(index);			
+			return new ObjectExpressionData(index);
 		}
 		for(int i=0;i<targetCells.size();i++){
 			Cell target=targetCells.get(i);

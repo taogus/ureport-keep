@@ -15,11 +15,11 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.core.definition.value;
 
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.ureport.ureportkeep.core.expression.model.Condition;
+
 import java.util.List;
-
-import org.codehaus.jackson.annotate.JsonIgnore;
-
-import com.bstek.ureport.expression.model.Condition;
 
 /**
  * @author Jacky.gao
@@ -27,7 +27,7 @@ import com.bstek.ureport.expression.model.Condition;
  */
 public class GroupItem {
 	private String name;
-	@JsonIgnore 
+	@JsonIgnore
 	private Condition condition;
 	/**
 	 * 此属性给设计器使用，引擎不使用该属性

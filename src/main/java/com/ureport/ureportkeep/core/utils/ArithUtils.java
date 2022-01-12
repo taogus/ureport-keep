@@ -15,9 +15,10 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.core.utils;
 
-import java.math.BigDecimal;
 
-import com.bstek.ureport.Utils;
+import com.ureport.ureportkeep.core.Utils;
+
+import java.math.BigDecimal;
 
 /**
  * @author Jacky.gao
@@ -37,7 +38,7 @@ public class ArithUtils {
 	 * @return 加法
 	 */
 	public static Object add(Object first,Object second) {
-		BigDecimal a=Utils.toBigDecimal(first);
+		BigDecimal a= Utils.toBigDecimal(first);
 		BigDecimal b=Utils.toBigDecimal(second);
 		return a.add(b);
 	}

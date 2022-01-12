@@ -15,18 +15,6 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.console.designer;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import com.ureport.ureportkeep.console.RenderPageServletAction;
 import com.ureport.ureportkeep.console.cache.TempObjectCache;
@@ -48,6 +36,13 @@ import org.apache.velocity.VelocityContext;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.PrintWriter;
+import java.util.*;
 
 /**
  * @author Jacky.gao
@@ -118,7 +113,7 @@ public class DesignerServletAction extends RenderPageServletAction {
 	public void savePreviewData(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String content=req.getParameter("content");
 		content=decodeContent(content);
-		InputStream inputStream=IOUtils.toInputStream(content,"utf-8");
+		InputStream inputStream= IOUtils.toInputStream(content,"utf-8");
 		ReportDefinition reportDef=reportParser.parse(inputStream,"p");
 		reportRender.rebuildReportDefinition(reportDef);
 		IOUtils.closeQuietly(inputStream);

@@ -15,15 +15,16 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.core.chart.dataset.impl;
 
+import com.ureport.ureportkeep.core.build.Context;
+import com.ureport.ureportkeep.core.chart.dataset.Dataset;
+import com.ureport.ureportkeep.core.chart.dataset.impl.category.BarDataset;
+import com.ureport.ureportkeep.core.chart.dataset.impl.category.LineDataset;
+import com.ureport.ureportkeep.core.exception.ReportComputeException;
+import com.ureport.ureportkeep.core.model.Cell;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import com.bstek.ureport.build.Context;
-import com.bstek.ureport.chart.dataset.Dataset;
-import com.bstek.ureport.chart.dataset.impl.category.BarDataset;
-import com.bstek.ureport.chart.dataset.impl.category.LineDataset;
-import com.bstek.ureport.exception.ReportComputeException;
-import com.bstek.ureport.model.Cell;
 
 /**
  * @author Jacky.gao
@@ -34,7 +35,7 @@ public class MixDataset implements Dataset {
 	private List<LineDataset> lineDatasets=new ArrayList<LineDataset>();
 	
 	@Override
-	public String buildDataJson(Context context,Cell cell) {
+	public String buildDataJson(Context context, Cell cell) {
 		StringBuilder sb=new StringBuilder();
 		sb.append("{");
 		sb.append("\"datasets\":[");

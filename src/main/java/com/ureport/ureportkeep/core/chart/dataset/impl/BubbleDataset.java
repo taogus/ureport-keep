@@ -15,17 +15,18 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.core.chart.dataset.impl;
 
+
+import com.ureport.ureportkeep.core.Utils;
+import com.ureport.ureportkeep.core.build.Context;
+import com.ureport.ureportkeep.core.chart.dataset.BaseDataset;
+import com.ureport.ureportkeep.core.chart.dataset.BubbleData;
+import com.ureport.ureportkeep.core.model.Cell;
+import com.ureport.ureportkeep.core.utils.DataUtils;
+
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
-import com.bstek.ureport.Utils;
-import com.bstek.ureport.build.Context;
-import com.bstek.ureport.chart.dataset.BaseDataset;
-import com.bstek.ureport.chart.dataset.BubbleData;
-import com.bstek.ureport.model.Cell;
-import com.bstek.ureport.utils.DataUtils;
 
 /**
  * @author Jacky.gao
@@ -39,14 +40,14 @@ public class BubbleDataset extends BaseDataset {
 	private String categoryProperty;
 	
 	@Override
-	public String buildDataJson(Context context,Cell cell) {
-		Map<Object,List<BubbleData>> map=new LinkedHashMap<Object,List<BubbleData>>();
-		List<?> dataList=DataUtils.fetchData(cell, context, datasetName);
+	public String buildDataJson(Context context, Cell cell) {
+		Map<Object, List<BubbleData>> map=new LinkedHashMap<Object,List<BubbleData>>();
+		List<?> dataList= DataUtils.fetchData(cell, context, datasetName);
 		for(Object obj:dataList){
 			if(obj==null){
 				continue;
 			}
-			Object categoryValue=Utils.getProperty(obj, categoryProperty);
+			Object categoryValue= Utils.getProperty(obj, categoryProperty);
 			if(categoryValue==null){
 				continue;
 			}

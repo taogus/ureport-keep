@@ -15,32 +15,31 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.console.res;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.ureport.ureportkeep.console.ServletAction;
+import com.ureport.ureportkeep.console.UReportServlet;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
-import com.bstek.ureport.console.ServletAction;
-import com.bstek.ureport.console.UReportServlet;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 /**
  * @author Jacky.gao
  * @since 2016年6月6日
  */
-public class ResourceLoaderServletAction implements ServletAction,ApplicationContextAware{
+public class ResourceLoaderServletAction implements ServletAction, ApplicationContextAware {
 	public static final String URL="/res";
 	private ApplicationContext applicationContext;
 	@Override
 	public void execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String path=req.getContextPath()+UReportServlet.URL+URL;
+		String path=req.getContextPath()+ UReportServlet.URL+URL;
 		String uri=req.getRequestURI();
 		String resPath=uri.substring(path.length()+1);
 		String p="classpath:"+resPath;
@@ -60,7 +59,7 @@ public class ResourceLoaderServletAction implements ServletAction,ApplicationCon
 		InputStream input=applicationContext.getResource(p).getInputStream();
 		OutputStream output=resp.getOutputStream();
 		try{
-			IOUtils.copy(input, output);			
+			IOUtils.copy(input, output);
 		}finally{
 			IOUtils.closeQuietly(input);
 			IOUtils.closeQuietly(output);

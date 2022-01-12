@@ -15,20 +15,22 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.core.expression.function;
 
-import java.util.List;
+import com.ureport.ureportkeep.core.build.Context;
+import com.ureport.ureportkeep.core.expression.model.data.ExpressionData;
+import com.ureport.ureportkeep.core.model.Cell;
+import com.ureport.ureportkeep.core.model.Row;
+import org.springframework.stereotype.Component;
 
-import com.bstek.ureport.build.Context;
-import com.bstek.ureport.expression.model.data.ExpressionData;
-import com.bstek.ureport.model.Cell;
-import com.bstek.ureport.model.Row;
+import java.util.List;
 
 /**
  * @author Jacky.gao
  * @since 2017年4月25日
  */
+@Component
 public class RowFunction implements Function{
 	@Override
-	public Object execute(List<ExpressionData<?>> dataList, Context context,Cell currentCell) {
+	public Object execute(List<ExpressionData<?>> dataList, Context context, Cell currentCell) {
 		Row row=currentCell.getRow();
 		return row.getRowNumber();
 	}

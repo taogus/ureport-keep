@@ -15,8 +15,9 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.core.chart.option.impl;
 
-import com.bstek.ureport.chart.FontStyle;
-import com.bstek.ureport.chart.option.Option;
+
+import com.ureport.ureportkeep.core.chart.FontStyle;
+import com.ureport.ureportkeep.core.chart.option.Option;
 
 /**
  * @author Jacky.gao
@@ -25,7 +26,7 @@ import com.bstek.ureport.chart.option.Option;
 public class TooltipOption implements Option {
 	private boolean enabled=true;
 	private int titleFontSize=12;
-	private FontStyle titleFontStyle=FontStyle.bold;
+	private FontStyle titleFontStyle= FontStyle.bold;
 	private String titleFontColor="#fff";
 	private int bodyFontSize=12;
 	private FontStyle bodyFontStyle=FontStyle.normal;

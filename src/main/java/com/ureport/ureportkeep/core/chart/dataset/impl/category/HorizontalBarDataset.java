@@ -15,8 +15,9 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.core.chart.dataset.impl.category;
 
-import com.bstek.ureport.build.Context;
-import com.bstek.ureport.model.Cell;
+
+import com.ureport.ureportkeep.core.build.Context;
+import com.ureport.ureportkeep.core.model.Cell;
 
 /**
  * @author Jacky.gao
@@ -24,7 +25,7 @@ import com.bstek.ureport.model.Cell;
  */
 public class HorizontalBarDataset extends BarDataset {
 	@Override
-	public String buildDataJson(Context context,Cell cell) {
+	public String buildDataJson(Context context, Cell cell) {
 		String datasetJson=buildDatasetJson(context, cell,null);
 		StringBuilder sb=new StringBuilder();
 		sb.append("{");

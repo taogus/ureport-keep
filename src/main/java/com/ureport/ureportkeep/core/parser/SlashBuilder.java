@@ -15,32 +15,23 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.core.parser;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
+
+import com.ureport.ureportkeep.core.cache.ResourceCache;
+import com.ureport.ureportkeep.core.definition.*;
+import com.ureport.ureportkeep.core.definition.value.Slash;
+import com.ureport.ureportkeep.core.definition.value.SlashValue;
+import com.ureport.ureportkeep.core.exception.ReportComputeException;
+import com.ureport.ureportkeep.core.utils.UnitUtils;
+import org.springframework.util.Base64Utils;
+
+import javax.imageio.ImageIO;
+import javax.imageio.stream.MemoryCacheImageOutputStream;
+import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.List;
-
-import javax.imageio.ImageIO;
-import javax.imageio.stream.MemoryCacheImageOutputStream;
-
-import org.springframework.util.Base64Utils;
-
-import com.bstek.ureport.cache.ResourceCache;
-import com.bstek.ureport.definition.CellDefinition;
-import com.bstek.ureport.definition.CellStyle;
-import com.bstek.ureport.definition.ColumnDefinition;
-import com.bstek.ureport.definition.ReportDefinition;
-import com.bstek.ureport.definition.RowDefinition;
-import com.bstek.ureport.definition.value.Slash;
-import com.bstek.ureport.definition.value.SlashValue;
-import com.bstek.ureport.exception.ReportComputeException;
-import com.bstek.ureport.utils.UnitUtils;
 
 /**
  * @author Jacky.gao
@@ -78,7 +69,7 @@ public class SlashBuilder {
 		List<RowDefinition> rows=report.getRows();
 		for(int i=colNumber;i<(colNumber+colSpan);i++){
 			ColumnDefinition col=columns.get(i-1);
-			width+=UnitUtils.pointToPixel(col.getWidth());
+			width+= UnitUtils.pointToPixel(col.getWidth());
 		}
 		for(int i=rowNumber;i<(rowNumber+rowSpan);i++){
 			RowDefinition row=rows.get(i-1);
@@ -190,7 +181,7 @@ public class SlashBuilder {
 		try{
 			ImageIO.write(image, "png", memoryImage);
 			imageBytes=byteOutput.toByteArray();
-			String base64Data=Base64Utils.encodeToString(imageBytes);
+			String base64Data= Base64Utils.encodeToString(imageBytes);
 			content.setBase64Data(base64Data);
 		}catch(Exception ex){
 			throw new ReportComputeException(ex);

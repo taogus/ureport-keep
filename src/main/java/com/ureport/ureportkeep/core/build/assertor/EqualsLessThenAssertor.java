@@ -15,11 +15,11 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.core.build.assertor;
 
-import java.math.BigDecimal;
 
+import com.ureport.ureportkeep.core.Utils;
 import org.apache.commons.lang.StringUtils;
 
-import com.bstek.ureport.Utils;
+import java.math.BigDecimal;
 
 /**
  * @author Jacky.gao
@@ -35,7 +35,7 @@ public class EqualsLessThenAssertor extends AbstractAssertor {
 		if(StringUtils.isBlank(left.toString()) || StringUtils.isBlank(right.toString())){
 			return false;
 		}
-		BigDecimal leftObj=Utils.toBigDecimal(left);
+		BigDecimal leftObj= Utils.toBigDecimal(left);
 		right=buildObject(right);
 		BigDecimal rightObj=Utils.toBigDecimal(right);
 		return leftObj.compareTo(rightObj) < 1;

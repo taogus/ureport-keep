@@ -15,14 +15,14 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.core.parser.impl.value;
 
-import org.dom4j.Element;
 
-import com.bstek.ureport.definition.value.Source;
-import com.bstek.ureport.definition.value.Value;
-import com.bstek.ureport.definition.value.ZxingCategory;
-import com.bstek.ureport.definition.value.ZxingValue;
-import com.bstek.ureport.expression.ExpressionUtils;
-import com.bstek.ureport.expression.model.Expression;
+import com.ureport.ureportkeep.core.definition.value.Source;
+import com.ureport.ureportkeep.core.definition.value.Value;
+import com.ureport.ureportkeep.core.definition.value.ZxingCategory;
+import com.ureport.ureportkeep.core.definition.value.ZxingValue;
+import com.ureport.ureportkeep.core.expression.ExpressionUtils;
+import com.ureport.ureportkeep.core.expression.model.Expression;
+import org.dom4j.Element;
 
 /**
  * @author Jacky.gao
@@ -33,7 +33,7 @@ public class ZxingValueParser extends ValueParser {
 	@Override
 	public Value parse(Element element) {
 		ZxingValue value=new ZxingValue();
-		Source source=Source.valueOf(element.attributeValue("source"));
+		Source source= Source.valueOf(element.attributeValue("source"));
 		value.setSource(source);
 		value.setWidth(Integer.valueOf(element.attributeValue("width")));
 		value.setHeight(Integer.valueOf(element.attributeValue("height")));
@@ -56,7 +56,7 @@ public class ZxingValueParser extends ValueParser {
 		}
 		if(source.equals(Source.expression)){
 			String expr=value.getExpr();
-			Expression expression=ExpressionUtils.parseExpression(expr);
+			Expression expression= ExpressionUtils.parseExpression(expr);
 			value.setExpression(expression);
 		}
 		return value;

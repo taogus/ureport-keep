@@ -15,22 +15,24 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.core.expression.function.string;
 
-import java.util.List;
+import com.ureport.ureportkeep.core.build.Context;
+import com.ureport.ureportkeep.core.exception.ReportComputeException;
+import com.ureport.ureportkeep.core.expression.model.data.ExpressionData;
+import com.ureport.ureportkeep.core.expression.model.data.ObjectExpressionData;
+import com.ureport.ureportkeep.core.model.Cell;
+import org.springframework.stereotype.Component;
 
-import com.bstek.ureport.build.Context;
-import com.bstek.ureport.exception.ReportComputeException;
-import com.bstek.ureport.expression.model.data.ExpressionData;
-import com.bstek.ureport.expression.model.data.ObjectExpressionData;
-import com.bstek.ureport.model.Cell;
+import java.util.List;
 
 /**
  * @author Jacky.gao
  * @since 2017年1月24日
  */
+@Component
 public class ReplaceFunction extends StringFunction {
 
 	@Override
-	public Object execute(List<ExpressionData<?>> dataList, Context context,Cell currentCell) {
+	public Object execute(List<ExpressionData<?>> dataList, Context context, Cell currentCell) {
 		if(dataList.size()!=3){
 			throw new ReportComputeException("Function ["+name()+"] need three parameters.");
 		}

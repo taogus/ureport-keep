@@ -15,19 +15,20 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.core.build.aggregate;
 
+
+import com.ureport.ureportkeep.core.Utils;
+import com.ureport.ureportkeep.core.build.BindData;
+import com.ureport.ureportkeep.core.build.Context;
+import com.ureport.ureportkeep.core.definition.value.Value;
+import com.ureport.ureportkeep.core.exception.ReportComputeException;
+import com.ureport.ureportkeep.core.expression.model.Condition;
+import com.ureport.ureportkeep.core.expression.model.expr.dataset.DatasetExpression;
+import com.ureport.ureportkeep.core.model.Cell;
+import com.ureport.ureportkeep.core.utils.DataUtils;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-
-import com.bstek.ureport.Utils;
-import com.bstek.ureport.build.BindData;
-import com.bstek.ureport.build.Context;
-import com.bstek.ureport.definition.value.Value;
-import com.bstek.ureport.exception.ReportComputeException;
-import com.bstek.ureport.expression.model.Condition;
-import com.bstek.ureport.expression.model.expr.dataset.DatasetExpression;
-import com.bstek.ureport.model.Cell;
-import com.bstek.ureport.utils.DataUtils;
 
 /**
  * @author Jacky.gao
@@ -35,10 +36,10 @@ import com.bstek.ureport.utils.DataUtils;
  */
 public class AvgAggregate extends Aggregate {
 	@Override
-	public List<BindData> aggregate(DatasetExpression expr, Cell cell,Context context) {
+	public List<BindData> aggregate(DatasetExpression expr, Cell cell, Context context) {
 		String datasetName=expr.getDatasetName();
 		String property=expr.getProperty();
-		Cell leftCell=DataUtils.fetchLeftCell(cell, context, datasetName);
+		Cell leftCell= DataUtils.fetchLeftCell(cell, context, datasetName);
 		Cell topCell=DataUtils.fetchTopCell(cell, context, datasetName);
 		List<Object> leftList=null,topList=null;
 		if(leftCell!=null){
@@ -88,7 +89,7 @@ public class AvgAggregate extends Aggregate {
 				if(condition!=null && !condition.filter(cell, cell, obj, context)){
 					continue;
 				}
-				Object o=Utils.getProperty(obj, prop);
+				Object o= Utils.getProperty(obj, prop);
 				if((o!=null && data!=null && (o==data || o.equals(data))) || (o==null && data==null)){
 					Object value=Utils.getProperty(obj, property);
 					if(value==null || value.toString().equals("")){

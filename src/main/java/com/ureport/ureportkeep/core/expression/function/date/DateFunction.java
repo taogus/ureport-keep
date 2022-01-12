@@ -15,25 +15,27 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.core.expression.function.date;
 
+import com.ureport.ureportkeep.core.build.Context;
+import com.ureport.ureportkeep.core.exception.ReportComputeException;
+import com.ureport.ureportkeep.core.expression.model.data.ExpressionData;
+import com.ureport.ureportkeep.core.expression.model.data.ObjectExpressionData;
+import com.ureport.ureportkeep.core.model.Cell;
+import org.springframework.stereotype.Component;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import com.bstek.ureport.build.Context;
-import com.bstek.ureport.exception.ReportComputeException;
-import com.bstek.ureport.expression.model.data.ExpressionData;
-import com.bstek.ureport.expression.model.data.ObjectExpressionData;
-import com.bstek.ureport.model.Cell;
-
 /**
  * @author Jacky.gao
  * @since 2017年1月22日
  */
+@Component
 public class DateFunction extends CalendarFunction {
 	private String pattern="yyyy-MM-dd HH:mm:ss";
 	@Override
-	public Object execute(List<ExpressionData<?>> dataList, Context context,Cell currentCell) {
+	public Object execute(List<ExpressionData<?>> dataList, Context context, Cell currentCell) {
 		SimpleDateFormat sd=new SimpleDateFormat(pattern);
 		Date date=new Date();
 		if(dataList.size()==1){

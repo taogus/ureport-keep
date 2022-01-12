@@ -15,16 +15,16 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.console.chart;
 
-import java.io.IOException;
+
+import com.ureport.ureportkeep.console.RenderPageServletAction;
+import com.ureport.ureportkeep.core.cache.CacheUtils;
+import com.ureport.ureportkeep.core.chart.ChartData;
+import com.ureport.ureportkeep.core.utils.UnitUtils;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.bstek.ureport.cache.CacheUtils;
-import com.bstek.ureport.chart.ChartData;
-import com.bstek.ureport.console.RenderPageServletAction;
-import com.bstek.ureport.utils.UnitUtils;
+import java.io.IOException;
 
 /**
  * @author Jacky.gao
@@ -43,7 +43,7 @@ public class ChartServletAction extends RenderPageServletAction {
 		String file=req.getParameter("_u");
 		file=decode(file);
 		String chartId=req.getParameter("_chartId");
-		ChartData chartData=CacheUtils.getChartData(chartId);
+		ChartData chartData= CacheUtils.getChartData(chartId);
 		if(chartData==null){
 			return;
 		}

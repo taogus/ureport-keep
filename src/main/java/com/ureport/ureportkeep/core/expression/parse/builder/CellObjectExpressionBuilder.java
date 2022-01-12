@@ -15,11 +15,10 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.core.expression.parse.builder;
 
-import com.bstek.ureport.dsl.ReportParserParser.CellContext;
-import com.bstek.ureport.dsl.ReportParserParser.PropertyContext;
-import com.bstek.ureport.dsl.ReportParserParser.UnitContext;
-import com.bstek.ureport.expression.model.expr.BaseExpression;
-import com.bstek.ureport.expression.model.expr.cell.CellObjectExpression;
+
+import com.ureport.ureportkeep.core.dsl.ReportParserParser;
+import com.ureport.ureportkeep.core.expression.model.expr.BaseExpression;
+import com.ureport.ureportkeep.core.expression.model.expr.cell.CellObjectExpression;
 
 /**
  * @author Jacky.gao
@@ -28,10 +27,10 @@ import com.bstek.ureport.expression.model.expr.cell.CellObjectExpression;
 public class CellObjectExpressionBuilder implements ExpressionBuilder {
 
 	@Override
-	public BaseExpression build(UnitContext unitContext) {
-		CellContext ctx=unitContext.cell();
+	public BaseExpression build(ReportParserParser.UnitContext unitContext) {
+		ReportParserParser.CellContext ctx=unitContext.cell();
 		String property=null;
-		PropertyContext propCtx=ctx.property();
+		ReportParserParser.PropertyContext propCtx=ctx.property();
 		if(propCtx!=null){
 			property=propCtx.getText();
 		}
@@ -41,7 +40,7 @@ public class CellObjectExpressionBuilder implements ExpressionBuilder {
 	}
 
 	@Override
-	public boolean support(UnitContext unitContext) {
+	public boolean support(ReportParserParser.UnitContext unitContext) {
 		return unitContext.cell()!=null;
 	}
 }

@@ -15,9 +15,10 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.core.chart.option.impl;
 
-import com.bstek.ureport.chart.FontStyle;
-import com.bstek.ureport.chart.option.Option;
-import com.bstek.ureport.chart.option.Position;
+
+import com.ureport.ureportkeep.core.chart.FontStyle;
+import com.ureport.ureportkeep.core.chart.option.Option;
+import com.ureport.ureportkeep.core.chart.option.Position;
 
 /**
  * @author Jacky.gao
@@ -25,10 +26,10 @@ import com.bstek.ureport.chart.option.Position;
  */
 public class TitleOption implements Option {
 	private boolean display;
-	private Position position=Position.top;
+	private Position position= Position.top;
 	private int fontSize=14;
 	private String fontColor="#666";
-	private FontStyle fontStyle=FontStyle.bold;
+	private FontStyle fontStyle= FontStyle.bold;
 	private int padding=10;
 	private String text;
 	@Override

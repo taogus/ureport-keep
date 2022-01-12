@@ -15,38 +15,19 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.console.importexcel;
 
+import com.ureport.ureportkeep.core.definition.CellStyle;
+import com.ureport.ureportkeep.core.definition.PaperSize;
+import com.ureport.ureportkeep.core.definition.*;
+import com.ureport.ureportkeep.core.definition.value.SimpleValue;
+import org.apache.poi.hssf.usermodel.*;
+import org.apache.poi.hssf.util.HSSFColor;
+import org.apache.poi.ss.usermodel.BorderStyle;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.util.CellRangeAddress;
+
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-
-import org.apache.poi.hssf.usermodel.HSSFCell;
-import org.apache.poi.hssf.usermodel.HSSFCellStyle;
-import org.apache.poi.hssf.usermodel.HSSFFont;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.hssf.util.HSSFColor;
-import org.apache.poi.ss.usermodel.BorderStyle;
-import org.apache.poi.ss.usermodel.CellType;
-import org.apache.poi.ss.usermodel.FillPatternType;
-import org.apache.poi.ss.usermodel.Font;
-import org.apache.poi.ss.usermodel.HorizontalAlignment;
-import org.apache.poi.ss.usermodel.VerticalAlignment;
-import org.apache.poi.ss.util.CellRangeAddress;
-
-import com.bstek.ureport.definition.Alignment;
-import com.bstek.ureport.definition.Border;
-import com.bstek.ureport.definition.CellDefinition;
-import com.bstek.ureport.definition.CellStyle;
-import com.bstek.ureport.definition.ColumnDefinition;
-import com.bstek.ureport.definition.Orientation;
-import com.bstek.ureport.definition.PagingMode;
-import com.bstek.ureport.definition.Paper;
-import com.bstek.ureport.definition.PaperSize;
-import com.bstek.ureport.definition.PaperType;
-import com.bstek.ureport.definition.ReportDefinition;
-import com.bstek.ureport.definition.RowDefinition;
-import com.bstek.ureport.definition.value.SimpleValue;
 
 /**
  * @author Jacky.gao
@@ -146,7 +127,7 @@ public class HSSFExcelParser extends ExcelParser {
 		return report;
 	}
 
-	private CellStyle buildCellStyle(HSSFCell cell,HSSFWorkbook book){
+	private CellStyle buildCellStyle(HSSFCell cell, HSSFWorkbook book){
 		CellStyle style=new CellStyle();
 		HSSFCellStyle cellStyle=cell.getCellStyle();
 		HorizontalAlignment align=cellStyle.getAlignmentEnum();
@@ -174,7 +155,7 @@ public class HSSFExcelParser extends ExcelParser {
 		if(font.getItalic()){
 			style.setItalic(true);
 		}
-		if(font.getUnderline()!=Font.U_NONE){
+		if(font.getUnderline()!= Font.U_NONE){
 			style.setUnderline(true);
 		}
 		HSSFColor color=font.getHSSFColor(book);
@@ -198,7 +179,7 @@ public class HSSFExcelParser extends ExcelParser {
 		if(!borderStyle.equals(BorderStyle.NONE)){
 			Border border=new Border();
 			border.setColor("0,0,0");
-			border.setStyle(com.bstek.ureport.definition.BorderStyle.solid);
+			border.setStyle(com.ureport.ureportkeep.core.definition.BorderStyle.solid);
 			border.setWidth(1);
 			style.setLeftBorder(border);
 		}
@@ -206,7 +187,7 @@ public class HSSFExcelParser extends ExcelParser {
 		if(!borderStyle.equals(BorderStyle.NONE)){
 			Border border=new Border();
 			border.setColor("0,0,0");
-			border.setStyle(com.bstek.ureport.definition.BorderStyle.solid);
+			border.setStyle(com.ureport.ureportkeep.core.definition.BorderStyle.solid);
 			border.setWidth(1);
 			style.setRightBorder(border);
 		}
@@ -214,7 +195,7 @@ public class HSSFExcelParser extends ExcelParser {
 		if(!borderStyle.equals(BorderStyle.NONE)){
 			Border border=new Border();
 			border.setColor("0,0,0");
-			border.setStyle(com.bstek.ureport.definition.BorderStyle.solid);
+			border.setStyle(com.ureport.ureportkeep.core.definition.BorderStyle.solid);
 			border.setWidth(1);
 			style.setTopBorder(border);
 		}
@@ -222,7 +203,7 @@ public class HSSFExcelParser extends ExcelParser {
 		if(!borderStyle.equals(BorderStyle.NONE)){
 			Border border=new Border();
 			border.setColor("0,0,0");
-			border.setStyle(com.bstek.ureport.definition.BorderStyle.solid);
+			border.setStyle(com.ureport.ureportkeep.core.definition.BorderStyle.solid);
 			border.setWidth(1);
 			style.setBottomBorder(border);
 		}

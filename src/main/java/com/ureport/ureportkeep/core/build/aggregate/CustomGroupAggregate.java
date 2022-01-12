@@ -15,19 +15,19 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.core.build.aggregate;
 
+import com.ureport.ureportkeep.core.build.BindData;
+import com.ureport.ureportkeep.core.build.Context;
+import com.ureport.ureportkeep.core.definition.Order;
+import com.ureport.ureportkeep.core.definition.value.GroupItem;
+import com.ureport.ureportkeep.core.expression.model.Condition;
+import com.ureport.ureportkeep.core.expression.model.expr.dataset.DatasetExpression;
+import com.ureport.ureportkeep.core.model.Cell;
+import com.ureport.ureportkeep.core.utils.DataUtils;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import com.bstek.ureport.build.BindData;
-import com.bstek.ureport.build.Context;
-import com.bstek.ureport.definition.Order;
-import com.bstek.ureport.definition.value.GroupItem;
-import com.bstek.ureport.expression.model.Condition;
-import com.bstek.ureport.expression.model.expr.dataset.DatasetExpression;
-import com.bstek.ureport.model.Cell;
-import com.bstek.ureport.utils.DataUtils;
 
 /**
  * @author Jacky.gao
@@ -36,8 +36,8 @@ import com.bstek.ureport.utils.DataUtils;
 public class CustomGroupAggregate extends Aggregate {
 
 	@Override
-	public List<BindData> aggregate(DatasetExpression expr, Cell cell,Context context) {
-		List<?> objList=DataUtils.fetchData(cell, context, expr.getDatasetName());
+	public List<BindData> aggregate(DatasetExpression expr, Cell cell, Context context) {
+		List<?> objList= DataUtils.fetchData(cell, context, expr.getDatasetName());
 		List<BindData> list = doAggregate(expr, cell, context, objList);
 		return list;
 	}

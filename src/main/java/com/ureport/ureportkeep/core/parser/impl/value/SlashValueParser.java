@@ -15,14 +15,14 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.core.parser.impl.value;
 
-import java.util.ArrayList;
-import java.util.List;
 
+import com.ureport.ureportkeep.core.definition.value.Slash;
+import com.ureport.ureportkeep.core.definition.value.SlashValue;
+import com.ureport.ureportkeep.core.definition.value.Value;
 import org.dom4j.Element;
 
-import com.bstek.ureport.definition.value.Slash;
-import com.bstek.ureport.definition.value.SlashValue;
-import com.bstek.ureport.definition.value.Value;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Jacky.gao

@@ -1,0 +1,10 @@
+server:
+  servlet:
+    context-path: ureport_keep
+
+spring:
+  thymeleaf:
+    cache: false
+  web:
+    resources:
+      static-locations: classpath:/templates/

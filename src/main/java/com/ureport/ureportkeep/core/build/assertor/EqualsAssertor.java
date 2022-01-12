@@ -15,9 +15,10 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.core.build.assertor;
 
+import com.ureport.ureportkeep.core.Utils;
+
 import java.math.BigDecimal;
 
-import com.bstek.ureport.Utils;
 
 /**
  * @author Jacky.gao
@@ -33,7 +34,7 @@ public class EqualsAssertor extends AbstractAssertor {
 			return false;
 		}
 		if(left instanceof Number && right instanceof Number){
-			BigDecimal b1=Utils.toBigDecimal(left);
+			BigDecimal b1= Utils.toBigDecimal(left);
 			BigDecimal b2=Utils.toBigDecimal(right);
 			return b1.compareTo(b2)==0;
 		}else if(left instanceof Number){

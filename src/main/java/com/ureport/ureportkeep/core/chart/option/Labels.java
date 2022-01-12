@@ -15,7 +15,7 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.core.chart.option;
 
-import com.bstek.ureport.chart.FontStyle;
+import com.ureport.ureportkeep.core.chart.FontStyle;
 
 /**
  * @author Jacky.gao
@@ -24,7 +24,7 @@ import com.bstek.ureport.chart.FontStyle;
 public class Labels {
 	private int boxWidth=40;
 	private int fontSize=12;
-	private FontStyle fontStyle=FontStyle.normal;
+	private FontStyle fontStyle= FontStyle.normal;
 	private String fontColor="#666";
 	private int padding=10;
 	public String toJson(){

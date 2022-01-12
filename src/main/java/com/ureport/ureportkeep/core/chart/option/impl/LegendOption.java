@@ -15,9 +15,10 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.core.chart.option.impl;
 
-import com.bstek.ureport.chart.option.Labels;
-import com.bstek.ureport.chart.option.Option;
-import com.bstek.ureport.chart.option.Position;
+
+import com.ureport.ureportkeep.core.chart.option.Labels;
+import com.ureport.ureportkeep.core.chart.option.Option;
+import com.ureport.ureportkeep.core.chart.option.Position;
 
 /**
  * @author Jacky.gao
@@ -25,7 +26,7 @@ import com.bstek.ureport.chart.option.Position;
  */
 public class LegendOption implements Option {
 	private boolean display=true;
-	private Position position=Position.top;
+	private Position position= Position.top;
 	private Labels labels;
 	@Override
 	public String buildOptionJson() {

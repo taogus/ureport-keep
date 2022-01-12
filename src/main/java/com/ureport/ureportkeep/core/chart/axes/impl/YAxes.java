@@ -15,9 +15,10 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.core.chart.axes.impl;
 
-import com.bstek.ureport.chart.axes.BaseAxes;
-import com.bstek.ureport.chart.axes.ScaleLabel;
-import com.bstek.ureport.chart.axes.YPosition;
+
+import com.ureport.ureportkeep.core.chart.axes.BaseAxes;
+import com.ureport.ureportkeep.core.chart.axes.ScaleLabel;
+import com.ureport.ureportkeep.core.chart.axes.YPosition;
 
 /**
  * @author Jacky.gao

@@ -15,7 +15,7 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.core.expression.model;
 
-import com.bstek.ureport.exception.ReportParseException;
+import com.ureport.ureportkeep.core.exception.ReportParseException;
 
 /**
  * @author Jacky.gao

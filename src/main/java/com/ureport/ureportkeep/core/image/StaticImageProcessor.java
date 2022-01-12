@@ -15,26 +15,26 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.core.image;
 
+
+import com.ureport.ureportkeep.core.Utils;
+import com.ureport.ureportkeep.core.exception.ReportComputeException;
+import com.ureport.ureportkeep.core.provider.image.ImageProvider;
+import org.springframework.context.ApplicationContext;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collection;
 import java.util.logging.Logger;
-
-import org.springframework.context.ApplicationContext;
-
-import com.bstek.ureport.Utils;
-import com.bstek.ureport.exception.ReportComputeException;
-import com.bstek.ureport.provider.image.ImageProvider;
 
 /**
  * @author Jacky.gao
  * @since 2017年3月20日
  */
 public class StaticImageProcessor implements ImageProcessor<String> {
-	private Logger log=Logger.getGlobal();
+	private Logger log= Logger.getGlobal();
 	@Override
 	public InputStream getImage(String path) {
-		Collection<ImageProvider> imageProviders=Utils.getImageProviders();
+		Collection<ImageProvider> imageProviders= Utils.getImageProviders();
 		ImageProvider targetImageProvider=null;
 		for(ImageProvider provider:imageProviders){
 			if(provider.support(path)){

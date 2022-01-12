@@ -15,15 +15,16 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.core.export.word.high;
 
-import com.bstek.ureport.build.Context;
-import com.bstek.ureport.build.paging.HeaderFooter;
+
+import com.ureport.ureportkeep.core.build.Context;
+import com.ureport.ureportkeep.core.build.paging.HeaderFooter;
 
 /**
  * @author Jacky.gao
  * @since 2017年4月17日
  */
 public class HeaderFooterExpressionBuilder {
-	public HeaderFooter buildHeaderFooter(HeaderFooter headerFooterDef,Context context){
+	public HeaderFooter buildHeaderFooter(HeaderFooter headerFooterDef, Context context){
 		HeaderFooter hf=new HeaderFooter();
 		//String left=headerFooterDef.getLeft();
 		

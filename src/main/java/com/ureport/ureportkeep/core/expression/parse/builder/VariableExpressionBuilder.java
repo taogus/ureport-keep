@@ -15,9 +15,10 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.core.expression.parse.builder;
 
-import com.bstek.ureport.dsl.ReportParserParser.UnitContext;
-import com.bstek.ureport.expression.model.expr.BaseExpression;
-import com.bstek.ureport.expression.model.expr.VariableExpression;
+
+import com.ureport.ureportkeep.core.dsl.ReportParserParser;
+import com.ureport.ureportkeep.core.expression.model.expr.BaseExpression;
+import com.ureport.ureportkeep.core.expression.model.expr.VariableExpression;
 
 /**
  * @author Jacky.gao
@@ -25,13 +26,13 @@ import com.bstek.ureport.expression.model.expr.VariableExpression;
  */
 public class VariableExpressionBuilder implements ExpressionBuilder {
 	@Override
-	public BaseExpression build(UnitContext unitContext) {
+	public BaseExpression build(ReportParserParser.UnitContext unitContext) {
 		String text=unitContext.variable().Identifier().getText();
 		VariableExpression varExpr=new VariableExpression(text);
 		return varExpr;
 	}
 	@Override
-	public boolean support(UnitContext unitContext) {
+	public boolean support(ReportParserParser.UnitContext unitContext) {
 		return unitContext.variable()!=null;
 	}
 }

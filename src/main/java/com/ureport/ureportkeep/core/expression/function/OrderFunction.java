@@ -15,37 +15,36 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.core.expression.function;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.List;
 
-import com.bstek.ureport.Utils;
-import com.bstek.ureport.build.BindData;
-import com.bstek.ureport.build.Context;
-import com.bstek.ureport.definition.Order;
-import com.bstek.ureport.exception.ReportComputeException;
-import com.bstek.ureport.expression.model.data.BindDataListExpressionData;
-import com.bstek.ureport.expression.model.data.ExpressionData;
-import com.bstek.ureport.expression.model.data.ObjectExpressionData;
-import com.bstek.ureport.expression.model.data.ObjectListExpressionData;
-import com.bstek.ureport.model.Cell;
+import com.ureport.ureportkeep.core.Utils;
+import com.ureport.ureportkeep.core.build.BindData;
+import com.ureport.ureportkeep.core.build.Context;
+import com.ureport.ureportkeep.core.definition.Order;
+import com.ureport.ureportkeep.core.exception.ReportComputeException;
+import com.ureport.ureportkeep.core.expression.model.data.BindDataListExpressionData;
+import com.ureport.ureportkeep.core.expression.model.data.ExpressionData;
+import com.ureport.ureportkeep.core.expression.model.data.ObjectExpressionData;
+import com.ureport.ureportkeep.core.expression.model.data.ObjectListExpressionData;
+import com.ureport.ureportkeep.core.model.Cell;
+import org.springframework.stereotype.Component;
+
+import java.math.BigDecimal;
+import java.util.*;
 
 /**
  * @author Jacky.gao
  * @since 2017年1月21日
  */
+@Component
 public class OrderFunction implements Function {
 
 	@Override
-	public Object execute(List<ExpressionData<?>> dataList, Context context,Cell currentCell) {
+	public Object execute(List<ExpressionData<?>> dataList, Context context, Cell currentCell) {
 		if(dataList==null || dataList.size()!=2){
 			throw new ReportComputeException("Function [order] need two parameters");
 		}
 		boolean result=computeOrder(dataList);
-		Order orderData=Order.asc;
+		Order orderData= Order.asc;
 		if(!result){
 			orderData=Order.desc;
 		}
@@ -96,7 +95,7 @@ public class OrderFunction implements Function {
 				return d2.compareTo(d1);								
 			}
 		}else if(data1 instanceof Number){
-			BigDecimal n1=Utils.toBigDecimal(data1);
+			BigDecimal n1= Utils.toBigDecimal(data1);
 			BigDecimal n2=Utils.toBigDecimal(data2);
 			if(order.equals(Order.asc)){
 				return n1.compareTo(n2);

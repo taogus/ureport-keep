@@ -15,15 +15,16 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.core.definition;
 
-import java.io.Serializable;
 
-import com.bstek.ureport.exception.ReportComputeException;
+import com.ureport.ureportkeep.core.exception.ReportComputeException;
+
+import java.io.Serializable;
 
 /**
  * @author Jacky.gao
  * @since 2014年4月23日
  */
-public enum PaperType implements Serializable{
+public enum PaperType implements Serializable {
 	A0, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, B0, B1, B2, B3, B4, B5, B6, B7, B8, B9, B10, CUSTOM;
 	public PaperSize getPaperSize(){
 		switch(this){

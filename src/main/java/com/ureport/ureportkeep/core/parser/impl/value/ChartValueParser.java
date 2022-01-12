@@ -15,38 +15,29 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.core.parser.impl.value;
 
-import org.apache.commons.lang3.StringUtils;
-import org.dom4j.Element;
 
-import com.bstek.ureport.chart.Chart;
-import com.bstek.ureport.chart.axes.BaseAxes;
-import com.bstek.ureport.chart.axes.ScaleLabel;
-import com.bstek.ureport.chart.axes.impl.XAxes;
-import com.bstek.ureport.chart.axes.impl.YAxes;
-import com.bstek.ureport.chart.dataset.CollectType;
-import com.bstek.ureport.chart.dataset.Dataset;
-import com.bstek.ureport.chart.dataset.impl.BubbleDataset;
-import com.bstek.ureport.chart.dataset.impl.ScatterDataset;
-import com.bstek.ureport.chart.dataset.impl.category.AreaDataset;
-import com.bstek.ureport.chart.dataset.impl.category.BarDataset;
-import com.bstek.ureport.chart.dataset.impl.category.CategoryDataset;
-import com.bstek.ureport.chart.dataset.impl.category.DoughnutDataset;
-import com.bstek.ureport.chart.dataset.impl.category.HorizontalBarDataset;
-import com.bstek.ureport.chart.dataset.impl.category.LineDataset;
-import com.bstek.ureport.chart.dataset.impl.category.PieDataset;
-import com.bstek.ureport.chart.dataset.impl.category.PolarDataset;
-import com.bstek.ureport.chart.dataset.impl.category.RadarDataset;
-import com.bstek.ureport.chart.dataset.impl.category.SeriesType;
-import com.bstek.ureport.chart.option.Easing;
-import com.bstek.ureport.chart.option.Option;
-import com.bstek.ureport.chart.option.Position;
-import com.bstek.ureport.chart.option.impl.AnimationsOption;
-import com.bstek.ureport.chart.option.impl.LegendOption;
-import com.bstek.ureport.chart.option.impl.TitleOption;
-import com.bstek.ureport.chart.plugins.DataLabelsPlugin;
-import com.bstek.ureport.definition.value.ChartValue;
-import com.bstek.ureport.definition.value.Value;
-import com.bstek.ureport.exception.ReportParseException;
+import com.ureport.ureportkeep.core.chart.Chart;
+import com.ureport.ureportkeep.core.chart.axes.BaseAxes;
+import com.ureport.ureportkeep.core.chart.axes.ScaleLabel;
+import com.ureport.ureportkeep.core.chart.axes.impl.XAxes;
+import com.ureport.ureportkeep.core.chart.axes.impl.YAxes;
+import com.ureport.ureportkeep.core.chart.dataset.CollectType;
+import com.ureport.ureportkeep.core.chart.dataset.Dataset;
+import com.ureport.ureportkeep.core.chart.dataset.impl.BubbleDataset;
+import com.ureport.ureportkeep.core.chart.dataset.impl.ScatterDataset;
+import com.ureport.ureportkeep.core.chart.dataset.impl.category.*;
+import com.ureport.ureportkeep.core.chart.option.Easing;
+import com.ureport.ureportkeep.core.chart.option.Option;
+import com.ureport.ureportkeep.core.chart.option.Position;
+import com.ureport.ureportkeep.core.chart.option.impl.AnimationsOption;
+import com.ureport.ureportkeep.core.chart.option.impl.LegendOption;
+import com.ureport.ureportkeep.core.chart.option.impl.TitleOption;
+import com.ureport.ureportkeep.core.chart.plugins.DataLabelsPlugin;
+import com.ureport.ureportkeep.core.definition.value.ChartValue;
+import com.ureport.ureportkeep.core.definition.value.Value;
+import com.ureport.ureportkeep.core.exception.ReportParseException;
+import org.apache.commons.lang.StringUtils;
+import org.dom4j.Element;
 
 /**
  * @author Jacky.gao
@@ -135,7 +126,7 @@ public class ChartValueParser extends ValueParser {
 		throw new ReportParseException("Unknow option :"+type);
 	}
 	
-	private void parseAxes(Element element,BaseAxes axes){
+	private void parseAxes(Element element, BaseAxes axes){
 		String rotation=element.attributeValue("rotation");
 		if(StringUtils.isNotBlank(rotation)){
 			axes.setRotation(Integer.valueOf(rotation));

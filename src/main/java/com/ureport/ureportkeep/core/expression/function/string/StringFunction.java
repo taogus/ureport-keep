@@ -15,13 +15,14 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.core.expression.function.string;
 
-import java.util.List;
 
-import com.bstek.ureport.exception.ReportComputeException;
-import com.bstek.ureport.expression.function.Function;
-import com.bstek.ureport.expression.model.data.ExpressionData;
-import com.bstek.ureport.expression.model.data.ObjectExpressionData;
-import com.bstek.ureport.expression.model.data.ObjectListExpressionData;
+import com.ureport.ureportkeep.core.exception.ReportComputeException;
+import com.ureport.ureportkeep.core.expression.function.Function;
+import com.ureport.ureportkeep.core.expression.model.data.ExpressionData;
+import com.ureport.ureportkeep.core.expression.model.data.ObjectExpressionData;
+import com.ureport.ureportkeep.core.expression.model.data.ObjectListExpressionData;
+
+import java.util.List;
 
 /**
  * @author Jacky.gao

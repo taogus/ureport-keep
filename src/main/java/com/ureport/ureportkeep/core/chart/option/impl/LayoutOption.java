@@ -15,8 +15,9 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.core.chart.option.impl;
 
-import com.bstek.ureport.chart.option.Option;
-import com.bstek.ureport.chart.option.Padding;
+
+import com.ureport.ureportkeep.core.chart.option.Option;
+import com.ureport.ureportkeep.core.chart.option.Padding;
 
 /**
  * @author Jacky.gao

@@ -15,40 +15,17 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.core.expression.parse.builder;
 
-import java.util.ArrayList;
-import java.util.List;
 
+import com.ureport.ureportkeep.core.dsl.ReportParserParser;
+import com.ureport.ureportkeep.core.dsl.ReportParserParser.*;
+import com.ureport.ureportkeep.core.exception.ReportParseException;
+import com.ureport.ureportkeep.core.expression.model.condition.BaseCondition;
+import com.ureport.ureportkeep.core.expression.model.expr.BaseExpression;
+import com.ureport.ureportkeep.core.expression.model.expr.set.*;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
-import com.bstek.ureport.dsl.ReportParserParser.AbsoluteContext;
-import com.bstek.ureport.dsl.ReportParserParser.CellCoordinateConditionContext;
-import com.bstek.ureport.dsl.ReportParserParser.CellCoordinateContext;
-import com.bstek.ureport.dsl.ReportParserParser.CellIndicatorContext;
-import com.bstek.ureport.dsl.ReportParserParser.CellPairContext;
-import com.bstek.ureport.dsl.ReportParserParser.ConditionsContext;
-import com.bstek.ureport.dsl.ReportParserParser.CoordinateContext;
-import com.bstek.ureport.dsl.ReportParserParser.RangeContext;
-import com.bstek.ureport.dsl.ReportParserParser.RelativeContext;
-import com.bstek.ureport.dsl.ReportParserParser.SetContext;
-import com.bstek.ureport.dsl.ReportParserParser.SimpleDataContext;
-import com.bstek.ureport.dsl.ReportParserParser.SimpleValueContext;
-import com.bstek.ureport.dsl.ReportParserParser.SingleCellConditionContext;
-import com.bstek.ureport.dsl.ReportParserParser.SingleCellContext;
-import com.bstek.ureport.dsl.ReportParserParser.SingleCellCoordinateContext;
-import com.bstek.ureport.dsl.ReportParserParser.UnitContext;
-import com.bstek.ureport.dsl.ReportParserParser.WholeCellContext;
-import com.bstek.ureport.exception.ReportParseException;
-import com.bstek.ureport.expression.model.condition.BaseCondition;
-import com.bstek.ureport.expression.model.expr.BaseExpression;
-import com.bstek.ureport.expression.model.expr.set.CellConditionExpression;
-import com.bstek.ureport.expression.model.expr.set.CellCoordinate;
-import com.bstek.ureport.expression.model.expr.set.CellCoordinateExpression;
-import com.bstek.ureport.expression.model.expr.set.CellCoordinateSet;
-import com.bstek.ureport.expression.model.expr.set.CellExpression;
-import com.bstek.ureport.expression.model.expr.set.CellPairExpression;
-import com.bstek.ureport.expression.model.expr.set.CoordinateType;
-import com.bstek.ureport.expression.model.expr.set.FromToExpression;
-import com.bstek.ureport.expression.model.expr.set.WholeCellExpression;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Jacky.gao
@@ -56,36 +33,36 @@ import com.bstek.ureport.expression.model.expr.set.WholeCellExpression;
  */
 public class SetExpressionBuilder extends BaseExpressionBuilder{
 	@Override
-	public BaseExpression build(UnitContext unitContext) {
-		SetContext context=unitContext.set();
+	public BaseExpression build(ReportParserParser.UnitContext unitContext) {
+		ReportParserParser.SetContext context=unitContext.set();
 		BaseExpression setExpr=buildSetExpression(context);
 		setExpr.setExpr(context.getText());
 		return setExpr;
 	}
-	public BaseExpression buildSetExpression(SetContext context) {
-		if(context instanceof SingleCellContext){
-			TerminalNode cellNode=((SingleCellContext)context).Cell();
+	public BaseExpression buildSetExpression(ReportParserParser.SetContext context) {
+		if(context instanceof ReportParserParser.SingleCellContext){
+			TerminalNode cellNode=((ReportParserParser.SingleCellContext)context).Cell();
 			return new CellExpression(cellNode.getText());
-		}else if(context instanceof WholeCellContext){
-			WholeCellContext ctx=(WholeCellContext)context;
+		}else if(context instanceof ReportParserParser.WholeCellContext){
+			ReportParserParser.WholeCellContext ctx=(ReportParserParser.WholeCellContext)context;
 			WholeCellExpression wholeCellExpression=new WholeCellExpression(ctx.Cell().getText());
-			ConditionsContext conditionsContext=ctx.conditions();
+			ReportParserParser.ConditionsContext conditionsContext=ctx.conditions();
 			if(conditionsContext!=null){
 				BaseCondition condition = buildConditions(conditionsContext);
 				wholeCellExpression.setCondition(condition);
 			}
 			return wholeCellExpression;
-		}else if(context instanceof SingleCellConditionContext){
-			SingleCellConditionContext ctx=(SingleCellConditionContext)context;
+		}else if(context instanceof ReportParserParser.SingleCellConditionContext){
+			ReportParserParser.SingleCellConditionContext ctx=(ReportParserParser.SingleCellConditionContext)context;
 			BaseCondition condition = buildConditions(ctx.conditions());
 			return new CellConditionExpression(ctx.Cell().getText(),condition);
-		}else if(context instanceof CellPairContext){
-			CellPairContext pairContext=(CellPairContext)context;
+		}else if(context instanceof ReportParserParser.CellPairContext){
+			ReportParserParser.CellPairContext pairContext=(ReportParserParser.CellPairContext)context;
 			String startCellName=pairContext.Cell(0).getText();
 			String endCellName=pairContext.Cell(1).getText();
 			return new CellPairExpression(startCellName, endCellName);
-		}else if(context instanceof SingleCellCoordinateContext){
-			SingleCellCoordinateContext ctx=(SingleCellCoordinateContext)context;
+		}else if(context instanceof ReportParserParser.SingleCellCoordinateContext){
+			ReportParserParser.SingleCellCoordinateContext ctx=(SingleCellCoordinateContext)context;
 			String cellName=null;
 			if(ctx.Cell()!=null){
 				cellName=ctx.Cell().getText();

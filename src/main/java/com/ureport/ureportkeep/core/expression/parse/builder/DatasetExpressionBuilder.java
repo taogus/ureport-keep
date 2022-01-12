@@ -15,16 +15,14 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.core.expression.parse.builder;
 
-import org.antlr.v4.runtime.tree.TerminalNode;
 
-import com.bstek.ureport.definition.Order;
-import com.bstek.ureport.definition.value.AggregateType;
-import com.bstek.ureport.dsl.ReportParserParser.ConditionsContext;
-import com.bstek.ureport.dsl.ReportParserParser.DatasetContext;
-import com.bstek.ureport.dsl.ReportParserParser.UnitContext;
-import com.bstek.ureport.expression.model.condition.BaseCondition;
-import com.bstek.ureport.expression.model.expr.BaseExpression;
-import com.bstek.ureport.expression.model.expr.dataset.DatasetExpression;
+import com.ureport.ureportkeep.core.definition.Order;
+import com.ureport.ureportkeep.core.definition.value.AggregateType;
+import com.ureport.ureportkeep.core.dsl.ReportParserParser;
+import com.ureport.ureportkeep.core.expression.model.condition.BaseCondition;
+import com.ureport.ureportkeep.core.expression.model.expr.BaseExpression;
+import com.ureport.ureportkeep.core.expression.model.expr.dataset.DatasetExpression;
+import org.antlr.v4.runtime.tree.TerminalNode;
 
 /**
  * @author Jacky.gao
@@ -32,8 +30,8 @@ import com.bstek.ureport.expression.model.expr.dataset.DatasetExpression;
  */
 public class DatasetExpressionBuilder extends BaseExpressionBuilder {
 	@Override
-	public BaseExpression build(UnitContext unitContext) {
-		DatasetContext context=(DatasetContext)unitContext.dataset();
+	public BaseExpression build(ReportParserParser.UnitContext unitContext) {
+		ReportParserParser.DatasetContext context=(ReportParserParser.DatasetContext)unitContext.dataset();
 		DatasetExpression expr=new DatasetExpression();
 		expr.setExpr(context.getText());
 		expr.setDatasetName(context.Identifier().getText());
@@ -41,7 +39,7 @@ public class DatasetExpressionBuilder extends BaseExpressionBuilder {
 		if(context.property()!=null){
 			expr.setProperty(context.property().getText());			
 		}
-		ConditionsContext conditionsContext=context.conditions();
+		ReportParserParser.ConditionsContext conditionsContext=context.conditions();
 		if(conditionsContext!=null){
 			BaseCondition condition=buildConditions(conditionsContext);
 			expr.setCondition(condition);
@@ -54,7 +52,7 @@ public class DatasetExpressionBuilder extends BaseExpressionBuilder {
 	}
 
 	@Override
-	public boolean support(UnitContext unitContext) {
+	public boolean support(ReportParserParser.UnitContext unitContext) {
 		return unitContext.dataset()!=null;
 	}
 }

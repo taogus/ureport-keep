@@ -15,17 +15,18 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.core.expression.model.expr.set;
 
+
+import com.ureport.ureportkeep.core.Utils;
+import com.ureport.ureportkeep.core.build.Context;
+import com.ureport.ureportkeep.core.expression.ExpressionUtils;
+import com.ureport.ureportkeep.core.expression.model.data.ExpressionData;
+import com.ureport.ureportkeep.core.expression.model.data.ObjectExpressionData;
+import com.ureport.ureportkeep.core.expression.model.data.ObjectListExpressionData;
+import com.ureport.ureportkeep.core.expression.model.expr.BaseExpression;
+import com.ureport.ureportkeep.core.model.Cell;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import com.bstek.ureport.Utils;
-import com.bstek.ureport.build.Context;
-import com.bstek.ureport.expression.ExpressionUtils;
-import com.bstek.ureport.expression.model.data.ExpressionData;
-import com.bstek.ureport.expression.model.data.ObjectExpressionData;
-import com.bstek.ureport.expression.model.data.ObjectListExpressionData;
-import com.bstek.ureport.expression.model.expr.BaseExpression;
-import com.bstek.ureport.model.Cell;
 
 /**
  * @author Jacky.gao
@@ -40,14 +41,14 @@ public class CellPairExpression extends BaseExpression {
 		this.endCellName=endCellName;
 	}
 	@Override
-	protected ExpressionData<?> compute(Cell cell,Cell currentCell, Context context) {
+	protected ExpressionData<?> compute(Cell cell, Cell currentCell, Context context) {
 		List<Cell> cellList = buildCells(cell, context);
 		if(cellList.size()>1){
 			List<Object> list=new ArrayList<Object>();
 			for(Cell targetCell:cellList){
 				list.add(targetCell.getData()); 
 			}
-			return new ObjectListExpressionData(list);			
+			return new ObjectListExpressionData(list);
 		}else if(cellList.size()==1){
 			return new ObjectExpressionData(cellList.get(0).getData());
 		}else{
@@ -55,7 +56,7 @@ public class CellPairExpression extends BaseExpression {
 		}
 	}
 	private List<Cell> buildCells(Cell cell, Context context) {
-		List<String> cellNameList=ExpressionUtils.getCellNameList();
+		List<String> cellNameList= ExpressionUtils.getCellNameList();
 		CellName startName=parseCellName(startCellName);
 		int startPos=cellNameList.indexOf(startName.getName());
 		int rowStart=startName.getNumber();
@@ -84,7 +85,7 @@ public class CellPairExpression extends BaseExpression {
 		for(String name:names){
 			for(int i=rowStart;i<=rowEnd;i++){
 				String cellName=name+i;
-				List<Cell> cells=Utils.fetchTargetCells(cell, context, cellName);
+				List<Cell> cells= Utils.fetchTargetCells(cell, context, cellName);
 				cellList.addAll(cells);
 			}			
 		}

@@ -15,10 +15,11 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.core.expression.model.expr;
 
-import com.bstek.ureport.build.Context;
-import com.bstek.ureport.expression.model.data.ExpressionData;
-import com.bstek.ureport.expression.model.data.ObjectExpressionData;
-import com.bstek.ureport.model.Cell;
+
+import com.ureport.ureportkeep.core.build.Context;
+import com.ureport.ureportkeep.core.expression.model.data.ExpressionData;
+import com.ureport.ureportkeep.core.expression.model.data.ObjectExpressionData;
+import com.ureport.ureportkeep.core.model.Cell;
 
 /**
  * @author Jacky.gao
@@ -31,7 +32,7 @@ public class IntegerExpression extends BaseExpression {
 		this.value=value;
 	}
 	@Override
-	public ExpressionData<?> compute(Cell cell, Cell currentCell,Context context) {
+	public ExpressionData<?> compute(Cell cell, Cell currentCell, Context context) {
 		return new ObjectExpressionData(value);
 	}
 }

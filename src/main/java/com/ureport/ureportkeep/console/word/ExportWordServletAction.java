@@ -15,28 +15,26 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.console.word;
 
-import java.io.IOException;
-import java.io.OutputStream;
-import java.util.Map;
+import com.ureport.ureportkeep.console.BaseServletAction;
+import com.ureport.ureportkeep.console.cache.TempObjectCache;
+import com.ureport.ureportkeep.console.exception.ReportDesignException;
+import com.ureport.ureportkeep.core.build.ReportBuilder;
+import com.ureport.ureportkeep.core.definition.ReportDefinition;
+import com.ureport.ureportkeep.core.exception.ReportComputeException;
+import com.ureport.ureportkeep.core.exception.ReportException;
+import com.ureport.ureportkeep.core.export.ExportConfigure;
+import com.ureport.ureportkeep.core.export.ExportConfigureImpl;
+import com.ureport.ureportkeep.core.export.ExportManager;
+import com.ureport.ureportkeep.core.export.word.high.WordProducer;
+import com.ureport.ureportkeep.core.model.Report;
+import org.apache.commons.lang.StringUtils;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.apache.commons.lang.StringUtils;
-
-import com.bstek.ureport.build.ReportBuilder;
-import com.bstek.ureport.console.BaseServletAction;
-import com.bstek.ureport.console.cache.TempObjectCache;
-import com.bstek.ureport.console.exception.ReportDesignException;
-import com.bstek.ureport.definition.ReportDefinition;
-import com.bstek.ureport.exception.ReportComputeException;
-import com.bstek.ureport.exception.ReportException;
-import com.bstek.ureport.export.ExportConfigure;
-import com.bstek.ureport.export.ExportConfigureImpl;
-import com.bstek.ureport.export.ExportManager;
-import com.bstek.ureport.export.word.high.WordProducer;
-import com.bstek.ureport.model.Report;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.Map;
 
 /**
  * @author Jacky.gao
@@ -72,11 +70,11 @@ public class ExportWordServletAction extends BaseServletAction {
 			resp.setHeader("Content-Disposition","attachment;filename=\"" + fileName + "\"");
 			Map<String, Object> parameters = buildParameters(req);
 			if(file.equals(PREVIEW_KEY)){
-				ReportDefinition reportDefinition=(ReportDefinition)TempObjectCache.getObject(PREVIEW_KEY);
+				ReportDefinition reportDefinition=(ReportDefinition) TempObjectCache.getObject(PREVIEW_KEY);
 				if(reportDefinition==null){
 					throw new ReportDesignException("Report data has expired,can not do export word.");
 				}
-				Report report=reportBuilder.buildReport(reportDefinition, parameters);	
+				Report report=reportBuilder.buildReport(reportDefinition, parameters);
 				wordProducer.produce(report, outputStream);
 			}else{
 				ExportConfigure configure=new ExportConfigureImpl(file,parameters,outputStream);

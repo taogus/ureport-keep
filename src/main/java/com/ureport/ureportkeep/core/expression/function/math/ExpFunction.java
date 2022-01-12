@@ -15,21 +15,23 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.core.expression.function.math;
 
+import com.ureport.ureportkeep.core.build.Context;
+import com.ureport.ureportkeep.core.expression.model.data.ExpressionData;
+import com.ureport.ureportkeep.core.model.Cell;
+import org.springframework.stereotype.Component;
+
 import java.math.BigDecimal;
 import java.util.List;
-
-import com.bstek.ureport.build.Context;
-import com.bstek.ureport.expression.model.data.ExpressionData;
-import com.bstek.ureport.model.Cell;
 
 /**
  * @author Jacky.gao
  * @since 2017年1月23日
  */
+@Component
 public class ExpFunction extends MathFunction {
 
 	@Override
-	public Object execute(List<ExpressionData<?>> dataList, Context context,Cell currentCell) {
+	public Object execute(List<ExpressionData<?>> dataList, Context context, Cell currentCell) {
 		BigDecimal data=buildBigDecimal(dataList);
 		return Math.exp(data.doubleValue());
 	}

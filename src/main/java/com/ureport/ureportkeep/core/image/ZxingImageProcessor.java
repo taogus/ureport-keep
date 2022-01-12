@@ -15,9 +15,10 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.core.image;
 
-import java.io.InputStream;
 
-import com.bstek.ureport.definition.value.ZxingValue;
+import com.ureport.ureportkeep.core.definition.value.ZxingValue;
+
+import java.io.InputStream;
 
 /**
  * @author Jacky.gao

@@ -15,9 +15,10 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.core.build.paging;
 
-import java.util.List;
 
-import com.bstek.ureport.model.Row;
+import com.ureport.ureportkeep.core.model.Row;
+
+import java.util.List;
 
 /**
  * @author Jacky.gao

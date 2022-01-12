@@ -15,24 +15,23 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.core.parser.impl.value;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import com.ureport.ureportkeep.core.definition.Order;
+import com.ureport.ureportkeep.core.definition.mapping.MappingItem;
+import com.ureport.ureportkeep.core.definition.mapping.MappingType;
+import com.ureport.ureportkeep.core.definition.value.AggregateType;
+import com.ureport.ureportkeep.core.definition.value.DatasetValue;
+import com.ureport.ureportkeep.core.definition.value.GroupItem;
+import com.ureport.ureportkeep.core.definition.value.Value;
+import com.ureport.ureportkeep.core.expression.ExpressionUtils;
+import com.ureport.ureportkeep.core.expression.model.Condition;
+import com.ureport.ureportkeep.core.expression.model.Op;
+import com.ureport.ureportkeep.core.expression.model.condition.Join;
+import com.ureport.ureportkeep.core.expression.model.condition.PropertyExpressionCondition;
 import org.apache.commons.lang3.StringUtils;
 import org.dom4j.Element;
 
-import com.bstek.ureport.definition.Order;
-import com.bstek.ureport.definition.mapping.MappingItem;
-import com.bstek.ureport.definition.mapping.MappingType;
-import com.bstek.ureport.definition.value.AggregateType;
-import com.bstek.ureport.definition.value.DatasetValue;
-import com.bstek.ureport.definition.value.GroupItem;
-import com.bstek.ureport.definition.value.Value;
-import com.bstek.ureport.expression.ExpressionUtils;
-import com.bstek.ureport.expression.model.Condition;
-import com.bstek.ureport.expression.model.Op;
-import com.bstek.ureport.expression.model.condition.Join;
-import com.bstek.ureport.expression.model.condition.PropertyExpressionCondition;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Jacky.gao

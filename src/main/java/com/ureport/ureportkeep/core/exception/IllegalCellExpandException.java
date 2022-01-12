@@ -15,7 +15,7 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.core.exception;
 
-import com.bstek.ureport.model.ReportCell;
+import com.ureport.ureportkeep.core.model.ReportCell;
 
 /**
  * @author Jacky.gao

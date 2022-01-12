@@ -15,14 +15,15 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.core.definition.datasource;
 
+
+import com.ureport.ureportkeep.core.Utils;
+import com.ureport.ureportkeep.core.exception.ReportComputeException;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import com.bstek.ureport.Utils;
-import com.bstek.ureport.exception.ReportComputeException;
 
 /**
  * @author Jacky.gao
@@ -71,7 +72,7 @@ public enum DataType {
 				return null;
 			}
 			if(obj instanceof List){
-				return (List<?>)obj;
+				return (java.util.List<?>)obj;
 			}else{
 				String[] arrs=obj.toString().split(",");
 				List<String> list=new ArrayList<String>();
@@ -84,7 +85,7 @@ public enum DataType {
 			if(obj.toString().equals("")){
 				return null;
 			}
-			if(obj instanceof Date){
+			if(obj instanceof java.util.Date){
 				return (Date)obj;
 			}else{
 				Date date=null;

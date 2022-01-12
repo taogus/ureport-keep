@@ -15,22 +15,24 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.core.expression.function.math;
 
+import com.ureport.ureportkeep.core.build.Context;
+import com.ureport.ureportkeep.core.expression.model.data.ExpressionData;
+import com.ureport.ureportkeep.core.model.Cell;
+import org.springframework.stereotype.Component;
+
 import java.math.BigDecimal;
 import java.util.List;
-
-import com.bstek.ureport.build.Context;
-import com.bstek.ureport.expression.model.data.ExpressionData;
-import com.bstek.ureport.model.Cell;
 
 /**
  * 求方差
  * @author Jacky.gao
  * @since 2017年1月23日
  */
+@Component
 public class VaraFunction extends MathFunction {
 
 	@Override
-	public Object execute(List<ExpressionData<?>> dataList, Context context,Cell currentCell) {
+	public Object execute(List<ExpressionData<?>> dataList, Context context, Cell currentCell) {
 		List<BigDecimal> list=buildDataList(dataList);
 		BigDecimal total=new BigDecimal(0);
 		for(BigDecimal bigData:list){

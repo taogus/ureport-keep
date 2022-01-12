@@ -15,10 +15,11 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.core.model;
 
+
+import com.ureport.ureportkeep.core.cache.ResourceCache;
+
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-
-import com.bstek.ureport.cache.ResourceCache;
 
 /**
  * @author Jacky.gao
@@ -32,7 +33,7 @@ public class Resource {
 	}
 	
 	public InputStream getResourceData(){
-		byte[] imageBytes = (byte[])ResourceCache.getObject(key);
+		byte[] imageBytes = (byte[]) ResourceCache.getObject(key);
 		InputStream inputStream=new ByteArrayInputStream(imageBytes);
 		return inputStream;
 	}

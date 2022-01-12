@@ -15,25 +15,20 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.core.chart.dataset.impl.category;
 
+
+import com.ureport.ureportkeep.core.Utils;
+import com.ureport.ureportkeep.core.build.Context;
+import com.ureport.ureportkeep.core.chart.dataset.BaseDataset;
+import com.ureport.ureportkeep.core.chart.dataset.CollectType;
+import com.ureport.ureportkeep.core.exception.ReportComputeException;
+import com.ureport.ureportkeep.core.model.Cell;
+import com.ureport.ureportkeep.core.utils.DataUtils;
+import org.apache.commons.lang.StringUtils;
+
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.apache.commons.lang3.StringUtils;
-
-import com.bstek.ureport.Utils;
-import com.bstek.ureport.build.Context;
-import com.bstek.ureport.chart.dataset.BaseDataset;
-import com.bstek.ureport.chart.dataset.CollectType;
-import com.bstek.ureport.exception.ReportComputeException;
-import com.bstek.ureport.model.Cell;
-import com.bstek.ureport.utils.DataUtils;
-
+import java.util.*;
 
 /**
  * @author Jacky.gao
@@ -52,12 +47,12 @@ public abstract class CategoryDataset extends BaseDataset {
 	private String labels;
 	private String format;
 	
-	protected String buildDatasetJson(Context context,Cell cell,String props){
-		List<?> dataList=DataUtils.fetchData(cell, context, datasetName);
+	protected String buildDatasetJson(Context context, Cell cell, String props){
+		List<?> dataList= DataUtils.fetchData(cell, context, datasetName);
 		List<Object> categoryList=new ArrayList<Object>();
 		Map<Object,Map<Object,List<Object>>> seriesDataMap=new LinkedHashMap<Object,Map<Object,List<Object>>>();
 		for(Object obj:dataList){
-			Object category=Utils.getProperty(obj, categoryProperty);
+			Object category= Utils.getProperty(obj, categoryProperty);
 			if(category==null){
 				continue; 
 			}
@@ -168,7 +163,7 @@ public abstract class CategoryDataset extends BaseDataset {
 			for(Object data:list){
 				total+=Utils.toBigDecimal(data).doubleValue();
 			}
-			result=Utils.toBigDecimal(total).divide(Utils.toBigDecimal(list.size()),8,BigDecimal.ROUND_HALF_UP).doubleValue();
+			result=Utils.toBigDecimal(total).divide(Utils.toBigDecimal(list.size()),8, BigDecimal.ROUND_HALF_UP).doubleValue();
 			break;
 		case count:
 			result=list.size();

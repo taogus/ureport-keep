@@ -15,14 +15,14 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.core.expression.model.expr.cell;
 
-import org.apache.commons.lang.StringUtils;
 
-import com.bstek.ureport.Utils;
-import com.bstek.ureport.build.Context;
-import com.bstek.ureport.expression.model.data.ExpressionData;
-import com.bstek.ureport.expression.model.data.ObjectExpressionData;
-import com.bstek.ureport.expression.model.expr.BaseExpression;
-import com.bstek.ureport.model.Cell;
+import com.ureport.ureportkeep.core.Utils;
+import com.ureport.ureportkeep.core.build.Context;
+import com.ureport.ureportkeep.core.expression.model.data.ExpressionData;
+import com.ureport.ureportkeep.core.expression.model.data.ObjectExpressionData;
+import com.ureport.ureportkeep.core.expression.model.expr.BaseExpression;
+import com.ureport.ureportkeep.core.model.Cell;
+import org.apache.commons.lang.StringUtils;
 
 /**
  * @author Jacky.gao
@@ -35,12 +35,12 @@ public class CellObjectExpression extends BaseExpression {
 		this.property=property;
 	}
 	@Override
-	protected ExpressionData<?> compute(Cell cell, Cell currentCell,Context context) {
+	protected ExpressionData<?> compute(Cell cell, Cell currentCell, Context context) {
 		while(!context.isCellPocessed(cell.getName())){
 			context.getReportBuilder().buildCell(context, null);
 		}
 		if(StringUtils.isNotBlank(property)){
-			Object obj=Utils.getProperty(cell, property);
+			Object obj= Utils.getProperty(cell, property);
 			return new ObjectExpressionData(obj);
 		}
 		return new ObjectExpressionData(cell);

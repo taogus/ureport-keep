@@ -15,12 +15,11 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.core.expression.model.condition;
 
-import org.codehaus.jackson.annotate.JsonIgnore;
-
-import com.bstek.ureport.build.Context;
-import com.bstek.ureport.expression.model.Expression;
-import com.bstek.ureport.expression.model.data.ExpressionData;
-import com.bstek.ureport.model.Cell;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.ureport.ureportkeep.core.build.Context;
+import com.ureport.ureportkeep.core.expression.model.Expression;
+import com.ureport.ureportkeep.core.expression.model.data.ExpressionData;
+import com.ureport.ureportkeep.core.model.Cell;
 
 /**
  * @author Jacky.gao
@@ -31,7 +30,7 @@ public class CurrentValueExpressionCondition extends BaseCondition {
 	@JsonIgnore
 	private Expression rightExpression;
 	@Override
-	Object computeLeft(Cell cell,Cell currentCell,Object obj,Context context) {
+	Object computeLeft(Cell cell, Cell currentCell, Object obj, Context context) {
 		return obj;
 	}
 

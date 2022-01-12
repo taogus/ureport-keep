@@ -15,8 +15,9 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.core.chart.option.impl;
 
-import com.bstek.ureport.chart.option.Easing;
-import com.bstek.ureport.chart.option.Option;
+
+import com.ureport.ureportkeep.core.chart.option.Easing;
+import com.ureport.ureportkeep.core.chart.option.Option;
 
 /**
  * @author Jacky.gao

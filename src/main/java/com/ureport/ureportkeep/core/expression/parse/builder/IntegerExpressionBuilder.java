@@ -15,9 +15,10 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.core.expression.parse.builder;
 
-import com.bstek.ureport.dsl.ReportParserParser.UnitContext;
-import com.bstek.ureport.expression.model.expr.BaseExpression;
-import com.bstek.ureport.expression.model.expr.IntegerExpression;
+
+import com.ureport.ureportkeep.core.dsl.ReportParserParser;
+import com.ureport.ureportkeep.core.expression.model.expr.BaseExpression;
+import com.ureport.ureportkeep.core.expression.model.expr.IntegerExpression;
 
 /**
  * @author Jacky.gao
@@ -25,7 +26,7 @@ import com.bstek.ureport.expression.model.expr.IntegerExpression;
  */
 public class IntegerExpressionBuilder implements ExpressionBuilder{
 	@Override
-	public BaseExpression build(UnitContext unitContext) {
+	public BaseExpression build(ReportParserParser.UnitContext unitContext) {
 		Integer value=null;
 		if(unitContext.INTEGER()!=null){
 			value=Integer.valueOf(unitContext.INTEGER().getText());
@@ -34,7 +35,7 @@ public class IntegerExpressionBuilder implements ExpressionBuilder{
 	}
 
 	@Override
-	public boolean support(UnitContext unitContext) {
+	public boolean support(ReportParserParser.UnitContext unitContext) {
 		return unitContext.INTEGER()!=null;
 	}
 

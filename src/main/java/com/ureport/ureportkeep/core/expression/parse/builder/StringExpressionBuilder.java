@@ -15,10 +15,10 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.core.expression.parse.builder;
 
-import com.bstek.ureport.dsl.ReportParserParser.UnitContext;
-import com.bstek.ureport.expression.model.expr.BaseExpression;
-import com.bstek.ureport.expression.model.expr.StringExpression;
 
+import com.ureport.ureportkeep.core.dsl.ReportParserParser;
+import com.ureport.ureportkeep.core.expression.model.expr.BaseExpression;
+import com.ureport.ureportkeep.core.expression.model.expr.StringExpression;
 
 /**
  * @author Jacky.gao
@@ -26,14 +26,14 @@ import com.bstek.ureport.expression.model.expr.StringExpression;
  */
 public class StringExpressionBuilder implements ExpressionBuilder {
 	@Override
-	public BaseExpression build(UnitContext unitContext) {
+	public BaseExpression build(ReportParserParser.UnitContext unitContext) {
 		String text=unitContext.STRING().getText();
 		text=text.substring(1,text.length()-1);
 		StringExpression stringExpr=new StringExpression(text);
 		return stringExpr;
 	}
 	@Override
-	public boolean support(UnitContext unitContext) {
+	public boolean support(ReportParserParser.UnitContext unitContext) {
 		return unitContext.STRING()!=null;
 	}
 }

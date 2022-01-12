@@ -15,14 +15,15 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.core.expression.model.expr;
 
-import java.util.List;
 
-import com.bstek.ureport.Utils;
-import com.bstek.ureport.build.Context;
-import com.bstek.ureport.expression.model.data.ExpressionData;
-import com.bstek.ureport.expression.model.data.NoneExpressionData;
-import com.bstek.ureport.expression.model.data.ObjectExpressionData;
-import com.bstek.ureport.model.Cell;
+import com.ureport.ureportkeep.core.Utils;
+import com.ureport.ureportkeep.core.build.Context;
+import com.ureport.ureportkeep.core.expression.model.data.ExpressionData;
+import com.ureport.ureportkeep.core.expression.model.data.NoneExpressionData;
+import com.ureport.ureportkeep.core.expression.model.data.ObjectExpressionData;
+import com.ureport.ureportkeep.core.model.Cell;
+
+import java.util.List;
 
 /**
  * @author Jacky.gao
@@ -32,13 +33,13 @@ public class CurrentCellDataExpression extends BaseExpression {
 	private static final long serialVersionUID = 7517926036810650110L;
 	private String property;
 	@Override
-	protected ExpressionData<?> compute(Cell cell, Cell currentCell,Context context) {
+	protected ExpressionData<?> compute(Cell cell, Cell currentCell, Context context) {
 		List<Object> bindDataList=cell.getBindData();
 		if(bindDataList==null || bindDataList.size()==0){
 			return new NoneExpressionData();
 		}
 		Object obj=bindDataList.get(0);
-		Object data=Utils.getProperty(obj, property);
+		Object data= Utils.getProperty(obj, property);
 		return new ObjectExpressionData(data);
 	}
 	public void setProperty(String property) {

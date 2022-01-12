@@ -15,12 +15,13 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.core.build.aggregate;
 
-import java.util.List;
 
-import com.bstek.ureport.build.BindData;
-import com.bstek.ureport.build.Context;
-import com.bstek.ureport.expression.model.expr.dataset.DatasetExpression;
-import com.bstek.ureport.model.Cell;
+import com.ureport.ureportkeep.core.build.BindData;
+import com.ureport.ureportkeep.core.build.Context;
+import com.ureport.ureportkeep.core.expression.model.expr.dataset.DatasetExpression;
+import com.ureport.ureportkeep.core.model.Cell;
+
+import java.util.List;
 
 /**
  * @author Jacky.gao
@@ -28,7 +29,7 @@ import com.bstek.ureport.model.Cell;
  */
 public class RegroupAggregate extends GroupAggregate {
 	@Override
-	public List<BindData> aggregate(DatasetExpression expr, Cell cell,Context context) {
+	public List<BindData> aggregate(DatasetExpression expr, Cell cell, Context context) {
 		List<?> objList=context.getDatasetData(expr.getDatasetName());
 		return doAggregate(expr, cell, context,objList);
 	}

@@ -15,13 +15,9 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.core.export.word.high;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
+import com.ureport.ureportkeep.core.build.paging.HeaderFooter;
+import com.ureport.ureportkeep.core.model.Report;
 import org.apache.commons.lang.StringUtils;
 import org.apache.poi.xwpf.model.XWPFHeaderFooterPolicy;
 import org.apache.poi.xwpf.usermodel.ParagraphAlignment;
@@ -29,24 +25,21 @@ import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
 import org.apache.xmlbeans.impl.xb.xmlschema.SpaceAttribute;
-import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTFldChar;
-import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTFonts;
-import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTP;
-import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTRPr;
-import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTSectPr;
-import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTText;
-import org.openxmlformats.schemas.wordprocessingml.x2006.main.STFldCharType;
-import org.openxmlformats.schemas.wordprocessingml.x2006.main.STHdrFtr;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.*;
 
-import com.bstek.ureport.build.paging.HeaderFooter;
-import com.bstek.ureport.model.Report;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Jacky.gao
  * @since 2017年4月17日
  */
 public class HeaderFooterBuilder {
-	public void build(XWPFDocument document,CTSectPr sectPr,Report report){
+	public void build(XWPFDocument document, CTSectPr sectPr, Report report){
 		//HeaderFooterDefinition headerDef=report.getHeader();
 		//HeaderFooterDefinition footerDef=report.getFooter();
 		

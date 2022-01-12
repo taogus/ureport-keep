@@ -15,26 +15,12 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.core.utils;
 
+
+import com.ureport.ureportkeep.core.Utils;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Stack;
-
-/*******************************************************************************
- * Copyright 2017 Bstek
- * 
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not
- * use this file except in compliance with the License.  You may obtain a copy
- * of the License at
- * 
- *   http://www.apache.org/licenses/LICENSE-2.0
- * 
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the
- * License for the specific language governing permissions and limitations under
- * the License.
- ******************************************************************************/
-import com.bstek.ureport.Utils;
 
 /**
  * @author Jacky.gao
@@ -191,7 +177,7 @@ public class ElCompute {
 			if(op=='*'){
 				return b1.multiply(b2);
 			}else if(op=='/'){
-				return b1.divide(b2,10,RoundingMode.HALF_UP).stripTrailingZeros();
+				return b1.divide(b2,10, RoundingMode.HALF_UP).stripTrailingZeros();
 			}else if(op=='%'){
 				return b1.divideAndRemainder(b2)[1];
 			}else if(op=='-'){
@@ -215,7 +201,7 @@ public class ElCompute {
 		String data=dataSb.toString();
 		dataSb.setLength(0);
 		try{
-			BigDecimal bd=Utils.toBigDecimal(data);
+			BigDecimal bd= Utils.toBigDecimal(data);
 			dataStack.push(bd);
 		}catch(Exception ex){
 			dataStack.push(data);
