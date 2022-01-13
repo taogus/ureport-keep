@@ -1,7 +1,7 @@
 /**
  * Created by Jacky.Gao on 2017-10-16.
  */
-import Instance from '../instance/Instance.js';
+import Instance from './Instance.js';
 import Utils from '../Utils.js';
 import Checkbox from './Checkbox.js';
 export default class CheckboxInstance extends Instance{

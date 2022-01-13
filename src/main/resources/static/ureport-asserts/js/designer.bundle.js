@@ -26458,7 +26458,7 @@
         }
 
         loadFile(e, t) {
-            const i = this, n = window._server + "/designer/loadReport";
+            const i = this, n = "loadReport";
             $.ajax({
                 url: n, type: "POST", data: {file: e}, success: function (n) {
                     i.reportDef = n, i._buildReportData(n), t && t.call(i, n), i.hot.render(), "classpath:template/template.ureport.xml" !== e ? i.hot.context.fileInfo.setFile(e) : i.hot.context.fileInfo.setFile(`${window.i18n.table.report.tip}`), n.paper.bgImage ? $(".ht_master").css("background", `url(${n.paper.bgImage}) 50px 26px no-repeat`) : $(".ht_master").css("background", "transparent")

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
 <link href="${contextPath}/ureport/res/ureport-asserts/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
@@ -10,9 +10,10 @@
 </head>
 <body style="margin:0px">
 <div id='container'></div>
-<script type="text/javascript">
-	window._server="${contextPath}/ureport";
-	window._contextPath="${contextPath}";
+<script type="text/javascript" th:inline="javascript">
+ var contextPath = [[${servletContext.getAttribute(\'contextPath\')}]];
+	window._server= contextPath + "/ureport";
+	window._contextPath=contextPath;
 </script>
 <script type="text/javascript" src="${contextPath}/ureport/res/ureport-asserts/js/searchform.bundle.js"></script>
 </body>

@@ -1,10 +1,29 @@
 server:
   servlet:
-    context-path: ureport_keep
+    context-path: /ureport_keep
+  port: 8888
 
 spring:
   thymeleaf:
     cache: false
   web:
     resources:
-      static-locations: classpath:/templates/
+      static-locations: classpath:/static
+      chain:
+        cache: false
+        strategy:
+          content:
+            enabled: true
+            paths: /**
+          fixed:
+            enabled: true
+            paths: /ureport2-js/**
+            version: v12
+  mvc:
+    static-path-pattern: /static/**
+
+ureport:
+  disableHttpSessionReportCache: false
+  disableFileProvider: false
+  fileStoreDir: /WEB-INF/ureportfiles
+  debug: true

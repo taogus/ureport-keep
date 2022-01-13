@@ -20,7 +20,7 @@ package com.ureport.ureportkeep.core.build;
  * @since 2017年6月19日
  */
 public class Splash {
-	public void doPrint(){
+	/*public void doPrint(){
 		StringBuilder sb=new StringBuilder();
 		sb.append("\n");
 		sb.append("_____  __________ __________________ _______ ________ ______________ ");
@@ -43,5 +43,5 @@ public class Splash {
 		sb.append("........................................................................................................");
 		sb.append("\n");
 		System.out.println(sb.toString());
-	}
+	}*/
 }

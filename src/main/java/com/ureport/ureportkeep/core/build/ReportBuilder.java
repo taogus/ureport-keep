@@ -15,14 +15,6 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.core.build;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import com.ureport.ureportkeep.core.Utils;
 import com.ureport.ureportkeep.core.build.cell.CellBuilder;
 import com.ureport.ureportkeep.core.build.cell.NoneExpandBuilder;
@@ -44,6 +36,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.*;
 
 
 /**
@@ -458,6 +454,6 @@ public class ReportBuilder extends BasePagination implements ApplicationContextA
 		for(DatasourceProvider dp: datasourceProviders){
 			datasourceProviderMap.put(dp.getName(), dp);
 		}
-		new Splash().doPrint();
+		//new Splash().doPrint();
 	}
 }

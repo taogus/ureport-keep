@@ -15,20 +15,6 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.core.provider.report.file;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-
-import javax.servlet.ServletContext;
-
 import com.ureport.ureportkeep.core.exception.ReportException;
 import com.ureport.ureportkeep.core.provider.report.ReportFile;
 import com.ureport.ureportkeep.core.provider.report.ReportProvider;
@@ -40,6 +26,10 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.WebApplicationContext;
 
+import javax.servlet.ServletContext;
+import java.io.*;
+import java.util.*;
+
 /**
  * @author Jacky.gao
  * @since 2017年2月11日
@@ -49,7 +39,7 @@ public class FileReportProvider implements ReportProvider,ApplicationContextAwar
 	private String prefix="file:";
 	@Value("${ureport.fileStoreDir}")
 	private String fileStoreDir;
-	@Value("ureport.disableFileProvider")
+	@Value("${ureport.disableFileProvider}")
 	private boolean disabled;
 	@Override
 	public InputStream loadReport(String file) {

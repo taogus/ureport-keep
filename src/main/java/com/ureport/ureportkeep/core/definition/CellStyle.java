@@ -15,11 +15,11 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.core.definition;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ureport.ureportkeep.core.export.pdf.font.FontBuilder;
 import org.apache.commons.lang3.StringUtils;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
-import java.awt.Font;
+import java.awt.*;
 import java.io.Serializable;
 
 
