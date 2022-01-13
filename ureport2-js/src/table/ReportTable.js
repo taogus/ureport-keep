@@ -6,7 +6,7 @@ import {afterRenderer} from './CellRenderer.js';
 import buildMenuConfigure from './ContextMenu.js';
 import Handsontable from 'handsontable';
 
-export default class ReportTable{
+export default class ReportTable {
     constructor(container,callback){
         this.container=container;
         this.hot=new Handsontable(container,{
@@ -101,7 +101,7 @@ export default class ReportTable{
 
     loadFile(file,callback){
         const _this=this;
-        const url=window._server+"/designer/loadReport";
+        const url= "loadReport";
         $.ajax({
             url,
             type:'POST',
