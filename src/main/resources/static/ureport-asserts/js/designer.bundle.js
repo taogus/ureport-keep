@@ -25767,16 +25767,16 @@
             "white-space": "nowrap",
             padding: "0 1px"
         }), "Down" === a.expand) {
-            let e = window._server + "/res/ureport-asserts/icons/expr-expand-down.svg";
-            "dataset" === u && (e = window._server + "/res/ureport-asserts/icons/expand-down.svg"), d.prepend(`<image src="${e}"></image>`)
+            let e = window._server + "/static/ureport-asserts/icons/expr-expand-down.svg";
+            "dataset" === u && (e = window._server + "/static/ureport-asserts/icons/expand-down.svg"), d.prepend(`<image src="${e}"></image>`)
         } else if ("Right" === a.expand) {
-            let e = window._server + "/res/ureport-asserts/icons/expr-expand-right.svg";
-            "dataset" === u && (e = window._server + "/res/ureport-asserts/icons/expand-right.svg"), d.prepend(`<image src="${e}" style="display: block;"></image>`)
+            let e = window._server + "/static/ureport-asserts/icons/expr-expand-right.svg";
+            "dataset" === u && (e = window._server + "/static/ureport-asserts/icons/expand-right.svg"), d.prepend(`<image src="${e}" style="display: block;"></image>`)
         } else if ("dataset" === u) {
-            let e = window._server + "/res/ureport-asserts/icons/property.svg";
+            let e = window._server + "/static/ureport-asserts/icons/property.svg";
             d.prepend(`<image src="${e}" style="display: inline-block;"></image>`)
         } else if ("expression" === u) {
-            let e = window._server + "/res/ureport-asserts/icons/expression.svg";
+            let e = window._server + "/static/ureport-asserts/icons/expression.svg";
             d.prepend(`<image src="${e}" style="display: inline-block;"></image>`)
         }
         s.align && d.css("text-align", s.align), s.valign && d.css("vertical-align", s.valign), s.bold && d.css("font-weight", "bold"), s.italic && d.css("font-style", "italic"), s.underline && d.css("text-decoration", "underline"), s.forecolor && d.css("color", "rgb(" + s.forecolor + ")"), s.bgcolor && d.css("background-color", "rgb(" + s.bgcolor + ")"), s.fontSize && d.css("font-size", s.fontSize + "pt"), s.fontFamily && d.css("font-family", s.fontFamily), s.lineHeight ? d.css("line-height", s.lineHeight) : d.css("line-height", "");
@@ -26426,7 +26426,7 @@
                 outsideClickDeselects: !1
             }), this.buildMenu(), this.hot.addHook("afterRenderer", m);
             let i = r.d("_u");
-            i && null !== i && "" !== i ? window._reportFile = i : i = "classpath:template/template.ureport.xml", this.cellsMap = new Map, this.loadFile(i, t), this.hot.addHook("afterRowResize", function (e, t) {
+            i && null !== i && "" !== i ? window._reportFile = i : i = "classpath:static/template/template.ureport.xml", this.cellsMap = new Map, this.loadFile(i, t), this.hot.addHook("afterRowResize", function (e, t) {
                 let i = this.getSettings().rowHeights, n = i.concat([]), o = i.concat([]);
                 o.splice(e, 1, t), this.updateSettings({rowHeights: o, manualRowResize: o});
                 const a = this;
@@ -26461,7 +26461,7 @@
             const i = this, n = "loadReport";
             $.ajax({
                 url: n, type: "POST", data: {file: e}, success: function (n) {
-                    i.reportDef = n, i._buildReportData(n), t && t.call(i, n), i.hot.render(), "classpath:template/template.ureport.xml" !== e ? i.hot.context.fileInfo.setFile(e) : i.hot.context.fileInfo.setFile(`${window.i18n.table.report.tip}`), n.paper.bgImage ? $(".ht_master").css("background", `url(${n.paper.bgImage}) 50px 26px no-repeat`) : $(".ht_master").css("background", "transparent")
+                    i.reportDef = n, i._buildReportData(n), t && t.call(i, n), i.hot.render(), "classpath:static/template/template.ureport.xml" !== e ? i.hot.context.fileInfo.setFile(e) : i.hot.context.fileInfo.setFile(`${window.i18n.table.report.tip}`), n.paper.bgImage ? $(".ht_master").css("background", `url(${n.paper.bgImage}) 50px 26px no-repeat`) : $(".ht_master").css("background", "transparent")
                 }, error: function (t) {
                     t && t.responseText ? alert("服务端错误：" + t.responseText) : alert(`${window.i18n.table.report.load}${e}${window.i18n.table.report.fail}`)
                 }
@@ -27835,11 +27835,11 @@
         }
 
         doPreview(e) {
-            let t = window._server + "/preview?_u=p";
+            let t = window._server + "/html/preview?_u=p";
             e && (t += "&_i=1&_r=1");
             const i = Object(r.m)(this.context);
             $.ajax({
-                url: window._server + "/designer/savePreviewData",
+                url: "savePreviewData",
                 type: "POST",
                 data: {content: i},
                 success: function () {

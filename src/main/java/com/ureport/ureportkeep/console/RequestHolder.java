@@ -15,6 +15,9 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.console;
 
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -27,7 +30,9 @@ public class RequestHolder {
 		requestThreadLocal.set(request);
 	}
 	public static HttpServletRequest getRequest(){
-		return requestThreadLocal.get();
+		ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+		HttpServletRequest request = servletRequestAttributes.getRequest();
+		return request;
 	}
 	public static void clean(){
 		requestThreadLocal.remove();

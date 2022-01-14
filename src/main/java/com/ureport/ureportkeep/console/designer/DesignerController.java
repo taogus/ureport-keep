@@ -1,23 +1,29 @@
 package com.ureport.ureportkeep.console.designer;
 
+import com.ureport.ureportkeep.console.AbstractReportBasicController;
 import com.ureport.ureportkeep.console.cache.TempObjectCache;
+import com.ureport.ureportkeep.console.common.R;
 import com.ureport.ureportkeep.console.exception.ReportDesignException;
 import com.ureport.ureportkeep.core.definition.ReportDefinition;
 import com.ureport.ureportkeep.core.export.ReportRender;
 import com.ureport.ureportkeep.core.parser.ReportParser;
+import org.apache.commons.io.IOUtils;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.SerializationConfig;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 
@@ -28,7 +34,7 @@ import java.text.SimpleDateFormat;
  **/
 @Controller
 @RequestMapping(value = "/designer")
-public class DesignerController {
+public class DesignerController extends AbstractReportBasicController {
 
     @Autowired
     private ReportRender reportRender;
@@ -43,10 +49,9 @@ public class DesignerController {
      * @return
      */
     @RequestMapping(value = "/designer", method = RequestMethod.GET)
-    public String designer(HttpServletRequest request) {
+    public String designer(HttpServletRequest request, Model model) {
         //application
-        ServletContext context = request.getServletContext();
-        context.setAttribute("contextPath",request.getContextPath());
+        model.addAttribute("contextPath", request.getContextPath());
 
         return "designer";
     }
@@ -64,7 +69,6 @@ public class DesignerController {
             throw new ReportDesignException("Report file can not be null.");
         }
 
-        file = "classpath:static/template/template.ureport.xml";
         file = ReportUtils.decodeFileName(file);
         Object obj = TempObjectCache.getObject(file);
         try {
@@ -84,21 +88,27 @@ public class DesignerController {
 
     }
 
-
-    private void writeObjectToJson(HttpServletResponse resp, Object obj) throws ServletException, IOException {
-        resp.setContentType("text/json");
-        resp.setCharacterEncoding("UTF-8");
-        ObjectMapper mapper=new ObjectMapper();
-        mapper.setSerializationInclusion(JsonSerialize.Inclusion.NON_NULL);
-        mapper.configure(SerializationConfig.Feature.WRITE_DATES_AS_TIMESTAMPS,false);
-        mapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
-        OutputStream out = resp.getOutputStream();
+    /**
+     * 加载报表表格
+     *
+     */
+    @RequestMapping(value = "/savePreviewData", method = RequestMethod.POST)
+    @ResponseBody
+    public R savePreviewData(HttpServletRequest req) {
+        String content = req.getParameter("content");
+        content = decodeContent(content);
+        InputStream inputStream = null;
         try {
-            mapper.writeValue(out, obj);
-        } finally {
-            out.flush();
-            out.close();
+            inputStream = IOUtils.toInputStream(content, "utf-8");
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+        ReportDefinition reportDef = reportParser.parse(inputStream, "p");
+        reportRender.rebuildReportDefinition(reportDef);
+        IOUtils.closeQuietly(inputStream);
+        TempObjectCache.putObject(PREVIEW_KEY, reportDef);
+
+        return R.ok();
     }
 
 }

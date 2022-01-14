@@ -16,6 +16,7 @@
 package com.ureport.ureportkeep.console.cache;
 
 import com.ureport.ureportkeep.console.RequestHolder;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;

@@ -23,6 +23,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.ureport.ureportkeep.console.AbstractReportBasicController;
 import com.ureport.ureportkeep.console.BaseServletAction;
 import com.ureport.ureportkeep.console.cache.TempObjectCache;
 import com.ureport.ureportkeep.console.exception.ReportDesignException;
@@ -37,30 +38,25 @@ import com.ureport.ureportkeep.core.model.Report;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 
 /**
  * @author Jacky.gao
  * @since 2017年7月3日
  */
-@Component
-public class ExportExcel97ServletAction extends BaseServletAction {
+@Controller
+@RequestMapping(value = "/excel97")
+public class ExportExcel97ServletAction extends AbstractReportBasicController {
 	@Autowired
 	private ReportBuilder reportBuilder;
 
 	@Autowired
 	private ExportManager exportManager;
 	private Excel97Producer excelProducer=new Excel97Producer();
-	
-	@Override
-	public void execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String method=retriveMethod(req);
-		if(method!=null){
-			invokeMethod(method, req, resp);
-		}else{			
-			buildExcel(req, resp,false,false);
-		}
-	}
+
+
 	public void paging(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		buildExcel(req, resp, true, false);
 	}

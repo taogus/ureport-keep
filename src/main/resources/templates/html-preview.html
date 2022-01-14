@@ -1,126 +1,91 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org" th:with="unixstamp=${#dates.createNow().time}">
 <head>
 <meta charset="UTF-8">
-<link href="${contextPath}/ureport/res/ureport-asserts/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<link th:href="@{/static/ureport-asserts/css/bootstrap.min.css}" rel="stylesheet" type="text/css" />
 <meta name="renderer" content="webkit">
 <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
 <meta http-equiv="Cache-Control" content="no-siteapp" />
 <meta name ="viewport" content ="initial-scale=1, maximum-scale=3, minimum-scale=1, user-scalable=no">
-<title>${title}</title>
-<style type="text/css" id="_ureport_table_style">
-	${style}
+<title th:text="${title}"></title>
+<style type="text/css" id="_ureport_table_style" th:text="${style}">
 </style>
- 	<script type="text/javascript" src="${contextPath}/ureport/res/ureport-asserts/venderjs/jquery.min.js"></script>
- 	<script type="text/javascript" src="${contextPath}/ureport/res/ureport-asserts/venderjs/bootstrap.min.js"></script>
- 	<script type="text/javascript" src="${contextPath}/ureport/res/ureport-asserts/venderjs/Chart.bundle.min.js"></script>
- 	<script type="text/javascript" src="${contextPath}/ureport/res/ureport-asserts/venderjs/chartjs-plugin-datalabels.min.js"></script>
- 	<script type="text/javascript" src="${contextPath}/ureport/res/ureport-asserts/venderjs/bootstrap-datetimepicker.js"></script>
- 	<script type="text/javascript" src="${contextPath}/ureport/res/ureport-asserts/js/preview.bundle.js"></script>
+ 	<script type="text/javascript" th:src="@{/static/ureport-asserts/venderjs/jquery.min.js}"></script>
+ 	<script type="text/javascript" th:src="@{/static/ureport-asserts/venderjs/bootstrap.min.js}"></script>
+ 	<script type="text/javascript" th:src="@{/static/ureport-asserts/venderjs/Chart.bundle.min.js}"></script>
+ 	<script type="text/javascript" th:src="@{/static/ureport-asserts/venderjs/chartjs-plugin-datalabels.min.js}"></script>
+ 	<script type="text/javascript" th:src="@{/static/ureport-asserts/venderjs/bootstrap-datetimepicker.js}"></script>
+ 	<script type="text/javascript" th:src="@{/static/ureport-asserts/js/preview.bundle.js}"></script>
 </head>
 <body style="margin:5px">
-${upSearchFormHtml}
-#if($tools.show)
-<div style="border:solid 1px #ddd;border-radius:5px;height:35px;width:100%;margin-bottom:5px;background:#f8f8f8">
+<div th:utext="${upSearchFormHtml}"></div>
+<div style="border:solid 1px #ddd;border-radius:5px;height:35px;width:100%;margin-bottom:5px;background:#f8f8f8" th:if="${tools != null && tools.show != null && tools.show == true}">
 	<div style="text-align:${reportAlign}">
-		#if($tools.print)
-		<button type="button" class="btn btn-default ureport-print" style="display:inline-block;padding:0;background:#f8f8f8;border:none;margin:3px" title="在线打印">
-			<img src='${contextPath}/ureport/res/ureport-asserts/icons/print.svg' width="20px" height="20px">
+		<button type="button" class="btn btn-default ureport-print" style="display:inline-block;padding:0;background:#f8f8f8;border:none;margin:3px" title="在线打印" th:if="${tools.print}">
+			<img th:src="#{context-path} + '/static/ureport-asserts/icons/print.svg'" width="20px" height="20px">
 		</button>
-		#end
-		#if($tools.pdfPrint)
-		<button type="button" class="btn btn-default ureport-pdf-direct-print" style="display:inline-block;padding:0;background:#f8f8f8;border:none;margin:3px" title="PDF在线打印">
-			<img src='${contextPath}/ureport/res/ureport-asserts/icons/pdf-direct-print.svg' width="20px" height="20px">
+		<button type="button" class="btn btn-default ureport-pdf-direct-print" style="display:inline-block;padding:0;background:#f8f8f8;border:none;margin:3px" title="PDF在线打印" th:if="${tools.pdfPrint}">
+			<img th:src="#{context-path} + '/static/ureport-asserts/icons/pdf-direct-print.svg'" width="20px" height="20px">
 		</button>
-		#end
-		#if($tools.pdfPreviewPrint)
-		<button type="button" class="btn btn-default ureport-pdf-print" style="display:inline-block;padding:0;background:#f8f8f8;border:none;margin:3px" title="PDF在线预览打印">
-			<img src='${contextPath}/ureport/res/ureport-asserts/icons/pdf-print.svg' width="20px" height="20px">
+		<button type="button" class="btn btn-default ureport-pdf-print" style="display:inline-block;padding:0;background:#f8f8f8;border:none;margin:3px" title="PDF在线预览打印" th:if="${tools.pdfPreviewPrint}">
+			<img th:src="#{context-path} + '/static/ureport-asserts/icons/pdf-print.svg'" width="20px" height="20px">
 		</button>
-		#end
-		#if($tools.pdf)
-		<button type="button" class="btn btn-default ureport-export-pdf" style="display:inline-block;padding:0;background:#f8f8f8;border:none;margin:3px" title="导出PDF">
-			<img src='${contextPath}/ureport/res/ureport-asserts/icons/pdf.svg' width="20px" height="20px">
+		<button type="button" class="btn btn-default ureport-export-pdf" style="display:inline-block;padding:0;background:#f8f8f8;border:none;margin:3px" title="导出PDF" th:if="${tools.pdf}">
+			<img th:src="#{context-path} + '/static/ureport-asserts/icons/pdf.svg'" width="20px" height="20px">
 		</button>
-		#end
-		#if($tools.word)
-		<button type="button" class="btn btn-default ureport-export-word" style="display:inline-block;padding:0;background:#f8f8f8;border:none;margin:3px" title="导出WORD">
-			<img src='${contextPath}/ureport/res/ureport-asserts/icons/word.svg' width="20px" height="20px">
+		<button type="button" class="btn btn-default ureport-export-word" style="display:inline-block;padding:0;background:#f8f8f8;border:none;margin:3px" title="导出WORD" th:if="${tools.word}">
+			<img th:src="#{context-path} + '/static/ureport-asserts/icons/word.svg'" width="20px" height="20px">
 		</button>
-		#end
-		#if($tools.excel)
-		<button type="button" class="btn btn-default ureport-export-excel" style="display:inline-block;padding:0;background:#f8f8f8;border:none;margin:3px" title="导出EXCEL">
-			<img src='${contextPath}/ureport/res/ureport-asserts/icons/excel.svg' width="20px" height="20px">
+		<button type="button" class="btn btn-default ureport-export-excel" style="display:inline-block;padding:0;background:#f8f8f8;border:none;margin:3px" title="导出EXCEL" th:if="${tools.excel}">
+			<img th:src="#{context-path} + '/static/ureport-asserts/icons/excel.svg'" width="20px" height="20px">
 		</button>
-		#end
-		#if($tools.pagingExcel)
-		<button type="button" class="btn btn-default ureport-export-excel-paging" style="display:inline-block;padding:0;background:#f8f8f8;border:none;margin:3px" title="分页导出EXCEL">
-			<img src='${contextPath}/ureport/res/ureport-asserts/icons/excel-paging.svg' width="20px" height="20px">
+		<button type="button" class="btn btn-default ureport-export-excel-paging" style="display:inline-block;padding:0;background:#f8f8f8;border:none;margin:3px" title="分页导出EXCEL" th:if="${tools.pagingExcel}">
+			<img th:src="#{context-path} + '/static/ureport-asserts/icons/excel-paging.svg'" width="20px" height="20px">
 		</button>
-		#end
-		#if($tools.sheetPagingExcel)
-		<button type="button" class="btn btn-default ureport-export-excel-paging-sheet" style="display:inline-block;padding:0;background:#f8f8f8;border:none;margin:3px" title="分页分Sheet导出EXCEL">
-			<img src='${contextPath}/ureport/res/ureport-asserts/icons/excel-with-paging-sheet.svg' width="20px" height="20px">
+		<button type="button" class="btn btn-default ureport-export-excel-paging-sheet" style="display:inline-block;padding:0;background:#f8f8f8;border:none;margin:3px" title="分页分Sheet导出EXCEL" th:if="${tools.sheetPagingExcel}">
+			<img th:src="#{context-path} + '/static/ureport-asserts/icons/excel-with-paging-sheet.svg'" width="20px" height="20px">
 		</button>
-		#end
-		#if($tools.paging)
-		<div class="btn-group">
-			<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="background:#f8f8f8;border:none;color:#337ab7">
-				#if($pageIndex>0)
-					分页预览
-				#else
-					预览
-				#end
+		<div class="btn-group" th:if="${tools.sheetPagingExcel}">
+			<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="background:#f8f8f8;border:none;color:#337ab7" >
+				<span th:text="${pageIndex>0 ? '分页预览' : '预览'}"></span>
 				 <span class="caret"></span>
 			</button>
 			<ul class="dropdown-menu" role="menu">
-				#if($hasTools)
-				<li><a href="${contextPath}/ureport/preview?_u=${file}&_t=${_t}&${customParameters}" style="color:#337ab7">预览</a></li>
-				#else
-				<li><a href="${contextPath}/ureport/preview?_u=${file}&${customParameters}" style="color:#337ab7">预览</a></li>
-				#end
-				#if($hasTools)
-				<li><a href="${contextPath}/ureport/preview?_u=${file}&_i=1&_t=${_t}&${customParameters}" style="color:#337ab7">分页预览</a></li>
-				#else
-				<li><a href="${contextPath}/ureport/preview?_u=${file}&_i=1&${customParameters}" style="color:#337ab7">分页预览</a></li>
-				#end
+				<li th:if="${hasTools}"><a th:href="${'preview?_u=' + file + '&_t=' + _t + '&' + customParameters}" style="color:#337ab7">预览</a></li>
+				<li th:else><a th:href="${'preview?_u=' + file + '&' + customParameters}" style="color:#337ab7">预览</a></li>
+				<li th:if="${hasTools}"><a th:href="${'preview?_u=' + file + '&_t=1&' + customParameters}" style="color:#337ab7">分页预览</a></li>
+				<li th:else><a th:href="${'preview?_u=' + file + '&_t=1&' + customParameters}" style="color:#337ab7">分页预览</a></li>
 			</ul>
 		</div>
-		#end 
-		#if($pageIndex>0) 
-		<span id='pagingContainer' style="font-size:14px;margin-left:1px;color:#337ab7">
-			共<span id='totalPageLabel'>${totalPageWithCol}</span>页
+		<span id='pagingContainer' style="font-size:14px;margin-left:1px;color:#337ab7" th:if="${pageIndex>0}">
+			共<span id='totalPageLabel' th:text="${totalPageWithCol}"></span>页
 			<select id="pageSelector" class="form-control" style="display:inline-block;width:inherit;font-size:13px;height:28px;margin-top:2px">
-				#foreach($index in [1..$totalPageWithCol])
-				<option>${index}</option>
-				#end
+				<option th:each="index : ${totalPageWithCol}" th:text="${index}"></option>
 			</select>
 			<span id='pageLinkContainer'></span>
 		</span>
-		#end
 	</div>
 </div>
-#end
-${downSearchFormHtml}
-<div id="_ureport_table" style="float:${reportAlign}">
-	${content}
+<div th:text="${downSearchFormHtml}"></div>
+<div id="_ureport_table" style="float:${reportAlign}" th:utext="${content}">
 </div>
 <iframe name="_print_frame" width="0" height="0" frameborder="0" src="about:blank"></iframe>
 <iframe name="_print_pdf_frame" width="0" height="0" frameborder="0" src="about:blank"></iframe>
-<script type="text/javascript">
-window._server="${contextPath}/ureport";
+<script type="text/javascript" th:inline="javascript">
+window._server= [[#{context-path}]] + "";
 window.formElements=[];
 $(document).ready(function(){
 	
-	buildPaging(${pageIndex},${totalPageWithCol});
-	
-	#if($intervalRefreshValue>0)
-		_intervalRefresh($intervalRefreshValue,$totalPageWithCol);
-	#end
-	_buildChartDatas($chartDatas);
-	${searchFormJs}
+	buildPaging([[${pageIndex}]],[[${totalPageWithCol}]]);
+
+	var refVal = [[${intervalRefreshValue}]];
+	if (refVal > 0) {
+		_intervalRefresh([[${intervalRefreshValue}]],[[${totalPageWithCol}]]);
+	}
+	_buildChartDatas([[${chartDatas}]]);
+	//${searchFormJs}
 	function doSearch(){
-		submitSearchForm("${file}","${customParameters}");
+		submitSearchForm([[${file}]],[[${customParameters}]]);
 	}
 });
 </script>
