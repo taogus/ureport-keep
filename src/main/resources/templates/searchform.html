@@ -2,19 +2,19 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<link href="${contextPath}/ureport/res/ureport-asserts/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<link th:href="@{/static/ureport-asserts/css/bootstrap.min.css}" rel="stylesheet" type="text/css" />
 <title>UReport2 Designer</title>
- <script type="text/javascript" src="${contextPath}/ureport/res/ureport-asserts/venderjs/jquery.min.js"></script>
- <script type="text/javascript" src="${contextPath}/ureport/res/ureport-asserts/venderjs/jquery-ui.min.js"></script>
- <script type="text/javascript" src="${contextPath}/ureport/res/ureport-asserts/venderjs/bootstrap-datetimepicker.js"></script>
+ <script type="text/javascript" th:src="@{/static/ureport-asserts/venderjs/jquery.min.js}"></script>
+ <script type="text/javascript" th:src="@{/static/ureport-asserts/venderjs/jquery-ui.min.js}"></script>
+ <script type="text/javascript" th:src="@{/static/ureport-asserts/venderjs/bootstrap-datetimepicker.js}"></script>
 </head>
 <body style="margin:0px">
 <div id='container'></div>
 <script type="text/javascript" th:inline="javascript">
- var contextPath = [[${servletContext.getAttribute(\'contextPath\')}]];
-	window._server= contextPath + "/ureport";
+ var contextPath = [[#{context-path}]] + "";
+	window._server= contextPath;
 	window._contextPath=contextPath;
 </script>
-<script type="text/javascript" src="${contextPath}/ureport/res/ureport-asserts/js/searchform.bundle.js"></script>
+<script type="text/javascript" th:src="@{/static/ureport-asserts/js/searchform.bundle.js}"></script>
 </body>
 </html>

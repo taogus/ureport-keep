@@ -4,6 +4,9 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
+### reportFiles ###
+!**/urportfiles/
+
 ### STS ###
 .apt_generated
 .classpath

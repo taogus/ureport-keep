@@ -41,11 +41,11 @@ export function afterRenderer(td,row,col,prop,value,cellProperties){
         }
         cellDef.crossTabWidget.doDraw(cellDef,row,col);
     }else if(valueType==='zxing'){
-        let imagePath=window._server+'/res/ureport-asserts/icons/qrcode.svg';
+        let imagePath=window._server+'/static/ureport-asserts/icons/qrcode.svg';
         tip=`${window.i18n.table.render.qrcode}`;
         if(cellValue.category==='barcode'){
             tip=`${window.i18n.table.render.barcode}`;
-            imagePath=window._server+'/res/ureport-asserts/icons/barcode.svg';
+            imagePath=window._server+'/static/ureport-asserts/icons/barcode.svg';
         }
         const width=cellValue.width,height=cellValue.height;
         const image=$(`<img src="${imagePath}" width="${width}px" height="${height}px">`);

@@ -132,77 +132,83 @@ public class HtmlPreviewController extends AbstractReportBasicController {
 
     @RequestMapping(value = "/loadPrintPages", method = RequestMethod.POST)
     public void loadPrintPages(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String file=req.getParameter("_u");
-        file=decode(file);
-        if(StringUtils.isBlank(file)){
+        String file = req.getParameter("_u");
+        file = decode(file);
+        if (StringUtils.isBlank(file)) {
             throw new ReportComputeException("Report file can not be null.");
         }
         Map<String, Object> parameters = buildParameters(req);
-        ReportDefinition reportDefinition=null;
-        if(file.equals(PREVIEW_KEY)){
-            reportDefinition=(ReportDefinition) TempObjectCache.getObject(PREVIEW_KEY);
-            if(reportDefinition==null){
+        ReportDefinition reportDefinition = null;
+        if (file.equals(PREVIEW_KEY)) {
+            reportDefinition = (ReportDefinition) TempObjectCache.getObject(PREVIEW_KEY);
+            if (reportDefinition == null) {
                 throw new ReportDesignException("Report data has expired,can not do export excel.");
             }
-        }else{
-            reportDefinition=reportRender.getReportDefinition(file);
+        } else {
+            reportDefinition = reportRender.getReportDefinition(file);
         }
-        Report report=reportBuilder.buildReport(reportDefinition, parameters);
-        Map<String, ChartData> chartMap=report.getContext().getChartDataMap();
-        if(chartMap.size()>0){
+        Report report = reportBuilder.buildReport(reportDefinition, parameters);
+        Map<String, ChartData> chartMap = report.getContext().getChartDataMap();
+        if (chartMap.size() > 0) {
             CacheUtils.storeChartDataMap(chartMap);
         }
-        FullPageData pageData= PageBuilder.buildFullPageData(report);
-        StringBuilder sb=new StringBuilder();
-        List<List<Page>> list=pageData.getPageList();
-        Context context=report.getContext();
-        if(list.size()>0){
-            for(int i=0;i<list.size();i++){
-                List<Page> columnPages=list.get(i);
-                if(i==0){
-                    String html=htmlProducer.produce(context,columnPages,pageData.getColumnMargin(),false);
+        FullPageData pageData = PageBuilder.buildFullPageData(report);
+        StringBuilder sb = new StringBuilder();
+        List<List<Page>> list = pageData.getPageList();
+        Context context = report.getContext();
+        if (list.size() > 0) {
+            for (int i = 0; i < list.size(); i++) {
+                List<Page> columnPages = list.get(i);
+                if (i == 0) {
+                    String html = htmlProducer.produce(context, columnPages, pageData.getColumnMargin(), false);
                     sb.append(html);
-                }else{
-                    String html=htmlProducer.produce(context,columnPages,pageData.getColumnMargin(),false);
+                } else {
+                    String html = htmlProducer.produce(context, columnPages, pageData.getColumnMargin(), false);
                     sb.append(html);
                 }
             }
-        }else{
-            List<Page> pages=report.getPages();
-            for(int i=0;i<pages.size();i++){
-                Page page=pages.get(i);
-                if(i==0){
-                    String html=htmlProducer.produce(context,page, false);
+        } else {
+            List<Page> pages = report.getPages();
+            for (int i = 0; i < pages.size(); i++) {
+                Page page = pages.get(i);
+                if (i == 0) {
+                    String html = htmlProducer.produce(context, page, false);
                     sb.append(html);
-                }else{
-                    String html=htmlProducer.produce(context,page, true);
+                } else {
+                    String html = htmlProducer.produce(context, page, true);
                     sb.append(html);
                 }
             }
         }
-        Map<String,String> map=new HashMap<String,String>();
+        Map<String, String> map = new HashMap<String, String>();
         map.put("html", sb.toString());
         writeObjectToJson(resp, map);
     }
 
     @RequestMapping(value = "/loadPagePaper", method = RequestMethod.GET)
     public void loadPagePaper(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String file=req.getParameter("_u");
-        file=decode(file);
-        if(StringUtils.isBlank(file)){
+        String file = req.getParameter("_u");
+        file = decode(file);
+        if (StringUtils.isBlank(file)) {
             throw new ReportComputeException("Report file can not be null.");
         }
-        ReportDefinition report=null;
-        if(file.equals(PREVIEW_KEY)){
-            report=(ReportDefinition)TempObjectCache.getObject(PREVIEW_KEY);
-            if(report==null){
+        ReportDefinition report = null;
+        if (file.equals(PREVIEW_KEY)) {
+            report = (ReportDefinition) TempObjectCache.getObject(PREVIEW_KEY);
+            if (report == null) {
                 throw new ReportDesignException("Report data has expired.");
             }
-        }else{
-            report=reportRender.getReportDefinition(file);
+        } else {
+            report = reportRender.getReportDefinition(file);
         }
-        Paper paper=report.getPaper();
+        Paper paper = report.getPaper();
         writeObjectToJson(resp, paper);
+    }
+
+    @RequestMapping(value = "/loadData", method = RequestMethod.POST)
+    public void loadData(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        HtmlReport htmlReport=loadReport(req);
+        writeObjectToJson(resp, htmlReport);
     }
 
     private HtmlReport loadReport(HttpServletRequest req) {
@@ -292,20 +298,20 @@ public class HtmlPreviewController extends AbstractReportBasicController {
         return trace;
     }
 
-    private String buildCustomParameters(HttpServletRequest req){
-        StringBuilder sb=new StringBuilder();
-        Enumeration<?> enumeration=req.getParameterNames();
-        while(enumeration.hasMoreElements()){
-            Object obj=enumeration.nextElement();
-            if(obj==null){
+    private String buildCustomParameters(HttpServletRequest req) {
+        StringBuilder sb = new StringBuilder();
+        Enumeration<?> enumeration = req.getParameterNames();
+        while (enumeration.hasMoreElements()) {
+            Object obj = enumeration.nextElement();
+            if (obj == null) {
                 continue;
             }
-            String name=obj.toString();
-            String value=req.getParameter(name);
-            if(name==null || value==null || (name.startsWith("_") && !name.equals("_n"))){
+            String name = obj.toString();
+            String value = req.getParameter(name);
+            if (name == null || value == null || (name.startsWith("_") && !name.equals("_n"))) {
                 continue;
             }
-            if(sb.length()>0){
+            if (sb.length() > 0) {
                 sb.append("&");
             }
             sb.append(name);
@@ -315,11 +321,11 @@ public class HtmlPreviewController extends AbstractReportBasicController {
         return sb.toString();
     }
 
-    private String convertJson(Collection<ChartData> data){
-        if(data==null || data.size()==0){
+    private String convertJson(Collection<ChartData> data) {
+        if (data == null || data.size() == 0) {
             return "";
         }
-        ObjectMapper mapper=new ObjectMapper();
+        ObjectMapper mapper = new ObjectMapper();
         try {
             String json = mapper.writeValueAsString(data);
             return json;

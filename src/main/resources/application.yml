@@ -25,5 +25,5 @@ spring:
 ureport:
   disableHttpSessionReportCache: false
   disableFileProvider: false
-  fileStoreDir: /WEB-INF/ureportfiles
+  fileStoreDir: ureportfiles
   debug: true

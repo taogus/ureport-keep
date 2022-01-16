@@ -25749,10 +25749,10 @@
             h = l.datasetName + "." + l.aggregate + "(", h += l.property + ")", "" === d.html() && d.html(h)
         } else if ("expression" === u) h = l.value || "", "" === d.html() && d.html(h); else if ("image" === u) {
             h = `${window.i18n.table.render.image}` + l.value;
-            const e = window._server + "/res/ureport-asserts/icons/image.svg", t = $(`<img src="${e}" width="20px">`);
+            const e = window._server + "/static/ureport-asserts/icons/image.svg", t = $(`<img src="${e}" width="20px">`);
             d.empty(), d.append(t)
         } else if ("slash" === u) h = `${window.i18n.table.render.slash}`, a.crossTabWidget || (a.crossTabWidget = new c(this.context, t, i, a)), a.crossTabWidget.doDraw(a, t, i); else if ("zxing" === u) {
-            let e = window._server + "/res/ureport-asserts/icons/qrcode.svg";
+            let e = window._server + "/static/ureport-asserts/icons/qrcode.svg";
             h = `${window.i18n.table.render.qrcode}`, "barcode" === l.category && (h = `${window.i18n.table.render.barcode}`, e = window._server + "/res/ureport-asserts/icons/barcode.svg");
             const t = l.width, i = l.height, n = $(`<img src="${e}" width="${t}px" height="${i}px">`);
             d.empty(), d.append(n)
@@ -26699,7 +26699,7 @@
                         let l = $('<a href="###"><i class="glyphicon glyphicon-folder-open" style="color: #008ed3;font-size: 14pt"></i></a>');
                         s.append(l), l.click(function () {
                             Object(n.b)(`${window.i18n.dialog.open.openConfirm}[${i.name}]？`, function () {
-                                let t = e + encodeURI(encodeURI(i.name)), n = window._server + "/designer?_u=" + t;
+                                let t = e + encodeURI(encodeURI(i.name)), n = window._server + "/designer/designer?_u=" + t;
                                 window.open(n, "_self")
                             })
                         });
@@ -27782,7 +27782,7 @@
                 if (!t || "" === t) return;
                 const i = JSON.parse(t);
                 if (i.result) {
-                    const e = window._server + "/designer";
+                    const e = window._server + "/designer/designer";
                     window.open(e, "_self")
                 } else {
                     const e = i.errorInfo;

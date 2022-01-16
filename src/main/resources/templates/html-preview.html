@@ -82,8 +82,14 @@ $(document).ready(function(){
 	if (refVal > 0) {
 		_intervalRefresh([[${intervalRefreshValue}]],[[${totalPageWithCol}]]);
 	}
-	_buildChartDatas([[${chartDatas}]]);
-	//${searchFormJs}
+
+	eval([[${searchFormJs}]])
+
+	var chartData = [[${chartDatas}]];
+	if (chartData != null && chartData != "") {
+		_buildChartDatas(JSON.parse([[${chartDatas}]]));
+	}
+
 	function doSearch(){
 		submitSearchForm([[${file}]],[[${customParameters}]]);
 	}

@@ -15,33 +15,9 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.console.designer;
 
-import java.beans.PropertyDescriptor;
-import java.io.IOException;
-import java.lang.reflect.Method;
-import java.sql.Connection;
-import java.sql.DatabaseMetaData;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.sql.DataSource;
-
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ureport.ureportkeep.console.AbstractReportBasicController;
-import com.ureport.ureportkeep.console.RenderPageServletAction;
 import com.ureport.ureportkeep.console.exception.ReportDesignException;
 import com.ureport.ureportkeep.core.Utils;
 import com.ureport.ureportkeep.core.build.Context;
@@ -63,16 +39,25 @@ import org.springframework.jdbc.core.PreparedStatementCallback;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.PreparedStatementCreatorFactory;
 import org.springframework.jdbc.core.SqlParameter;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.jdbc.core.namedparam.NamedParameterUtils;
-import org.springframework.jdbc.core.namedparam.ParsedSql;
-import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.jdbc.core.namedparam.*;
 import org.springframework.jdbc.datasource.SingleConnectionDataSource;
 import org.springframework.jdbc.support.JdbcUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.sql.DataSource;
+import java.beans.PropertyDescriptor;
+import java.io.IOException;
+import java.lang.reflect.Method;
+import java.sql.*;
+import java.util.Date;
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 /**
@@ -87,7 +72,15 @@ public class DatasourceController extends AbstractReportBasicController {
     @Autowired
     private ApplicationContext applicationContext;
 
-    public void loadBuildinDatasources(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    /**
+     * 加载内置数据源
+     *
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
+    @RequestMapping(value = "/loadBuildinDatasources", method = RequestMethod.GET)
+    public void loadBuildinDatasources(HttpServletResponse resp) throws ServletException, IOException {
         List<String> datasources = new ArrayList<String>();
         for (BuildinDatasource datasource : Utils.getBuildinDatasources()) {
             datasources.add(datasource.name());
@@ -95,6 +88,15 @@ public class DatasourceController extends AbstractReportBasicController {
         writeObjectToJson(resp, datasources);
     }
 
+    /**
+     * 加载Bean方法
+     *
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
+    @RequestMapping(value = "/loadMethods", method = RequestMethod.GET)
     public void loadMethods(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String beanId = req.getParameter("beanId");
         Object obj = applicationContext.getBean(beanId);
@@ -123,6 +125,15 @@ public class DatasourceController extends AbstractReportBasicController {
         writeObjectToJson(resp, result);
     }
 
+    /**
+     * 获取class字段
+     *
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
+    @RequestMapping(value = "/buildClass", method = RequestMethod.GET)
     public void buildClass(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String clazz = req.getParameter("clazz");
         List<Field> result = new ArrayList<Field>();
