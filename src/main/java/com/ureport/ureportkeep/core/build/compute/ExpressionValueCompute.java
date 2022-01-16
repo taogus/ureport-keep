@@ -26,11 +26,10 @@ import com.ureport.ureportkeep.core.expression.function.page.PageFunction;
 import com.ureport.ureportkeep.core.expression.model.Expression;
 import com.ureport.ureportkeep.core.expression.model.data.BindDataListExpressionData;
 import com.ureport.ureportkeep.core.expression.model.data.ExpressionData;
-import com.ureport.ureportkeep.core.expression.model.expr.BaseExpression;
-import com.ureport.ureportkeep.core.expression.model.expr.FunctionExpression;
-import com.ureport.ureportkeep.core.expression.model.expr.JoinExpression;
+import com.ureport.ureportkeep.core.expression.model.expr.*;
 import com.ureport.ureportkeep.core.expression.model.expr.ifelse.*;
 import com.ureport.ureportkeep.core.model.Cell;
+import org.apache.commons.collections.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -148,6 +147,42 @@ public class ExpressionValueCompute implements ValueCompute {
 			for(BaseExpression baseExpr:list){
 				boolean has=hasPageFunction(baseExpr);
 				if(has){
+					return has;
+				}
+			}
+		} else if (expr instanceof ExpressionBlock) {
+			FunctionExpression funExpr = null;
+
+			try {
+				List<Expression> expressionList = ((ExpressionBlock) expr).getExpressionList();
+				if (!CollectionUtils.isEmpty(expressionList)) {
+					ParenExpression expression = (ParenExpression) expressionList.get(0);
+					List<BaseExpression> expressions = expression.getExpressions();
+					if (!CollectionUtils.isEmpty(expressions)) {
+						funExpr = (FunctionExpression) expressions.get(0);
+					}
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			if (funExpr == null) {
+				return false;
+			}
+			String name = funExpr.getName();
+			Function fun = ExpressionUtils.getFunctions().get(name);
+			if (fun == null) {
+				throw new RuntimeException(name + "函数不支持");
+			}
+			if (fun instanceof PageFunction) {
+				return true;
+			}
+			List<BaseExpression> list = funExpr.getExpressions();
+			if (list == null || list.size() == 0) {
+				return false;
+			}
+			for (BaseExpression baseExpr : list) {
+				boolean has = hasPageFunction(baseExpr);
+				if (has) {
 					return has;
 				}
 			}
