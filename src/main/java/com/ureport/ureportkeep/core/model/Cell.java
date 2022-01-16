@@ -15,21 +15,6 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.core.model;
 
-import java.awt.Font;
-import java.awt.FontMetrics;
-import java.io.UnsupportedEncodingException;
-import java.math.BigDecimal;
-import java.net.URLEncoder;
-import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.swing.JLabel;
-
 import com.ureport.ureportkeep.core.Range;
 import com.ureport.ureportkeep.core.Utils;
 import com.ureport.ureportkeep.core.build.BindData;
@@ -46,6 +31,16 @@ import com.ureport.ureportkeep.core.expression.model.data.ObjectExpressionData;
 import com.ureport.ureportkeep.core.expression.model.data.ObjectListExpressionData;
 import com.ureport.ureportkeep.core.utils.UnitUtils;
 import org.apache.commons.lang3.StringUtils;
+
+import javax.swing.*;
+import java.awt.*;
+import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
+import java.net.URLEncoder;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.List;
+import java.util.*;
 
 /**
  * @author Jacky.gao
@@ -534,6 +529,9 @@ public class Cell implements ReportCell {
 					}
 				}
 				Border leftBorder=style.getLeftBorder();
+				if (this.customCellStyle == null) {
+					this.customCellStyle = new CellStyle();
+				}
 				if(leftBorder!=null){
 					this.customCellStyle.setLeftBorder(leftBorder);
 				}
