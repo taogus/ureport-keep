@@ -28,5 +28,5 @@ git clone https://gitee.com/summer-T/ureport-keep.git
 
 2、运行spring boot ``` UreportKeepApplication ``` main方法
 
-3、启动服务后访问地址：``` http://localhost:8888/ureport-keep/designer/designer ```
+3、启动服务后访问地址：``` http://localhost:8888/ureport_keep/designer/designer ```
 
