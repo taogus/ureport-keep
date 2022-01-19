@@ -26,6 +26,7 @@ import com.ureport.ureportkeep.core.export.html.HtmlReport;
 import com.ureport.ureportkeep.core.export.pdf.PdfProducer;
 import com.ureport.ureportkeep.core.export.word.high.WordProducer;
 import com.ureport.ureportkeep.core.model.Report;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -38,7 +39,10 @@ import java.util.Map;
  */
 @Service
 public class ExportManagerImpl implements ExportManager {
+
+	@Autowired
 	private ReportRender reportRender;
+
 	private HtmlProducer htmlProducer=new HtmlProducer();
 	private WordProducer wordProducer=new WordProducer();
 	private ExcelProducer excelProducer=new ExcelProducer();
