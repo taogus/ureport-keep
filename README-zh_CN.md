@@ -32,3 +32,7 @@ git clone https://gitee.com/summer-T/ureport-keep.git
 
 3、启动服务后访问地址：``` http://localhost:8888/ureport_keep/designer/designer ```
 
+# 交流
+| 微信扫码添加交流 |
+|--------|
+|![输入图片说明](docs/images/c98f97a2b4e9faf2caab984899246ab0.jpg)|
