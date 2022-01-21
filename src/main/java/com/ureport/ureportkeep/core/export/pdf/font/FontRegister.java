@@ -19,6 +19,16 @@ package com.ureport.ureportkeep.core.export.pdf.font;
  * @since 2014年4月22日
  */
 public interface FontRegister {
+
+	/**
+	 * 字体文件相对路径
+	 *
+	 * @return
+	 */
+	default String path() {
+		return "static/report-font/";
+	}
+
 	/**
 	 * @return 返回自定义的字体名称
 	 */
