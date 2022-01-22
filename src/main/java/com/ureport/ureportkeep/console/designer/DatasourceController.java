@@ -182,7 +182,7 @@ public class DatasourceController extends AbstractReportBasicController {
         }
     }
 
-    @RequestMapping(value = "/buildFields", method = RequestMethod.GET)
+    @RequestMapping(value = "/buildFields", method = RequestMethod.POST)
     public void buildFields(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String sql = req.getParameter("sql");
         String parameters = req.getParameter("parameters");

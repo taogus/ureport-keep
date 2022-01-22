@@ -28867,6 +28867,7 @@
                 for (let n of i) o.addField(e, i, n, t)
             } else $.ajax({
                 url: window._server + "/datasource/buildFields",
+                type: "POST",
                 data: {
                     sql: e.sql,
                     parameters: JSON.stringify(e.parameters),
