@@ -858,19 +858,19 @@
             const r = $("#pageSelector");
             if (r.change(function () {
                 const t = window.buildLocationSearchParameters("_i");
-                let e = window._server + `/preview${t}&_i=${$(this).val()}`;
+                let e = window._server + `/html/preview${t}&_i=${$(this).val()}`;
                 window.open(e, "_self")
             }), r.val(t), 1 === e) return;
             const n = window.buildLocationSearchParameters("_i"), i = $("#pageLinkContainer");
             if (i.empty(), t > 1) {
-                let e = window._server + `/preview${n}&_i=${t - 1}`;
+                let e = window._server + `/html/preview${n}&_i=${t - 1}`;
                 const r = $('<button type="button" class="btn btn-link btn-sm">上一页</button>');
                 i.append(r), r.click(function () {
                     window.open(e, "_self")
                 })
             }
             if (t < e) {
-                let e = window._server + `/preview${n}&_i=${t + 1}`;
+                let e = window._server + `/html/preview${n}&_i=${t + 1}`;
                 const r = $('<button type="button" class="btn btn-link btn-sm">下一页</button>');
                 i.append(r), r.click(function () {
                     window.open(e, "_self")

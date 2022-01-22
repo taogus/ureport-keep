@@ -60,7 +60,7 @@
 		<span id='pagingContainer' style="font-size:14px;margin-left:1px;color:#337ab7" th:if="${pageIndex>0}">
 			共<span id='totalPageLabel' th:text="${totalPageWithCol}"></span>页
 			<select id="pageSelector" class="form-control" style="display:inline-block;width:inherit;font-size:13px;height:28px;margin-top:2px">
-				<option th:each="index : ${totalPageWithCol}" th:text="${index}"></option>
+				<option th:each="index : ${#numbers.sequence(1, totalPageWithCol)}" th:text="${index}" th:value="${index}"></option>
 			</select>
 			<span id='pageLinkContainer'></span>
 		</span>
