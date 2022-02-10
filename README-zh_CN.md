@@ -14,13 +14,9 @@ UReport2是一款高性能的架构在Spring之上纯Java报表引擎，通过�
 1.  BSDN WIKI： [http://wiki.bsdn.org/display/UR/ureport2+Home](http://wiki.bsdn.org/display/UR/ureport2+Home)
 2.  w3cschool： [https://www.w3cschool.cn/ureport](https://www.w3cschool.cn/ureport)
 
-# 界面
-![首页](docs/images/image.png)
-![输入图片说明](docs/images/image2.png)
-![输入图片说明](docs/images/image3.png)
-![输入图片说明](docs/images/image4.png)
-![输入图片说明](docs/images/image5.png)
-
+# 演示地址
+地址：
+[http://report.tt-u.cn/ureport_keep/designer/designer](http://report.tt-u.cn/ureport_keep/designer/designer)
 
 # 运行步骤
 1、拉取代码
@@ -31,6 +27,14 @@ git clone https://gitee.com/summer-T/ureport-keep.git
 2、运行spring boot ``` UreportKeepApplication ``` main方法
 
 3、启动服务后访问地址：``` http://localhost:8888/ureport_keep/designer/designer ```
+
+
+# 界面
+![首页](docs/images/image.png)
+![输入图片说明](docs/images/image2.png)
+![输入图片说明](docs/images/image3.png)
+![输入图片说明](docs/images/image4.png)
+![输入图片说明](docs/images/image5.png)
 
 # 交流
 | 微信扫码添加交流 |
