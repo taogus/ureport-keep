@@ -166,7 +166,7 @@ public class DatasourceController extends AbstractReportBasicController {
                 schema = metaData.getUserName();
             }
             List<Map<String, String>> tables = new ArrayList<Map<String, String>>();
-            rs = metaData.getTables(null, schema, "%", new String[]{"TABLE", "VIEW"});
+            rs = metaData.getTables(conn.getCatalog(), schema, null, new String[]{"TABLE", "VIEW"});
             while (rs.next()) {
                 Map<String, String> table = new HashMap<String, String>();
                 table.put("name", rs.getString("TABLE_NAME"));
