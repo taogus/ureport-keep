@@ -27842,8 +27842,12 @@
                 url: "savePreviewData",
                 type: "POST",
                 data: {content: i},
-                success: function () {
-                    window.open(t, "_blank").focus()
+                success: function (res) {
+                    if(res.code == 200) {
+                        window.open(t, "_blank").focus()
+                    } else {
+                        Object(n.a)(`${window.i18n.tools.preview.previewFail}<br /> 原因：${res.msg}`)
+                    }
                 },
                 error: function () {
                     Object(n.a)(`${window.i18n.tools.preview.previewFail}`)
