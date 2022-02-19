@@ -18,11 +18,11 @@ package com.ureport.ureportkeep.core.provider.report.file;
 import com.ureport.ureportkeep.core.exception.ReportException;
 import com.ureport.ureportkeep.core.provider.report.ReportFile;
 import com.ureport.ureportkeep.core.provider.report.ReportProvider;
+import com.ureport.ureportkeep.core.utils.ReportProperties;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
@@ -41,9 +41,9 @@ public class FileReportProvider implements ReportProvider, ApplicationContextAwa
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 
     private String prefix = "file:";
-    @Value("${ureport.fileStoreDir}")
+
     private String fileStoreDir;
-    @Value("${ureport.disableFileProvider}")
+
     private boolean disabled;
 
     @Override
@@ -134,6 +134,10 @@ public class FileReportProvider implements ReportProvider, ApplicationContextAwa
 
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        ReportProperties reportProperties = applicationContext.getBean(ReportProperties.class);
+        this.fileStoreDir = reportProperties.getFileStoreDir();
+        this.disabled = reportProperties.isDisableFileProvider();
+
         File file = new File(fileStoreDir);
         if (file.exists()) {
             return;

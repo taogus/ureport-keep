@@ -22,6 +22,9 @@ import com.ureport.ureportkeep.core.expression.model.Expression;
  * @since 2017年1月24日
  */
 public class ImageValue implements Value {
+
+	private static final long serialVersionUID = 1L;
+
 	private String path;
 	private String expr;
 	private Expression expression;

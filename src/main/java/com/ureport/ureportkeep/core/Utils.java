@@ -15,15 +15,6 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.core;
 
-import java.math.BigDecimal;
-import java.sql.Connection;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-
 import com.ureport.ureportkeep.core.build.Context;
 import com.ureport.ureportkeep.core.definition.datasource.BuildinDatasource;
 import com.ureport.ureportkeep.core.exception.ConvertException;
@@ -31,12 +22,19 @@ import com.ureport.ureportkeep.core.exception.ReportComputeException;
 import com.ureport.ureportkeep.core.model.Cell;
 import com.ureport.ureportkeep.core.model.Report;
 import com.ureport.ureportkeep.core.provider.image.ImageProvider;
+import com.ureport.ureportkeep.core.utils.ReportProperties;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
+
+import javax.annotation.PostConstruct;
+import java.math.BigDecimal;
+import java.sql.Connection;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 
 /**
@@ -45,10 +43,14 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class Utils implements ApplicationContextAware{
+
+	@Autowired
+	private ReportProperties reportProperties;
+
 	private static ApplicationContext applicationContext;
 	private static Collection<BuildinDatasource> buildinDatasources;
 	private static Collection<ImageProvider> imageProviders;
-	@Value("${ureport.debug}")
+
 	private static boolean debug;
 	
 	public static boolean isDebug() {
@@ -226,5 +228,10 @@ public class Utils implements ApplicationContextAware{
 		buildinDatasources.addAll(applicationContext.getBeansOfType(BuildinDatasource.class).values());
 		imageProviders=new ArrayList<ImageProvider>();
 		imageProviders.addAll(applicationContext.getBeansOfType(ImageProvider.class).values());
+	}
+
+	@PostConstruct
+	public void init() {
+		Utils.debug = reportProperties.isDebug();
 	}
 }

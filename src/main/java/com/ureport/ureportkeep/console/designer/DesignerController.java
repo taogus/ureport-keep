@@ -113,7 +113,12 @@ public class DesignerController extends AbstractReportBasicController implements
         ReportDefinition reportDef = reportParser.parse(inputStream, "p");
         reportRender.rebuildReportDefinition(reportDef);
         IOUtils.closeQuietly(inputStream);
-        TempObjectCache.putObject(PREVIEW_KEY, reportDef);
+
+        try {
+            TempObjectCache.putObject(PREVIEW_KEY, reportDef);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         return R.ok();
     }

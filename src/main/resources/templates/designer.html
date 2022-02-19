@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" th:with="unixstamp=${#dates.createNow().time}">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
 <link th:href="@{/static/ureport-asserts/css/bootstrap.min.css}" rel="stylesheet" type="text/css" />
@@ -7,9 +7,9 @@
 <title>UReport2 Designer</title>
  <script type="text/javascript" th:src="@{/static/ureport-asserts/venderjs/jquery.min.js}"></script>
  <script type="text/javascript" th:src="@{/static/ureport-asserts/venderjs/jquery.contextMenu.min.js}"></script>
- <script type="text/javascript" th:src="@{'/static/ureport-asserts/venderjs/completer.min.js'(v=${unixstamp})}"></script>
- <script type="text/javascript" th:src="@{'/static/ureport-asserts/venderjs/bootstrap-colorpicker.min.js'(v=${unixstamp})}"></script>
- <script type="text/javascript" th:src="@{'/static/ureport-asserts/js/common.bundle.js'(v=${unixstamp})}"></script>
+ <script type="text/javascript" th:src="@{/static/ureport-asserts/venderjs/completer.min.js}"></script>
+ <script type="text/javascript" th:src="@{/static/ureport-asserts/venderjs/bootstrap-colorpicker.min.js}"></script>
+ <script type="text/javascript" th:src="@{/static/ureport-asserts/js/common.bundle.js}"></script>
 </head>
 <body style="margin:0px">
 <div id='container' ></div>
@@ -19,6 +19,6 @@
  window._server= contextPath;
  window._contextPath=contextPath;
 </script>
-<script type="text/javascript" th:src="@{'/static/ureport-asserts/js/designer.bundle.js'(v=${unixstamp})}"></script>
+<script type="text/javascript" th:src="@{/static/ureport-asserts/js/designer.bundle.js}"></script>
 </body>
 </html>

@@ -23,6 +23,9 @@ import com.ureport.ureportkeep.core.expression.model.Expression;
  * @since 2016年12月24日
  */
 public class ExpressionValue implements Value{
+
+	private static final long serialVersionUID = 1L;
+
 	private String text;
 	private Expression expression;
 	public ExpressionValue(String text) {

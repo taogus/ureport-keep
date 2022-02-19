@@ -22,6 +22,9 @@ import com.ureport.ureportkeep.core.expression.model.Expression;
  * @since 2017年3月26日
  */
 public class ZxingValue implements Value {
+
+	private static final long serialVersionUID = 1L;
+
 	private int width;
 	private int height;
 	private Source source;

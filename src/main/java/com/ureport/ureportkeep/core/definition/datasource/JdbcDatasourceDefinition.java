@@ -33,6 +33,9 @@ import java.util.Map;
  * @since 2016年12月27日
  */
 public class JdbcDatasourceDefinition implements DatasourceDefinition {
+
+	private static final long serialVersionUID = 1L;
+
 	private String name;
 	private String driver;
 	private String url;

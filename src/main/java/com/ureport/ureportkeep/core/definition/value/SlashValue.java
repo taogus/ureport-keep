@@ -25,6 +25,9 @@ import java.util.List;
  * @since 2017年3月14日
  */
 public class SlashValue implements Value {
+
+	private static final long serialVersionUID = 1L;
+
 	private String svg;
 	private List<Slash> slashes;
 	@JsonIgnore

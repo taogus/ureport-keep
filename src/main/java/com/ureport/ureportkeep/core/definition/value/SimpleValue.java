@@ -21,6 +21,9 @@ package com.ureport.ureportkeep.core.definition.value;
  * @since 2016年11月1日
  */
 public class SimpleValue implements Value{
+
+	private static final long serialVersionUID = 1L;
+
 	private String value;
 	public SimpleValue(String value) {
 		this.value=value;

@@ -22,6 +22,9 @@ import com.ureport.ureportkeep.core.chart.Chart;
  * @since 2017年6月9日
  */
 public class ChartValue implements Value {
+
+	private static final long serialVersionUID = 1L;
+
 	private Chart chart;
 	@Override
 	public String getValue() {

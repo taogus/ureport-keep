@@ -15,11 +15,16 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.core.definition.dataset;
 
+import java.io.Serializable;
+
 /**
  * @author Jacky.gao
  * @since 2016年12月30日
  */
-public class Field {
+public class Field implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
 	private String name;
 
 	public Field(String name) {

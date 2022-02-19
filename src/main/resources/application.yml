@@ -9,21 +9,21 @@ spring:
   web:
     resources:
       static-locations: classpath:/static
-      chain:
-        cache: false
-        strategy:
-          content:
-            enabled: true
-            paths: /**
-          fixed:
-            enabled: true
-            paths: /ureport2-js/**
-            version: v12
+
   mvc:
     static-path-pattern: /static/**
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    password:
+    connect-timeout: 300000
 
 ureport:
   disableHttpSessionReportCache: false
   disableFileProvider: false
   fileStoreDir: ureportfiles
   debug: true
+  # 是否使用redis作为缓存
+  enableRedis: false
+  # redis缓存过期时间 (单位：分钟) 默认60分钟
+  cacheExpire: 60
