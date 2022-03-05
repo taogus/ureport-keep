@@ -81,10 +81,9 @@ public class CacheUtils implements ApplicationContextAware {
         Collection<ReportCache> coll = applicationContext.getBeansOfType(ReportCache.class).values();
         for (ReportCache cache : coll) {
             if (cache.disabled()) {
-                continue;
+                reportCache = cache;
+                break;
             }
-            reportCache = cache;
-            break;
         }
         Collection<ReportDefinitionCache> reportCaches = applicationContext.getBeansOfType(ReportDefinitionCache.class).values();
         if (reportCaches.size() == 0) {

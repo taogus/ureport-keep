@@ -38,7 +38,7 @@ import java.util.*;
 @Component
 public class FileReportProvider implements ReportProvider, ApplicationContextAware {
 
-	private final Logger logger = LoggerFactory.getLogger(getClass());
+    private final Logger logger = LoggerFactory.getLogger(getClass());
 
     private String prefix = "file:";
 
@@ -52,7 +52,7 @@ public class FileReportProvider implements ReportProvider, ApplicationContextAwa
             file = file.substring(prefix.length(), file.length());
         }
         String fullPath = fileStoreDir + "/" + file;
-		logger.info(fullPath);
+        logger.info(fullPath);
         try {
             return new FileInputStream(fullPath);
         } catch (FileNotFoundException e) {
@@ -143,7 +143,7 @@ public class FileReportProvider implements ReportProvider, ApplicationContextAwa
             return;
         }
         if (applicationContext instanceof WebApplicationContext) {
-			String basePath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\";
+            String basePath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\";
             fileStoreDir = basePath + fileStoreDir;
             file = new File(fileStoreDir);
             if (!file.exists()) {

@@ -39,7 +39,7 @@ import java.io.IOException;
 public class ChartDataController extends AbstractReportBasicController {
 
     @RequestMapping(value = "/storeData", method = RequestMethod.POST)
-	@ResponseBody
+    @ResponseBody
     public void storeData(HttpServletRequest req) throws ServletException, IOException {
         String file = req.getParameter("_u");
         file = decode(file);

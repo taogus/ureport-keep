@@ -11,15 +11,13 @@ import com.ureport.ureportkeep.core.dsl.ReportParserParser;
 import com.ureport.ureportkeep.core.export.ReportRender;
 import com.ureport.ureportkeep.core.expression.ErrorInfo;
 import com.ureport.ureportkeep.core.expression.ScriptErrorListener;
+import com.ureport.ureportkeep.core.init.ReportProvidersInit;
 import com.ureport.ureportkeep.core.parser.ReportParser;
 import com.ureport.ureportkeep.core.provider.report.ReportProvider;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.apache.commons.io.IOUtils;
-import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,7 +29,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @Author: summer
@@ -40,7 +41,7 @@ import java.util.*;
  **/
 @Controller
 @RequestMapping(value = "/designer")
-public class DesignerController extends AbstractReportBasicController implements ApplicationContextAware {
+public class DesignerController extends AbstractReportBasicController {
 
     @Autowired
     private ReportRender reportRender;
@@ -48,7 +49,8 @@ public class DesignerController extends AbstractReportBasicController implements
     @Autowired
     private ReportParser reportParser;
 
-    private List<ReportProvider> reportProviders = new ArrayList<ReportProvider>();
+    @Autowired
+    private ReportProvidersInit reportProvidersInit;
 
     /**
      * 报表设计器首页
@@ -88,9 +90,7 @@ public class DesignerController extends AbstractReportBasicController implements
                 ReportDefinition reportDef = reportRender.parseReport(file);
                 writeObjectToJson(response, new ReportDefinitionWrapper(reportDef));
             }
-        } catch (ServletException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -132,7 +132,7 @@ public class DesignerController extends AbstractReportBasicController implements
      */
     @RequestMapping(value = "/loadReportProviders", method = RequestMethod.GET)
     public void loadReportProviders(HttpServletResponse resp) throws ServletException, IOException {
-        writeObjectToJson(resp, reportProviders);
+        writeObjectToJson(resp, reportProvidersInit.getReportProviders().stream().filter(r -> r.getName() != null).collect(Collectors.toList()));
     }
 
     /**
@@ -150,7 +150,7 @@ public class DesignerController extends AbstractReportBasicController implements
         String content = req.getParameter("content");
         content = decodeContent(content);
         ReportProvider targetReportProvider = null;
-        for (ReportProvider provider : reportProviders) {
+        for (ReportProvider provider : reportProvidersInit.getReportProviders()) {
             if (file.startsWith(provider.getPrefix())) {
                 targetReportProvider = provider;
                 break;
@@ -179,16 +179,16 @@ public class DesignerController extends AbstractReportBasicController implements
      */
     @RequestMapping(value = "/scriptValidation", method = RequestMethod.POST)
     public void scriptValidation(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String content=req.getParameter("content");
-        ANTLRInputStream antlrInputStream=new ANTLRInputStream(content);
-        ReportParserLexer lexer=new ReportParserLexer(antlrInputStream);
-        CommonTokenStream tokenStream=new CommonTokenStream(lexer);
-        ReportParserParser parser=new ReportParserParser(tokenStream);
-        ScriptErrorListener errorListener=new ScriptErrorListener();
+        String content = req.getParameter("content");
+        ANTLRInputStream antlrInputStream = new ANTLRInputStream(content);
+        ReportParserLexer lexer = new ReportParserLexer(antlrInputStream);
+        CommonTokenStream tokenStream = new CommonTokenStream(lexer);
+        ReportParserParser parser = new ReportParserParser(tokenStream);
+        ScriptErrorListener errorListener = new ScriptErrorListener();
         parser.removeErrorListeners();
         parser.addErrorListener(errorListener);
         parser.expression();
-        List<ErrorInfo> infos=errorListener.getInfos();
+        List<ErrorInfo> infos = errorListener.getInfos();
         writeObjectToJson(resp, infos);
     }
 
@@ -202,16 +202,16 @@ public class DesignerController extends AbstractReportBasicController implements
      */
     @RequestMapping(value = "/conditionScriptValidation", method = RequestMethod.POST)
     public void conditionScriptValidation(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String content=req.getParameter("content");
-        ANTLRInputStream antlrInputStream=new ANTLRInputStream(content);
-        ReportParserLexer lexer=new ReportParserLexer(antlrInputStream);
-        CommonTokenStream tokenStream=new CommonTokenStream(lexer);
-        ReportParserParser parser=new ReportParserParser(tokenStream);
-        ScriptErrorListener errorListener=new ScriptErrorListener();
+        String content = req.getParameter("content");
+        ANTLRInputStream antlrInputStream = new ANTLRInputStream(content);
+        ReportParserLexer lexer = new ReportParserLexer(antlrInputStream);
+        CommonTokenStream tokenStream = new CommonTokenStream(lexer);
+        ReportParserParser parser = new ReportParserParser(tokenStream);
+        ScriptErrorListener errorListener = new ScriptErrorListener();
         parser.removeErrorListeners();
         parser.addErrorListener(errorListener);
         parser.expr();
-        List<ErrorInfo> infos=errorListener.getInfos();
+        List<ErrorInfo> infos = errorListener.getInfos();
         writeObjectToJson(resp, infos);
     }
 
@@ -232,31 +232,21 @@ public class DesignerController extends AbstractReportBasicController implements
 
     @RequestMapping(value = "/deleteReportFile", method = RequestMethod.POST)
     public void deleteReportFile(HttpServletRequest req) throws ServletException, IOException {
-        String file=req.getParameter("file");
-        if(file==null){
+        String file = req.getParameter("file");
+        if (file == null) {
             throw new ReportDesignException("Report file can not be null.");
         }
-        ReportProvider targetReportProvider=null;
-        for(ReportProvider provider:reportProviders){
-            if(file.startsWith(provider.getPrefix())){
-                targetReportProvider=provider;
+        ReportProvider targetReportProvider = null;
+        for (ReportProvider provider : reportProvidersInit.getReportProviders()) {
+            if (file.startsWith(provider.getPrefix())) {
+                targetReportProvider = provider;
                 break;
             }
         }
-        if(targetReportProvider==null){
-            throw new ReportDesignException("File ["+file+"] not found available report provider.");
+        if (targetReportProvider == null) {
+            throw new ReportDesignException("File [" + file + "] not found available report provider.");
         }
         targetReportProvider.deleteReport(file);
     }
 
-    @Override
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        Collection<ReportProvider> providers = applicationContext.getBeansOfType(ReportProvider.class).values();
-        for (ReportProvider provider : providers) {
-            if (provider.disabled() || provider.getName() == null) {
-                continue;
-            }
-            reportProviders.add(provider);
-        }
-    }
 }
