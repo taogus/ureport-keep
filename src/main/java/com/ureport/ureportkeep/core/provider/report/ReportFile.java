@@ -15,6 +15,10 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.core.provider.report;
 
+
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.ureport.ureportkeep.console.conf.serialize.CustomDateSerialize;
+
 import java.util.Date;
 
 /**
@@ -23,6 +27,8 @@ import java.util.Date;
  */
 public class ReportFile {
 	private String name;
+
+	@JsonSerialize(using= CustomDateSerialize.class)
 	private Date updateDate;
 	
 	public ReportFile(String name, Date updateDate) {

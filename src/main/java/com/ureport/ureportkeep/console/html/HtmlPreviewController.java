@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ureport.ureportkeep.console.AbstractReportBasicController;
 import com.ureport.ureportkeep.console.MobileUtils;
 import com.ureport.ureportkeep.console.cache.TempObjectCache;
+import com.ureport.ureportkeep.console.common.R;
 import com.ureport.ureportkeep.console.exception.ReportDesignException;
 import com.ureport.ureportkeep.core.build.Context;
 import com.ureport.ureportkeep.core.build.ReportBuilder;
@@ -25,6 +26,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -131,7 +133,8 @@ public class HtmlPreviewController extends AbstractReportBasicController {
     }
 
     @RequestMapping(value = "/loadPrintPages", method = RequestMethod.POST)
-    public void loadPrintPages(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    @ResponseBody
+    public R loadPrintPages(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String file = req.getParameter("_u");
         file = decode(file);
         if (StringUtils.isBlank(file)) {
@@ -182,11 +185,13 @@ public class HtmlPreviewController extends AbstractReportBasicController {
         }
         Map<String, String> map = new HashMap<String, String>();
         map.put("html", sb.toString());
-        writeObjectToJson(resp, map);
+
+        return R.ok().success(map);
     }
 
     @RequestMapping(value = "/loadPagePaper", method = RequestMethod.GET)
-    public void loadPagePaper(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    @ResponseBody
+    public R loadPagePaper(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String file = req.getParameter("_u");
         file = decode(file);
         if (StringUtils.isBlank(file)) {
@@ -202,13 +207,16 @@ public class HtmlPreviewController extends AbstractReportBasicController {
             report = reportRender.getReportDefinition(file);
         }
         Paper paper = report.getPaper();
-        writeObjectToJson(resp, paper);
+
+        return R.ok().success(paper);
     }
 
     @RequestMapping(value = "/loadData", method = RequestMethod.POST)
-    public void loadData(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    @ResponseBody
+    public R loadData(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HtmlReport htmlReport=loadReport(req);
-        writeObjectToJson(resp, htmlReport);
+
+        return R.ok().success(htmlReport);
     }
 
     private HtmlReport loadReport(HttpServletRequest req) {

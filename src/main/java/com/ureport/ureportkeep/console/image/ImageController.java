@@ -41,7 +41,7 @@ import java.io.OutputStream;
 @RequestMapping(value = ImageController.URL)
 public class ImageController extends AbstractReportBasicController {
 
-    public static final String URL = "/image";
+    static final String URL = "/image";
 
     /**
 	 * 获取图片资源

@@ -32,6 +32,7 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -70,10 +71,10 @@ public class DesignerController extends AbstractReportBasicController {
      * 加载报表表格
      *
      * @param request
-     * @param response
      */
     @RequestMapping(value = "/loadReport", method = RequestMethod.POST)
-    public void loadReportTable(HttpServletRequest request, HttpServletResponse response) {
+    @ResponseBody
+    public R loadReportTable(HttpServletRequest request, HttpServletResponse response) {
         String file = request.getParameter("file");
         if (file == null) {
             throw new ReportDesignException("Report file can not be null.");
@@ -82,18 +83,20 @@ public class DesignerController extends AbstractReportBasicController {
         file = ReportUtils.decodeFileName(file);
         Object obj = TempObjectCache.getObject(file);
         try {
+            ReportDefinition reportDef = null;
             if (obj != null && obj instanceof ReportDefinition) {
-                ReportDefinition reportDef = (ReportDefinition) obj;
+                reportDef = (ReportDefinition) obj;
                 TempObjectCache.removeObject(file);
-                writeObjectToJson(response, new ReportDefinitionWrapper(reportDef));
+
             } else {
-                ReportDefinition reportDef = reportRender.parseReport(file);
-                writeObjectToJson(response, new ReportDefinitionWrapper(reportDef));
+                reportDef = reportRender.parseReport(file);
             }
+
+            return R.ok().success(Optional.ofNullable(reportDef).map(r -> new ReportDefinitionWrapper(r)).orElse(null));
         } catch (Exception e) {
             e.printStackTrace();
+            return R.error(e.getMessage());
         }
-
     }
 
     /**
@@ -126,13 +129,15 @@ public class DesignerController extends AbstractReportBasicController {
     /**
      * 加载报表
      *
-     * @param resp
      * @throws ServletException
      * @throws IOException
      */
     @RequestMapping(value = "/loadReportProviders", method = RequestMethod.GET)
-    public void loadReportProviders(HttpServletResponse resp) throws ServletException, IOException {
-        writeObjectToJson(resp, reportProvidersInit.getReportProviders().stream().filter(r -> r.getName() != null).collect(Collectors.toList()));
+    @ResponseBody
+    public R loadReportProviders() throws ServletException, IOException {
+        return R.ok().success(
+                reportProvidersInit.getReportProviders().stream().filter(r -> r.getName() != null).collect(Collectors.toList())
+        );
     }
 
     /**
@@ -178,7 +183,8 @@ public class DesignerController extends AbstractReportBasicController {
      * @throws IOException
      */
     @RequestMapping(value = "/scriptValidation", method = RequestMethod.POST)
-    public void scriptValidation(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    @ResponseBody
+    public R scriptValidation(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String content = req.getParameter("content");
         ANTLRInputStream antlrInputStream = new ANTLRInputStream(content);
         ReportParserLexer lexer = new ReportParserLexer(antlrInputStream);
@@ -189,19 +195,20 @@ public class DesignerController extends AbstractReportBasicController {
         parser.addErrorListener(errorListener);
         parser.expression();
         List<ErrorInfo> infos = errorListener.getInfos();
-        writeObjectToJson(resp, infos);
+
+        return R.ok().success(infos);
     }
 
     /**
      * 过滤条件表达式合法校验
      *
      * @param req
-     * @param resp
      * @throws ServletException
      * @throws IOException
      */
     @RequestMapping(value = "/conditionScriptValidation", method = RequestMethod.POST)
-    public void conditionScriptValidation(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    @ResponseBody
+    public R conditionScriptValidation(HttpServletRequest req) throws ServletException, IOException {
         String content = req.getParameter("content");
         ANTLRInputStream antlrInputStream = new ANTLRInputStream(content);
         ReportParserLexer lexer = new ReportParserLexer(antlrInputStream);
@@ -212,11 +219,13 @@ public class DesignerController extends AbstractReportBasicController {
         parser.addErrorListener(errorListener);
         parser.expr();
         List<ErrorInfo> infos = errorListener.getInfos();
-        writeObjectToJson(resp, infos);
+
+        return R.ok().success(infos);
     }
 
     @RequestMapping(value = "/parseDatasetName", method = RequestMethod.POST)
-    public void parseDatasetName(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    @ResponseBody
+    public R parseDatasetName(HttpServletRequest req) throws ServletException, IOException {
         String expr = req.getParameter("expr");
         ANTLRInputStream antlrInputStream = new ANTLRInputStream(expr);
         ReportParserLexer lexer = new ReportParserLexer(antlrInputStream);
@@ -227,7 +236,8 @@ public class DesignerController extends AbstractReportBasicController {
         String datasetName = ctx.Identifier().getText();
         Map<String, String> result = new HashMap<String, String>();
         result.put("datasetName", datasetName);
-        writeObjectToJson(resp, result);
+
+        return R.ok().success(result);
     }
 
     @RequestMapping(value = "/deleteReportFile", method = RequestMethod.POST)

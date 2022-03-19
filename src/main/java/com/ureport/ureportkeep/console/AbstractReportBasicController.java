@@ -1,17 +1,9 @@
 package com.ureport.ureportkeep.console;
 
 import org.apache.commons.lang.StringUtils;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.map.SerializationConfig;
-import org.codehaus.jackson.map.annotate.JsonSerialize;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.OutputStream;
 import java.net.URLDecoder;
-import java.text.SimpleDateFormat;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
@@ -55,22 +47,6 @@ public abstract class AbstractReportBasicController {
             return throwable;
         }
         return buildRootException(throwable.getCause());
-    }
-
-    protected void writeObjectToJson(HttpServletResponse resp, Object obj) throws ServletException, IOException {
-        resp.setContentType("text/json");
-        resp.setCharacterEncoding("UTF-8");
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.setSerializationInclusion(JsonSerialize.Inclusion.NON_NULL);
-        mapper.configure(SerializationConfig.Feature.WRITE_DATES_AS_TIMESTAMPS, false);
-        mapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
-        OutputStream out = resp.getOutputStream();
-        try {
-            mapper.writeValue(out, obj);
-        } finally {
-            out.flush();
-            out.close();
-        }
     }
 
     protected String buildDownloadFileName(String reportFileName,String fileName,String extName){

@@ -26460,9 +26460,11 @@
         loadFile(e, t) {
             const i = this, n = "loadReport";
             $.ajax({
-                url: n, type: "POST", data: {file: e}, success: function (n) {
+                url: n, type: "POST", data: {file: e}, success: function (res) {
+                    let n = res.data;
                     i.reportDef = n, i._buildReportData(n), t && t.call(i, n), i.hot.render(), "classpath:static/template/template.ureport.xml" !== e ? i.hot.context.fileInfo.setFile(e) : i.hot.context.fileInfo.setFile(`${window.i18n.table.report.tip}`), n.paper.bgImage ? $(".ht_master").css("background", `url(${n.paper.bgImage}) 50px 26px no-repeat`) : $(".ht_master").css("background", "transparent")
-                }, error: function (t) {
+                }, error: function (err) {
+                    let t = err.data;
                     t && t.responseText ? alert("服务端错误：" + t.responseText) : alert(`${window.i18n.table.report.load}${e}${window.i18n.table.report.fail}`)
                 }
             })
@@ -26615,7 +26617,8 @@
             this.content = e, this.context = t, this.fileEditor.val(""), this.providerSelect.empty(), this.fileTableBody.empty(), this.reportFilesData = {};
             const i = this;
             $.ajax({
-                url: window._server + "/designer/loadReportProviders", success: function (e) {
+                url: window._server + "/designer/loadReportProviders", success: function (res) {
+                    let e = res.data;
                     for (let t of e) {
                         let {reportFiles: e, name: n, prefix: o} = t;
                         i.reportFilesData[o] = e, i.providerSelect.append(`<option value="${o}">${n}</option>`)
@@ -26734,7 +26737,8 @@
             this.providerSelect.empty(), this.fileTableBody.empty(), this.reportFilesData = {};
             const e = this;
             $.ajax({
-                url: window._server + "/designer/loadReportProviders", success: function (t) {
+                url: window._server + "/designer/loadReportProviders", success: function (res) {
+                    let t = res.data;
                     for (let i of t) {
                         let {reportFiles: t, name: n, prefix: o} = i;
                         e.reportFilesData[o] = t, e.providerSelect.append(`<option value="${o}">${n}</option>`)
@@ -28385,7 +28389,8 @@
         if (!e || "" === e) return void t.call(this);
         const i = window._server + "/designer/scriptValidation";
         $.ajax({
-            url: i, data: {content: e}, type: "POST", success: function (e) {
+            url: i, data: {content: e}, type: "POST", success: function (res) {
+                let e = res.data;
                 let i = "";
                 for (let t of e) i += t.message;
                 "" !== i ? Object(n.a)(`${window.i18n.dialog.setting.syntaxError}${i}`) : t.call(this)
@@ -28656,7 +28661,8 @@
                 e = e.substring(2, e.length - 1);
                 const s = window._server + "/designer/scriptValidation";
                 $.ajax({
-                    url: s, data: {content: e}, type: "POST", success: function (e) {
+                    url: s, data: {content: e}, type: "POST", success: function (res) {
+						let e = res.data;
                         if (e) {
                             for (let t of e) t.from = {line: t.line - 1}, t.to = {line: t.line - 1};
                             t(o, e)
@@ -28685,7 +28691,8 @@
                 r.show();
                 const a = window._server + "/datasource/previewData";
                 $.ajax({
-                    type: "POST", url: a, data: o, success: function (e) {
+                    type: "POST", url: a, data: o, success: function (res) {
+						let r = res.data;
                         r.showData(e)
                     }, error: function (e) {
                         e && e.responseText ? Object(n.a)("服务端错误：" + e.responseText) : r.showError(`<div style='color: #d30e00;'>${window.i18n.dialog.sql.previewFail}</div>`)
@@ -28719,7 +28726,8 @@
             "jdbc" === i ? (o.username = this.db.username, o.password = this.db.password, o.driver = this.db.driver, o.url = this.db.url) : "buildin" === i && (o.name = this.db.name);
             const r = this, a = window._server + "/datasource/buildDatabaseTables";
             $.ajax({
-                type: "POST", data: o, url: a, success: function (e) {
+                type: "POST", data: o, url: a, success: function (res) {
+					let e = res.data;
                     r.tableBody.empty();
                     for (let t of e) {
                         const e = $('<tr style="height: 30px"></tr>'),
@@ -28881,7 +28889,8 @@
                     url: this.url,
                     type: "jdbc"
                 },
-                success: function (i) {
+                success: function (res) {
+					let i = res.data;
                     e.fields = i, t.empty();
                     for (let n of i) o.addField(e, i, n, t)
                 },
@@ -28930,7 +28939,8 @@
             this.dialog.modal("show"), this.tbody.empty();
             const i = this;
             $.ajax({
-                url: window._server + "/datasource/loadMethods", data: {beanId: t}, success: function (t) {
+                url: window._server + "/datasource/loadMethods", data: {beanId: t}, success: function (res) {
+                    let t = res.data;
                     for (let n of t) {
                         const t = $(`<tr style="height: 35px;"><td style="vertical-align: middle">${n}</td></tr>`),
                             o = $('<td style="vertical-align: middle"></td>');
@@ -29079,7 +29089,8 @@
             if (i || !o) $.ajax({
                 url: window._server + "/datasource/buildClass",
                 data: {clazz: e.clazz},
-                success: function (i) {
+                success: function (res) {
+					let i = res.data;
                     e.fields = i, t.empty();
                     for (let n of i) r.addField(e, i, n, t)
                 },
@@ -29210,7 +29221,8 @@
                 url: window._server + "/datasource/buildFields",
                 type: "POST",
                 data: {sql: e.sql, parameters: JSON.stringify(e.parameters), name: this.name, type: "buildin"},
-                success: function (i) {
+                success: function (res) {
+					let i = res.data;
                     e.fields = i, t.empty();
                     for (let n of i) o.addField(e, i, n, t)
                 },
@@ -29303,7 +29315,8 @@
                 url: window._server + "/datasource/testConnection",
                 data: {username: t, password: i, driver: o, url: r},
                 type: "POST",
-                success: function (e) {
+                success: function (res) {
+					let e = res.data;
                     a ? a.call(l) : e.result ? Object(n.a)(`${window.i18n.dialog.datasource.testSuccess}`) : Object(n.a)(`${window.i18n.dialog.datasource.testFail}` + e.error)
                 },
                 error: function (e) {
@@ -29364,7 +29377,8 @@
             this.dialog.modal("show"), this.tbody.empty();
             const t = this;
             $.ajax({
-                url: window._server + "/datasource/loadBuildinDatasources", success: function (i) {
+                url: window._server + "/datasource/loadBuildinDatasources", success: function (res) {
+                    let i = res.data;
                     for (let o of i) {
                         const i = $(`<tr style="height: 35px;"><td style="vertical-align: middle">${o}</td></tr>`),
                             a = $('<td style="vertical-align: middle"></td>');
@@ -29500,7 +29514,8 @@
             this.leftTypeSelect = $(`<select class="form-control" style="display: inline-block;width: inherit">\n            <option value="current">${window.i18n.dialog.editPropCondition.currentValue}</option>\n            <option value="property">${window.i18n.dialog.editPropCondition.property}</option>\n            <option value="expression">${window.i18n.dialog.editPropCondition.expression}</option>\n        </select>`), o.append(this.leftTypeSelect), this.propertyGroup = $(`<span style="margin-left: 10px"><label>${window.i18n.dialog.editPropCondition.propName}</label></span>`), this.propertySelect = $('<select class="form-control" style="display: inline-block;width:320px;"></select>'), this.propertyGroup.append(this.propertySelect), o.append(this.propertyGroup), e.append(o), this.exprGroup = $(`<span style="margin-left: 10px"><label>${window.i18n.dialog.editPropCondition.expr}</label></span>`), this.exprEditor = $('<input type="text" style="display: inline-block;width:320px;" class="form-control">'), this.exprGroup.append(this.exprEditor), o.append(this.exprGroup), this.exprEditor.change(function () {
                 const e = $(this).val(), t = window._server + "/designer/conditionScriptValidation";
                 $.ajax({
-                    url: t, type: "POST", data: {content: e}, success: function (t) {
+                    url: t, type: "POST", data: {content: e}, success: function (res) {
+						let t = res.data;
                         t.length > 0 && Object(n.a)(`${e} ${window.i18n.dialog.editPropCondition.syntaxError}`)
                     }
                 })
@@ -29514,7 +29529,8 @@
             this.valueEditor = $('<input type="text" class="form-control" style="display: inline-block;width:477px;">'), a.append(this.valueEditor), e.append(a), this.valueEditor.change(function () {
                 const e = $(this).val(), t = window._server + "/designer/conditionScriptValidation";
                 $.ajax({
-                    url: t, type: "POST", data: {content: e}, success: function (t) {
+                    url: t, type: "POST", data: {content: e}, success: function (res) {
+						let t = res.data;
                         t.length > 0 && Object(n.a)(`${e} ${window.i18n.dialog.editPropCondition.syntaxError}`)
                     }
                 })
@@ -30273,7 +30289,8 @@
                     if (n && "" !== n) {
                         const r = window._server + "/designer/parseDatasetName";
                         $.ajax({
-                            url: r, type: "POST", data: {expr: n}, success: function (n) {
+                            url: r, type: "POST", data: {expr: n}, success: function (res) {
+								let n = res.data;
                                 i = n.datasetName, o.show(t.datasources, i, e)
                             }, error: function () {
                                 o.show(t.datasources, i, e)
@@ -30300,7 +30317,8 @@
                 if (!e || "" === e) return;
                 const o = window._server + "/designer/scriptValidation";
                 $.ajax({
-                    url: o, data: {content: e}, type: "POST", success: function (e) {
+                    url: o, data: {content: e}, type: "POST", success: function (res) {
+						let e = res.data;
                         if (e) {
                             for (let t of e) t.from = {line: t.line - 1}, t.to = {line: t.line - 1};
                             t(n, e)
@@ -30392,7 +30410,8 @@
             this.valueEditor = $('<input type="text" class="form-control" style="display: inline-block;width:477px;">'), a.append(this.valueEditor), e.append(a), this.valueEditor.change(function () {
                 const e = $(this).val(), t = window._server + "/designer/conditionScriptValidation";
                 $.ajax({
-                    url: t, type: "POST", data: {content: e}, success: function (t) {
+                    url: t, type: "POST", data: {content: e}, success: function (res) {
+						let t = res.data;
                         t.length > 0 && Object(n.a)(`${e} ${window.i18n.dialog.condition.exprError}`)
                     }
                 })

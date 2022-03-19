@@ -18,6 +18,7 @@ package com.ureport.ureportkeep.console.designer;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ureport.ureportkeep.console.AbstractReportBasicController;
+import com.ureport.ureportkeep.console.common.R;
 import com.ureport.ureportkeep.console.exception.ReportDesignException;
 import com.ureport.ureportkeep.core.Utils;
 import com.ureport.ureportkeep.core.build.Context;
@@ -42,9 +43,9 @@ import org.springframework.jdbc.core.SqlParameter;
 import org.springframework.jdbc.core.namedparam.*;
 import org.springframework.jdbc.datasource.SingleConnectionDataSource;
 import org.springframework.jdbc.support.JdbcUtils;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -65,7 +66,7 @@ import java.util.regex.Pattern;
  * @Date: 2022/1/12 21:20
  * @Description:
  **/
-@Controller
+@RestController
 @RequestMapping(value = "/datasource")
 public class DatasourceController extends AbstractReportBasicController {
 
@@ -75,17 +76,18 @@ public class DatasourceController extends AbstractReportBasicController {
     /**
      * 加载内置数据源
      *
-     * @param resp
+     * @param
      * @throws ServletException
      * @throws IOException
      */
     @RequestMapping(value = "/loadBuildinDatasources", method = RequestMethod.GET)
-    public void loadBuildinDatasources(HttpServletResponse resp) throws ServletException, IOException {
+    public R loadBuildinDatasources() throws ServletException, IOException {
         List<String> datasources = new ArrayList<String>();
         for (BuildinDatasource datasource : Utils.getBuildinDatasources()) {
             datasources.add(datasource.name());
         }
-        writeObjectToJson(resp, datasources);
+
+        return R.ok().success(datasources);
     }
 
     /**
@@ -97,7 +99,7 @@ public class DatasourceController extends AbstractReportBasicController {
      * @throws IOException
      */
     @RequestMapping(value = "/loadMethods", method = RequestMethod.GET)
-    public void loadMethods(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public R loadMethods(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String beanId = req.getParameter("beanId");
         Object obj = applicationContext.getBean(beanId);
         Class<?> clazz = obj.getClass();
@@ -122,7 +124,7 @@ public class DatasourceController extends AbstractReportBasicController {
             }
             result.add(method.getName());
         }
-        writeObjectToJson(resp, result);
+        return R.ok().success(result);
     }
 
     /**
@@ -134,7 +136,7 @@ public class DatasourceController extends AbstractReportBasicController {
      * @throws IOException
      */
     @RequestMapping(value = "/buildClass", method = RequestMethod.GET)
-    public void buildClass(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public R buildClass(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String clazz = req.getParameter("clazz");
         List<Field> result = new ArrayList<Field>();
         try {
@@ -147,14 +149,15 @@ public class DatasourceController extends AbstractReportBasicController {
                 }
                 result.add(new Field(name));
             }
-            writeObjectToJson(resp, result);
+
+            return R.ok().success(result);
         } catch (Exception ex) {
             throw new ReportDesignException(ex);
         }
     }
 
     @RequestMapping(value = "/buildDatabaseTables", method = RequestMethod.POST)
-    public void buildDatabaseTables(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public R buildDatabaseTables(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Connection conn = null;
         ResultSet rs = null;
         try {
@@ -173,7 +176,8 @@ public class DatasourceController extends AbstractReportBasicController {
                 table.put("type", rs.getString("TABLE_TYPE"));
                 tables.add(table);
             }
-            writeObjectToJson(resp, tables);
+
+            return R.ok().success(tables);
         } catch (Exception ex) {
             throw new ServletException(ex);
         } finally {
@@ -183,7 +187,7 @@ public class DatasourceController extends AbstractReportBasicController {
     }
 
     @RequestMapping(value = "/buildFields", method = RequestMethod.POST)
-    public void buildFields(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public R buildFields(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String sql = req.getParameter("sql");
         String parameters = req.getParameter("parameters");
         Connection conn = null;
@@ -218,7 +222,8 @@ public class DatasourceController extends AbstractReportBasicController {
                     }
                 });
             }
-            writeObjectToJson(resp, fields);
+
+            return R.ok().success(fields);
         } catch (Exception ex) {
             throw new ReportDesignException(ex);
         } finally {
@@ -236,7 +241,7 @@ public class DatasourceController extends AbstractReportBasicController {
     }
 
     @RequestMapping(value = "/previewData", method = RequestMethod.POST)
-    public void previewData(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public R previewData(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String sql = req.getParameter("sql");
         String parameters = req.getParameter("parameters");
         Map<String, Object> map = buildParameters(parameters);
@@ -273,7 +278,8 @@ public class DatasourceController extends AbstractReportBasicController {
             result.setCurrentTotal(currentTotal);
             result.setData(ls);
             result.setTotal(size);
-            writeObjectToJson(resp, result);
+
+            return R.ok().success(result);
         } catch (Exception ex) {
             throw new ServletException(ex);
         } finally {
@@ -327,7 +333,7 @@ public class DatasourceController extends AbstractReportBasicController {
     }
 
     @RequestMapping(value = "/testConnection", method = RequestMethod.POST)
-    public void testConnection(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public R testConnection(HttpServletRequest req) throws ServletException, IOException {
         String username = req.getParameter("username");
         String password = req.getParameter("password");
         String driver = req.getParameter("driver");
@@ -350,7 +356,8 @@ public class DatasourceController extends AbstractReportBasicController {
                 }
             }
         }
-        writeObjectToJson(resp, map);
+
+        return R.ok().success(map);
     }
 
     @SuppressWarnings("unchecked")

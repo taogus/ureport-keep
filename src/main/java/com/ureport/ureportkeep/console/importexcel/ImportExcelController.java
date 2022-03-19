@@ -17,10 +17,12 @@ package com.ureport.ureportkeep.console.importexcel;
 
 import com.ureport.ureportkeep.console.AbstractReportBasicController;
 import com.ureport.ureportkeep.console.cache.TempObjectCache;
+import com.ureport.ureportkeep.console.common.R;
 import com.ureport.ureportkeep.core.definition.ReportDefinition;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -57,7 +59,8 @@ public class ImportExcelController extends AbstractReportBasicController {
      * @throws IOException
      */
     @RequestMapping(value = "", method = RequestMethod.POST)
-    public void execute(MultipartHttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    @ResponseBody
+    public R execute(MultipartHttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Map<String, MultipartFile> fileMap = req.getFileMap();
         ReportDefinition report = null;
         String errorInfo = null;
@@ -103,7 +106,8 @@ public class ImportExcelController extends AbstractReportBasicController {
                 result.put("errorInfo", errorInfo);
             }
         }
-        writeObjectToJson(resp, result);
+
+        return R.ok().success(result);
     }
 
 }
