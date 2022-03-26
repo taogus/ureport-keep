@@ -33,10 +33,15 @@ public abstract class StringFunction implements Function {
 		if(dataList==null || dataList.size()==0){
 			throw new ReportComputeException("Function ["+name()+"] need a data of string parameter.");
 		}
-		String result=null;
 		ExpressionData<?> data=dataList.get(0);
-		if(data instanceof ObjectListExpressionData){
-			ObjectListExpressionData listData=(ObjectListExpressionData)data;
+		return buildString(data);
+	}
+
+	protected String buildString(ExpressionData<?> expressionData) {
+
+		String result=null;
+		if(expressionData instanceof ObjectListExpressionData){
+			ObjectListExpressionData listData=(ObjectListExpressionData)expressionData;
 			List<?> list=listData.getData();
 			if(list==null || list.size()!=1){
 				throw new ReportComputeException("Function ["+name()+"] need a data of number parameter.");
@@ -46,8 +51,8 @@ public abstract class StringFunction implements Function {
 				throw new ReportComputeException("Function ["+name()+"] parameter can not be null.");
 			}
 			result=obj.toString();
-		}else if(data instanceof ObjectExpressionData){
-			ObjectExpressionData objData=(ObjectExpressionData)data;
+		}else if(expressionData instanceof ObjectExpressionData){
+			ObjectExpressionData objData=(ObjectExpressionData)expressionData;
 			Object obj=objData.getData();
 			if(obj==null){
 				throw new ReportComputeException("Function ["+name()+"] parameter can not be null.");
@@ -56,6 +61,7 @@ public abstract class StringFunction implements Function {
 		}else{
 			throw new ReportComputeException("Function ["+name()+"] need a data of number parameter.");
 		}
+
 		return result;
 	}
 }
