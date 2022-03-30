@@ -28692,7 +28692,7 @@
                 const a = window._server + "/datasource/previewData";
                 $.ajax({
                     type: "POST", url: a, data: o, success: function (res) {
-						let r = res.data;
+						let e = res.data;
                         r.showData(e)
                     }, error: function (e) {
                         e && e.responseText ? Object(n.a)("服务端错误：" + e.responseText) : r.showError(`<div style='color: #d30e00;'>${window.i18n.dialog.sql.previewFail}</div>`)
