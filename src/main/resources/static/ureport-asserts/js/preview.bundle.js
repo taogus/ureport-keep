@@ -786,7 +786,8 @@
                 Object(_Utils_js__WEBPACK_IMPORTED_MODULE_1__.l)(), $.ajax({
                     url: e,
                     type: "POST",
-                    success: function (e) {
+                    success: function (res) {
+                        let e = res.data;
                         $.get(window._server + "/html/loadPagePaper" + t, function (t) {
                             Object(_Utils_js__WEBPACK_IMPORTED_MODULE_1__.e)();
                             const r = e.html, n = window.frames._print_frame;
