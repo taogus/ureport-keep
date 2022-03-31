@@ -27785,7 +27785,7 @@
                 const t = d.contents().find("body").text();
                 if (!t || "" === t) return;
                 const i = JSON.parse(t);
-                if (i.result) {
+                if (i.data.result) {
                     const e = window._server + "/designer/designer";
                     window.open(e, "_self")
                 } else {
