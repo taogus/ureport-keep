@@ -241,7 +241,8 @@ public class DesignerController extends AbstractReportBasicController {
     }
 
     @RequestMapping(value = "/deleteReportFile", method = RequestMethod.POST)
-    public void deleteReportFile(HttpServletRequest req) throws ServletException, IOException {
+    @ResponseBody
+    public R deleteReportFile(HttpServletRequest req) throws ServletException, IOException {
         String file = req.getParameter("file");
         if (file == null) {
             throw new ReportDesignException("Report file can not be null.");
@@ -257,6 +258,8 @@ public class DesignerController extends AbstractReportBasicController {
             throw new ReportDesignException("File [" + file + "] not found available report provider.");
         }
         targetReportProvider.deleteReport(file);
+
+        return R.ok();
     }
 
 }
