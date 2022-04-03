@@ -21,7 +21,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.ureport.ureportkeep.core.build.assertor.*;
+import org.antlr.v4.runtime.ANTLRInputStream;
+import org.antlr.v4.runtime.CommonTokenStream;
+
+import com.ureport.ureportkeep.core.build.assertor.Assertor;
+import com.ureport.ureportkeep.core.build.assertor.EqualsAssertor;
+import com.ureport.ureportkeep.core.build.assertor.EqualsGreatThenAssertor;
+import com.ureport.ureportkeep.core.build.assertor.EqualsLessThenAssertor;
+import com.ureport.ureportkeep.core.build.assertor.GreatThenAssertor;
+import com.ureport.ureportkeep.core.build.assertor.InAssertor;
+import com.ureport.ureportkeep.core.build.assertor.LessThenAssertor;
+import com.ureport.ureportkeep.core.build.assertor.LikeAssertor;
+import com.ureport.ureportkeep.core.build.assertor.NotEqualsAssertor;
+import com.ureport.ureportkeep.core.build.assertor.NotInAssertor;
 import com.ureport.ureportkeep.core.dsl.ReportParserLexer;
 import com.ureport.ureportkeep.core.dsl.ReportParserParser;
 import com.ureport.ureportkeep.core.exception.ReportParseException;
@@ -30,21 +42,29 @@ import com.ureport.ureportkeep.core.expression.model.Expression;
 import com.ureport.ureportkeep.core.expression.model.Op;
 import com.ureport.ureportkeep.core.expression.parse.ExpressionErrorListener;
 import com.ureport.ureportkeep.core.expression.parse.ExpressionVisitor;
-import com.ureport.ureportkeep.core.expression.parse.builder.*;
-import org.antlr.v4.runtime.ANTLRInputStream;
-import org.antlr.v4.runtime.CommonTokenStream;
-import org.springframework.beans.BeansException;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
-import org.springframework.stereotype.Component;
+import com.ureport.ureportkeep.core.expression.parse.builder.BooleanExpressionBuilder;
+import com.ureport.ureportkeep.core.expression.parse.builder.CellObjectExpressionBuilder;
+import com.ureport.ureportkeep.core.expression.parse.builder.CellPositionExpressionBuilder;
+import com.ureport.ureportkeep.core.expression.parse.builder.CurrentCellDataExpressionBuilder;
+import com.ureport.ureportkeep.core.expression.parse.builder.CurrentCellValueExpressionBuilder;
+import com.ureport.ureportkeep.core.expression.parse.builder.DatasetExpressionBuilder;
+import com.ureport.ureportkeep.core.expression.parse.builder.ExpressionBuilder;
+import com.ureport.ureportkeep.core.expression.parse.builder.FunctionExpressionBuilder;
+import com.ureport.ureportkeep.core.expression.parse.builder.IntegerExpressionBuilder;
+import com.ureport.ureportkeep.core.expression.parse.builder.NullExpressionBuilder;
+import com.ureport.ureportkeep.core.expression.parse.builder.NumberExpressionBuilder;
+import com.ureport.ureportkeep.core.expression.parse.builder.RelativeCellExpressionBuilder;
+import com.ureport.ureportkeep.core.expression.parse.builder.SetExpressionBuilder;
+import com.ureport.ureportkeep.core.expression.parse.builder.StringExpressionBuilder;
+import com.ureport.ureportkeep.core.expression.parse.builder.VariableExpressionBuilder;
+import com.ureport.ureportkeep.core.utils.SpringContextUtils;
 
 
 /**
  * @author Jacky.gao
  * @since 2016年12月24日
  */
-@Component
-public class ExpressionUtils implements ApplicationContextAware{
+public class ExpressionUtils {
 	public static final String EXPR_PREFIX="${";
 	public static final String EXPR_SUFFIX="}";
 	private static ExpressionVisitor exprVisitor;
@@ -54,6 +74,11 @@ public class ExpressionUtils implements ApplicationContextAware{
 	private static List<String> cellNameList=new ArrayList<String>();
 	private static String[] LETTERS={"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"};
 	static{
+		Collection<Function> coll = SpringContextUtils.getAllBeansOfType(Function.class);
+		for (Function fun : coll) {
+			functions.put(fun.name(), fun);
+		}
+		
 		expressionBuilders.add(new StringExpressionBuilder());
 		expressionBuilders.add(new VariableExpressionBuilder());
 		expressionBuilders.add(new BooleanExpressionBuilder());
@@ -127,13 +152,5 @@ public class ExpressionUtils implements ApplicationContextAware{
 	
 	public static ExpressionVisitor getExprVisitor() {
 		return exprVisitor;
-	}
-	
-	@Override
-	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-		Collection<Function> coll=applicationContext.getBeansOfType(Function.class).values();
-		for(Function fun:coll){
-			functions.put(fun.name(), fun);
-		}
 	}
 }

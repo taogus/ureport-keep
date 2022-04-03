@@ -15,6 +15,17 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.core;
 
+import java.math.BigDecimal;
+import java.sql.Connection;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.beanutils.PropertyUtils;
+
 import com.ureport.ureportkeep.core.build.Context;
 import com.ureport.ureportkeep.core.definition.datasource.BuildinDatasource;
 import com.ureport.ureportkeep.core.exception.ConvertException;
@@ -22,36 +33,26 @@ import com.ureport.ureportkeep.core.exception.ReportComputeException;
 import com.ureport.ureportkeep.core.model.Cell;
 import com.ureport.ureportkeep.core.model.Report;
 import com.ureport.ureportkeep.core.provider.image.ImageProvider;
-import com.ureport.ureportkeep.core.utils.ReportProperties;
-import org.apache.commons.beanutils.PropertyUtils;
-import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
-import org.springframework.stereotype.Component;
-
-import javax.annotation.PostConstruct;
-import java.math.BigDecimal;
-import java.sql.Connection;
-import java.text.SimpleDateFormat;
-import java.util.*;
+import com.ureport.ureportkeep.core.utils.SpringContextUtils;
 
 
 /**
  * @author Jacky.gao
  * @since 2016年11月12日
  */
-@Component
-public class Utils implements ApplicationContextAware{
+public class Utils {
 
-	@Autowired
-	private ReportProperties reportProperties;
-
-	private static ApplicationContext applicationContext;
-	private static Collection<BuildinDatasource> buildinDatasources;
+ 	private static Collection<BuildinDatasource> buildinDatasources;
 	private static Collection<ImageProvider> imageProviders;
 
 	private static boolean debug;
+	
+	 static {
+		buildinDatasources=new ArrayList<BuildinDatasource>();
+		buildinDatasources.addAll(SpringContextUtils.getAllBeansOfType(BuildinDatasource.class));
+		imageProviders=new ArrayList<ImageProvider>();
+		imageProviders.addAll(SpringContextUtils.getAllBeansOfType(ImageProvider.class));
+	}
 	
 	public static boolean isDebug() {
 		return Utils.debug;
@@ -61,10 +62,6 @@ public class Utils implements ApplicationContextAware{
 		if(Utils.debug){
 			System.out.println(msg);
 		}
-	}
-	
-	public static ApplicationContext getApplicationContext() {
-		return applicationContext;
 	}
 	
 	public static Collection<BuildinDatasource> getBuildinDatasources() {
@@ -219,19 +216,5 @@ public class Utils implements ApplicationContextAware{
 	
 	public void setDebug(boolean debug) {
 		Utils.debug = debug;
-	}
-	
-	@Override
-	public void setApplicationContext(ApplicationContext applicationContext)throws BeansException {
-		Utils.applicationContext=applicationContext;
-		buildinDatasources=new ArrayList<BuildinDatasource>();
-		buildinDatasources.addAll(applicationContext.getBeansOfType(BuildinDatasource.class).values());
-		imageProviders=new ArrayList<ImageProvider>();
-		imageProviders.addAll(applicationContext.getBeansOfType(ImageProvider.class).values());
-	}
-
-	@PostConstruct
-	public void init() {
-		Utils.debug = reportProperties.isDebug();
 	}
 }

@@ -15,30 +15,28 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.core.provider.report.classpath;
 
-import com.ureport.ureportkeep.core.exception.ReportException;
-import com.ureport.ureportkeep.core.provider.report.ReportFile;
-import com.ureport.ureportkeep.core.provider.report.ReportProvider;
-import org.springframework.beans.BeansException;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
-import org.springframework.core.io.Resource;
-import org.springframework.stereotype.Component;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
+
+import org.springframework.core.io.Resource;
+import org.springframework.stereotype.Component;
+
+import com.ureport.ureportkeep.core.exception.ReportException;
+import com.ureport.ureportkeep.core.provider.report.ReportFile;
+import com.ureport.ureportkeep.core.provider.report.ReportProvider;
+import com.ureport.ureportkeep.core.utils.SpringContextUtils;
 
 /**
  * @author Jacky.gao
  * @since 2016年12月4日
  */
 @Component
-public class ClasspathReportProvider implements ReportProvider, ApplicationContextAware {
-    private ApplicationContext applicationContext;
+public class ClasspathReportProvider implements ReportProvider  {
 
     @Override
     public InputStream loadReport(String file) {
-        Resource resource = applicationContext.getResource(file);
+        Resource resource = SpringContextUtils.getResource(file);
         try {
             return resource.getInputStream();
         } catch (IOException e) {
@@ -49,11 +47,7 @@ public class ClasspathReportProvider implements ReportProvider, ApplicationConte
                 newFileName = "classpath:" + file.substring(11, file.length());
             }
             if (newFileName != null) {
-                try {
-                    return applicationContext.getResource(file).getInputStream();
-                } catch (IOException ex) {
-                    throw new ReportException(e);
-                }
+                return SpringContextUtils.getResourceStream(file);
             }
             throw new ReportException(e);
         }
@@ -85,10 +79,5 @@ public class ClasspathReportProvider implements ReportProvider, ApplicationConte
     @Override
     public String getName() {
         return null;
-    }
-
-    @Override
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        this.applicationContext = applicationContext;
     }
 }

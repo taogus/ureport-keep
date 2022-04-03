@@ -16,15 +16,14 @@
 package com.ureport.ureportkeep.core.image;
 
 
-import com.ureport.ureportkeep.core.Utils;
-import com.ureport.ureportkeep.core.exception.ReportComputeException;
-import com.ureport.ureportkeep.core.provider.image.ImageProvider;
-import org.springframework.context.ApplicationContext;
-
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collection;
 import java.util.logging.Logger;
+
+import com.ureport.ureportkeep.core.Utils;
+import com.ureport.ureportkeep.core.exception.ReportComputeException;
+import com.ureport.ureportkeep.core.provider.image.ImageProvider;
+import com.ureport.ureportkeep.core.utils.SpringContextUtils;
 
 /**
  * @author Jacky.gao
@@ -49,14 +48,9 @@ public class StaticImageProcessor implements ImageProcessor<String> {
 			InputStream inputStream=targetImageProvider.getImage(path);
 			return inputStream;			
 		}catch(Exception ex){
-			ApplicationContext applicationContext=Utils.getApplicationContext();
 			log.warning("Image ["+path+"] not exist,use default picture.");
 			String imageNotExistPath="classpath:com/bstek/ureport/image/image-not-exist.jpg";
-			try {
-				return applicationContext.getResource(imageNotExistPath).getInputStream();
-			} catch (IOException e1) {
-				throw new ReportComputeException(e1);
-			}
+			return SpringContextUtils.getResourceStream(imageNotExistPath);
 		}
 	}
 }

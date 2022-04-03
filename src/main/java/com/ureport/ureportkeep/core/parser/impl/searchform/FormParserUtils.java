@@ -19,21 +19,20 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import com.ureport.ureportkeep.core.definition.searchform.Component;
 import org.dom4j.Element;
-import org.springframework.beans.BeansException;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
+
+import com.ureport.ureportkeep.core.definition.searchform.Component;
+import com.ureport.ureportkeep.core.utils.SpringContextUtils;
 
 
 /**
  * @author Jacky.gao
  * @since 2017年10月24日
  */
-@org.springframework.stereotype.Component
-public class FormParserUtils implements ApplicationContextAware{
+public class FormParserUtils {
 	@SuppressWarnings("rawtypes")
-	private static Collection<FormParser> parsers=null;
+	private static Collection<FormParser> parsers = SpringContextUtils.getAllBeansOfType(FormParser.class);
+
 	public static List<Component> parse(Element element){
 		List<Component> list=new ArrayList<Component>();
 		for(Object obj:element.elements()){
@@ -55,9 +54,5 @@ public class FormParserUtils implements ApplicationContextAware{
 			list.add((Component)targetParser.parse(ele));
 		}
 		return list;
-	}
-	@Override
-	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-		FormParserUtils.parsers=applicationContext.getBeansOfType(FormParser.class).values();
 	}
 }

@@ -15,23 +15,19 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.core.cache;
 
-import com.ureport.ureportkeep.core.chart.ChartData;
-import com.ureport.ureportkeep.core.definition.ReportDefinition;
-import org.springframework.beans.BeansException;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
-import org.springframework.stereotype.Component;
-
 import java.util.Collection;
 import java.util.Map;
+
+import com.ureport.ureportkeep.core.chart.ChartData;
+import com.ureport.ureportkeep.core.definition.ReportDefinition;
+import com.ureport.ureportkeep.core.utils.SpringContextUtils;
 
 
 /**
  * @author Jacky.gao
  * @since 2017年3月8日
  */
-@Component
-public class CacheUtils implements ApplicationContextAware {
+public class CacheUtils {
     private static ReportCache reportCache;
     private static ReportDefinitionCache reportDefinitionCache;
     private static String CHART_DATA_key = "_chart_data_";
@@ -76,16 +72,15 @@ public class CacheUtils implements ApplicationContextAware {
         reportDefinitionCache.cacheReportDefinition(file, reportDefinition);
     }
 
-    @Override
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        Collection<ReportCache> coll = applicationContext.getBeansOfType(ReportCache.class).values();
+    static {
+        Collection<ReportCache> coll = SpringContextUtils.getAllBeansOfType(ReportCache.class);
         for (ReportCache cache : coll) {
             if (cache.disabled()) {
                 reportCache = cache;
                 break;
             }
         }
-        Collection<ReportDefinitionCache> reportCaches = applicationContext.getBeansOfType(ReportDefinitionCache.class).values();
+        Collection<ReportDefinitionCache> reportCaches = SpringContextUtils.getAllBeansOfType(ReportDefinitionCache.class);
         if (reportCaches.size() == 0) {
             reportDefinitionCache = new DefaultMemoryReportDefinitionCache();
         } else {

@@ -24,27 +24,23 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.ureport.ureportkeep.core.exception.ReportComputeException;
-import com.ureport.ureportkeep.core.exception.ReportException;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
 
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.pdf.BaseFont;
-import org.springframework.stereotype.Component;
+import com.ureport.ureportkeep.core.exception.ReportComputeException;
+import com.ureport.ureportkeep.core.exception.ReportException;
+import com.ureport.ureportkeep.core.utils.SpringContextUtils;
 
 /**
  * @author Jacky.gao
  * @since 2014年4月22日
  */
-@Component
-public class FontBuilder implements ApplicationContextAware {
-    private static ApplicationContext applicationContext;
+public class FontBuilder  {
     private static final Map<String, BaseFont> fontMap = new HashMap<String, BaseFont>();
     public static final Map<String, String> fontPathMap = new HashMap<String, String>();
     private static List<String> systemFontNameList = new ArrayList<String>();
@@ -98,7 +94,7 @@ public class FontBuilder implements ApplicationContextAware {
         }
         InputStream inputStream = null;
         try {
-            inputStream = applicationContext.getResource(fontPath).getInputStream();
+            inputStream = SpringContextUtils.getResourceStream(fontPath);
             java.awt.Font font = java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT, inputStream);
             return font.deriveFont(fontStyle, size);
         } catch (Exception e) {
@@ -108,14 +104,13 @@ public class FontBuilder implements ApplicationContextAware {
         }
     }
 
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        FontBuilder.applicationContext = applicationContext;
+    static {
         GraphicsEnvironment environment = GraphicsEnvironment.getLocalGraphicsEnvironment();
         String[] fontNames = environment.getAvailableFontFamilyNames();
         for (String name : fontNames) {
             systemFontNameList.add(name);
         }
-        Collection<FontRegister> fontRegisters = applicationContext.getBeansOfType(FontRegister.class).values();
+        Collection<FontRegister> fontRegisters = SpringContextUtils.getAllBeansOfType(FontRegister.class);
         for (FontRegister fontReg : fontRegisters) {
             String fontName = fontReg.getFontName();
             String fontPath = fontReg.getFontPath();
@@ -123,7 +118,7 @@ public class FontBuilder implements ApplicationContextAware {
                 continue;
             }
             try {
-                BaseFont baseFont = getIdentityFont(fontName, fontPath, applicationContext);
+                BaseFont baseFont = getIdentityFont(fontName, fontPath, SpringContextUtils.getApplicationContext());
                 if (baseFont == null) {
                     throw new ReportComputeException("Font " + fontPath + " does not exist");
                 }
@@ -135,7 +130,7 @@ public class FontBuilder implements ApplicationContextAware {
         }
     }
 
-    private BaseFont getIdentityFont(String fontFamily, String fontPath, ApplicationContext applicationContext) throws DocumentException, IOException {
+    private static BaseFont getIdentityFont(String fontFamily, String fontPath, ApplicationContext applicationContext) throws DocumentException, IOException {
         if (!fontPath.startsWith(ApplicationContext.CLASSPATH_URL_PREFIX)) {
             fontPath = ApplicationContext.CLASSPATH_URL_PREFIX + fontPath;
         }

@@ -19,13 +19,11 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import com.ureport.ureportkeep.core.exception.ReportComputeException;
-import org.springframework.beans.BeansException;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ResourceUtils;
-import org.springframework.web.context.WebApplicationContext;
+
+import com.ureport.ureportkeep.core.exception.ReportComputeException;
+import com.ureport.ureportkeep.core.utils.SpringContextUtils;
 
 
 /**
@@ -33,14 +31,13 @@ import org.springframework.web.context.WebApplicationContext;
  * @since 2017年3月6日
  */
 @Component
-public class DefaultImageProvider implements ImageProvider,ApplicationContextAware {
-	private ApplicationContext applicationContext;
-	private String baseWebPath;
+public class DefaultImageProvider implements ImageProvider  {
+	private String baseWebPath = SpringContextUtils.getWebBasePath();
 	@Override
 	public InputStream getImage(String path) {
 		try {
 			if(path.startsWith(ResourceUtils.CLASSPATH_URL_PREFIX) || path.startsWith("/WEB-INF")){
-				return applicationContext.getResource(path).getInputStream();				
+				return SpringContextUtils.getResourceStream(path);				
 			}else{
 				path=baseWebPath+path;
 				return new FileInputStream(path);
@@ -58,13 +55,5 @@ public class DefaultImageProvider implements ImageProvider,ApplicationContextAwa
 			return true;
 		}
 		return false;
-	}
-	@Override
-	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-		if(applicationContext instanceof WebApplicationContext){
-			WebApplicationContext context=(WebApplicationContext)applicationContext;
-			baseWebPath=context.getServletContext().getRealPath("/");
-		}
-		this.applicationContext=applicationContext;
 	}
 }
