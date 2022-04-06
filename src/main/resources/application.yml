@@ -20,10 +20,29 @@ spring:
 
 ureport:
   disableHttpSessionReportCache: false
-  disableFileProvider: false
+  # 是否开启文件储存系统
+  disableFileProvider: true
   fileStoreDir: ureportfiles
   debug: true
   # 是否使用redis作为缓存
   enableRedis: false
   # redis缓存过期时间 (单位：分钟) 默认60分钟
   cacheExpire: 60
+  # 是否开启云储存系统
+  ossEnable: false
+  # 云储存配置
+  oss:
+    # 端点，上传地址
+    endpoint:
+    # 云储存key
+    access-key:
+    # 云储存密钥
+    secret-key:
+    # 桶名称
+    bucket-name:
+    # 地区（可填可不填）
+    region:
+    # 最大连接时间
+    max-connections: 100
+    # 云储存上传路径
+    prefix: source/report/

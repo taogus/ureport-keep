@@ -1,5 +1,6 @@
 package com.ureport.ureportkeep.core.utils;
 
+import com.ureport.ureportkeep.core.utils.oss.OssProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
@@ -29,6 +30,32 @@ public class ReportProperties {
      * redis缓存过期时间 (单位：分钟)
      */
     private int cacheExpire;
+
+    /**
+     * 云储存启用
+     */
+    private boolean ossEnable;
+
+    /**
+     * 云储存配置
+     */
+    private OssProperties oss;
+
+    public boolean isOssEnable() {
+        return ossEnable;
+    }
+
+    public void setOssEnable(boolean ossEnable) {
+        this.ossEnable = ossEnable;
+    }
+
+    public OssProperties getOss() {
+        return oss;
+    }
+
+    public void setOss(OssProperties oss) {
+        this.oss = oss;
+    }
 
     public boolean isDisableHttpSessionReportCache() {
         return disableHttpSessionReportCache;
