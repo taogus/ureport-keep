@@ -79,7 +79,7 @@ public class XSSFExcelParser extends ExcelParser {
 				Span span=getSpan(sheet, i, j);
 				
 				Object value=null;
-				CellType cellType=cell.getCellTypeEnum();
+				CellType cellType=cell.getCellType();
 				switch(cellType){
 				case STRING:
 					value=cell.getStringCellValue();
@@ -129,7 +129,7 @@ public class XSSFExcelParser extends ExcelParser {
 	private CellStyle buildCellStyle(XSSFCell cell, XSSFWorkbook book){
 		CellStyle style=new CellStyle();
 		XSSFCellStyle cellStyle=cell.getCellStyle();
-		HorizontalAlignment align=cellStyle.getAlignmentEnum();
+		HorizontalAlignment align=cellStyle.getAlignment();
 		if(align.equals(HorizontalAlignment.CENTER)){
 			style.setAlign(Alignment.center);
 		}else if(align.equals(HorizontalAlignment.RIGHT)){
@@ -137,7 +137,7 @@ public class XSSFExcelParser extends ExcelParser {
 		}else{
 			style.setAlign(Alignment.left);
 		}
-		VerticalAlignment valign=cellStyle.getVerticalAlignmentEnum();
+		VerticalAlignment valign=cellStyle.getVerticalAlignment();
 		if(valign.equals(VerticalAlignment.BOTTOM)){
 			style.setValign(Alignment.bottom);
 		}else if(valign.equals(VerticalAlignment.TOP)){
@@ -164,7 +164,7 @@ public class XSSFExcelParser extends ExcelParser {
 		}else{
 			style.setForecolor("0,0,0");			
 		}
-		FillPatternType pattern=cellStyle.getFillPatternEnum();
+		FillPatternType pattern=cellStyle.getFillPattern();
 		if(pattern!=null && pattern.equals(FillPatternType.SOLID_FOREGROUND)){
 			XSSFColor bgcolor=cellStyle.getFillForegroundColorColor();
 			if(bgcolor!=null){
@@ -174,7 +174,7 @@ public class XSSFExcelParser extends ExcelParser {
 		}
 		int fontSize=font.getFontHeight()/20;
 		style.setFontSize(fontSize);
-		BorderStyle borderStyle=cellStyle.getBorderLeftEnum();
+		BorderStyle borderStyle=cellStyle.getBorderLeft();
 		if(!borderStyle.equals(BorderStyle.NONE)){
 			Border border=new Border();
 			border.setColor("0,0,0");
@@ -182,7 +182,7 @@ public class XSSFExcelParser extends ExcelParser {
 			border.setWidth(1);
 			style.setLeftBorder(border);
 		}
-		borderStyle=cellStyle.getBorderRightEnum();
+		borderStyle=cellStyle.getBorderRight();
 		if(!borderStyle.equals(BorderStyle.NONE)){
 			Border border=new Border();
 			border.setColor("0,0,0");
@@ -190,7 +190,7 @@ public class XSSFExcelParser extends ExcelParser {
 			border.setWidth(1);
 			style.setRightBorder(border);
 		}
-		borderStyle=cellStyle.getBorderTopEnum();
+		borderStyle=cellStyle.getBorderTop();
 		if(!borderStyle.equals(BorderStyle.NONE)){
 			Border border=new Border();
 			border.setColor("0,0,0");
@@ -198,7 +198,7 @@ public class XSSFExcelParser extends ExcelParser {
 			border.setWidth(1);
 			style.setTopBorder(border);
 		}
-		borderStyle=cellStyle.getBorderBottomEnum();
+		borderStyle=cellStyle.getBorderBottom();
 		if(!borderStyle.equals(BorderStyle.NONE)){
 			Border border=new Border();
 			border.setColor("0,0,0");

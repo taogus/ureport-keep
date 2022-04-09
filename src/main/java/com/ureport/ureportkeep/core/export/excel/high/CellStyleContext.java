@@ -15,10 +15,6 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.core.export.excel.high;
 
-import java.awt.Color;
-import java.util.HashMap;
-import java.util.Map;
-
 import com.ureport.ureportkeep.core.definition.Alignment;
 import com.ureport.ureportkeep.core.definition.Border;
 import com.ureport.ureportkeep.core.definition.CellStyle;
@@ -29,9 +25,14 @@ import org.apache.poi.ss.usermodel.FillPatternType;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
+import org.apache.poi.xssf.usermodel.DefaultIndexedColorMap;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFFont;
+
+import java.awt.*;
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -257,7 +258,7 @@ public class CellStyleContext {
 	private XSSFColor buildXSSFColor(String colorStr){
 		String[] color=colorStr.split(",");
 		Color c=new Color(Integer.valueOf(color[0]),Integer.valueOf(color[1]),Integer.valueOf(color[2]));
-		XSSFColor xssfColor=new XSSFColor(c);
+		XSSFColor xssfColor=new XSSFColor(c, new DefaultIndexedColorMap());
 		return xssfColor;
 	}
 	

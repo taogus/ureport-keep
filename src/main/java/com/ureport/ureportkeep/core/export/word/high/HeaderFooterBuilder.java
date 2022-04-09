@@ -96,7 +96,7 @@ public class HeaderFooterBuilder {
 						r1.setFontSize(hf.getFontSize());
 					}
 					CTRPr rpr = r1.getCTR().isSetRPr() ? r1.getCTR().getRPr() : r1.getCTR().addNewRPr();
-					CTFonts fonts = rpr.isSetRFonts() ? rpr.getRFonts() : rpr.addNewRFonts();
+					CTFonts fonts = rpr.sizeOfRFontsArray() > 0 ? rpr.getRFontsArray(0) : rpr.addNewRFonts();
 					String fontName=hf.getFontFamily();
 					if(fontName!=null){
 						fonts.setAscii(fontName);
@@ -122,7 +122,7 @@ public class HeaderFooterBuilder {
 						r1.setFontSize(hf.getFontSize());
 					}
 					CTRPr rpr = r1.getCTR().isSetRPr() ? r1.getCTR().getRPr() : r1.getCTR().addNewRPr();
-					CTFonts fonts = rpr.isSetRFonts() ? rpr.getRFonts() : rpr.addNewRFonts();
+					CTFonts fonts = rpr.sizeOfRFontsArray() > 0 ? rpr.getRFontsArray(0) : rpr.addNewRFonts();
 					String fontName=hf.getFontFamily();
 					if(fontName!=null){
 						fonts.setAscii(fontName);
@@ -144,7 +144,7 @@ public class HeaderFooterBuilder {
 						r1.setFontSize(hf.getFontSize());
 					}
 					CTRPr rpr = r1.getCTR().isSetRPr() ? r1.getCTR().getRPr() : r1.getCTR().addNewRPr();
-					CTFonts fonts = rpr.isSetRFonts() ? rpr.getRFonts() : rpr.addNewRFonts();
+					CTFonts fonts = rpr.sizeOfRFontsArray() > 0 ? rpr.getRFontsArray(0) : rpr.addNewRFonts();
 					String fontName=hf.getFontFamily();
 					if(fontName!=null){
 						fonts.setAscii(fontName);
@@ -164,7 +164,7 @@ public class HeaderFooterBuilder {
 						r1.setFontSize(hf.getFontSize());
 					}
 					CTRPr rpr = r1.getCTR().isSetRPr() ? r1.getCTR().getRPr() : r1.getCTR().addNewRPr();
-					CTFonts fonts = rpr.isSetRFonts() ? rpr.getRFonts() : rpr.addNewRFonts();
+					CTFonts fonts = rpr.sizeOfRFontsArray() > 0 ? rpr.getRFontsArray(0) : rpr.addNewRFonts();
 					String fontName=hf.getFontFamily();
 					if(fontName!=null){
 						fonts.setAscii(fontName);
@@ -184,7 +184,7 @@ public class HeaderFooterBuilder {
 						r1.setFontSize(hf.getFontSize());
 					}
 					CTRPr rpr = r1.getCTR().isSetRPr() ? r1.getCTR().getRPr() : r1.getCTR().addNewRPr();
-					CTFonts fonts = rpr.isSetRFonts() ? rpr.getRFonts() : rpr.addNewRFonts();
+					CTFonts fonts = rpr.sizeOfRFontsArray() > 0 ? rpr.getRFontsArray(0) : rpr.addNewRFonts();
 					String fontName=hf.getFontFamily();
 					if(fontName!=null){
 						fonts.setAscii(fontName);
@@ -219,7 +219,7 @@ public class HeaderFooterBuilder {
 						r1.setFontSize(hf.getFontSize());
 					}
 					CTRPr rpr = r1.getCTR().isSetRPr() ? r1.getCTR().getRPr() : r1.getCTR().addNewRPr();
-					CTFonts fonts = rpr.isSetRFonts() ? rpr.getRFonts() : rpr.addNewRFonts();
+					CTFonts fonts = rpr.sizeOfRFontsArray() > 0 ? rpr.getRFontsArray(0) : rpr.addNewRFonts();
 					String fontName=hf.getFontFamily();
 					if(fontName!=null){
 						fonts.setAscii(fontName);
@@ -245,7 +245,7 @@ public class HeaderFooterBuilder {
 						r1.setFontSize(hf.getFontSize());
 					}
 					CTRPr rpr = r1.getCTR().isSetRPr() ? r1.getCTR().getRPr() : r1.getCTR().addNewRPr();
-					CTFonts fonts = rpr.isSetRFonts() ? rpr.getRFonts() : rpr.addNewRFonts();
+					CTFonts fonts = rpr.sizeOfRFontsArray() > 0 ? rpr.getRFontsArray(0) : rpr.addNewRFonts();
 					String fontName=hf.getFontFamily();
 					if(fontName!=null){
 						fonts.setAscii(fontName);
@@ -267,7 +267,7 @@ public class HeaderFooterBuilder {
 						r1.setFontSize(hf.getFontSize());
 					}
 					CTRPr rpr = r1.getCTR().isSetRPr() ? r1.getCTR().getRPr() : r1.getCTR().addNewRPr();
-					CTFonts fonts = rpr.isSetRFonts() ? rpr.getRFonts() : rpr.addNewRFonts();
+					CTFonts fonts = rpr.sizeOfRFontsArray() > 0 ? rpr.getRFontsArray(0) : rpr.addNewRFonts();
 					String fontName=hf.getFontFamily();
 					if(fontName!=null){
 						fonts.setAscii(fontName);
@@ -287,7 +287,7 @@ public class HeaderFooterBuilder {
 						r1.setFontSize(hf.getFontSize());
 					}
 					CTRPr rpr = r1.getCTR().isSetRPr() ? r1.getCTR().getRPr() : r1.getCTR().addNewRPr();
-					CTFonts fonts = rpr.isSetRFonts() ? rpr.getRFonts() : rpr.addNewRFonts();
+					CTFonts fonts = rpr.sizeOfRFontsArray() > 0 ? rpr.getRFontsArray(0) : rpr.addNewRFonts();
 					String fontName=hf.getFontFamily();
 					if(fontName!=null){
 						fonts.setAscii(fontName);
@@ -307,7 +307,7 @@ public class HeaderFooterBuilder {
 						r1.setFontSize(hf.getFontSize());
 					}
 					CTRPr rpr = r1.getCTR().isSetRPr() ? r1.getCTR().getRPr() : r1.getCTR().addNewRPr();
-					CTFonts fonts = rpr.isSetRFonts() ? rpr.getRFonts() : rpr.addNewRFonts();
+					CTFonts fonts = rpr.sizeOfRFontsArray() > 0 ? rpr.getRFontsArray(0) : rpr.addNewRFonts();
 					String fontName=hf.getFontFamily();
 					if(fontName!=null){
 						fonts.setAscii(fontName);
@@ -342,7 +342,7 @@ public class HeaderFooterBuilder {
 						r1.setFontSize(hf.getFontSize());
 					}
 					CTRPr rpr = r1.getCTR().isSetRPr() ? r1.getCTR().getRPr() : r1.getCTR().addNewRPr();
-					CTFonts fonts = rpr.isSetRFonts() ? rpr.getRFonts() : rpr.addNewRFonts();
+					CTFonts fonts = rpr.sizeOfRFontsArray() > 0 ? rpr.getRFontsArray(0) : rpr.addNewRFonts();
 					String fontName=hf.getFontFamily();
 					if(fontName!=null){
 						fonts.setAscii(fontName);
@@ -368,7 +368,7 @@ public class HeaderFooterBuilder {
 						r1.setFontSize(hf.getFontSize());
 					}
 					CTRPr rpr = r1.getCTR().isSetRPr() ? r1.getCTR().getRPr() : r1.getCTR().addNewRPr();
-					CTFonts fonts = rpr.isSetRFonts() ? rpr.getRFonts() : rpr.addNewRFonts();
+					CTFonts fonts = rpr.sizeOfRFontsArray() > 0 ? rpr.getRFontsArray(0) : rpr.addNewRFonts();
 					String fontName=hf.getFontFamily();
 					if(fontName!=null){
 						fonts.setAscii(fontName);
@@ -390,7 +390,7 @@ public class HeaderFooterBuilder {
 						r1.setFontSize(hf.getFontSize());
 					}
 					CTRPr rpr = r1.getCTR().isSetRPr() ? r1.getCTR().getRPr() : r1.getCTR().addNewRPr();
-					CTFonts fonts = rpr.isSetRFonts() ? rpr.getRFonts() : rpr.addNewRFonts();
+					CTFonts fonts = rpr.sizeOfRFontsArray() > 0 ? rpr.getRFontsArray(0) : rpr.addNewRFonts();
 					String fontName=hf.getFontFamily();
 					if(fontName!=null){
 						fonts.setAscii(fontName);
@@ -410,7 +410,7 @@ public class HeaderFooterBuilder {
 						r1.setFontSize(hf.getFontSize());
 					}
 					CTRPr rpr = r1.getCTR().isSetRPr() ? r1.getCTR().getRPr() : r1.getCTR().addNewRPr();
-					CTFonts fonts = rpr.isSetRFonts() ? rpr.getRFonts() : rpr.addNewRFonts();
+					CTFonts fonts = rpr.sizeOfRFontsArray() > 0 ? rpr.getRFontsArray(0) : rpr.addNewRFonts();
 					String fontName=hf.getFontFamily();
 					if(fontName!=null){
 						fonts.setAscii(fontName);
@@ -430,7 +430,7 @@ public class HeaderFooterBuilder {
 						r1.setFontSize(hf.getFontSize());
 					}
 					CTRPr rpr = r1.getCTR().isSetRPr() ? r1.getCTR().getRPr() : r1.getCTR().addNewRPr();
-					CTFonts fonts = rpr.isSetRFonts() ? rpr.getRFonts() : rpr.addNewRFonts();
+					CTFonts fonts = rpr.sizeOfRFontsArray() > 0 ? rpr.getRFontsArray(0) : rpr.addNewRFonts();
 					String fontName=hf.getFontFamily();
 					if(fontName!=null){
 						fonts.setAscii(fontName);

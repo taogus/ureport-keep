@@ -108,11 +108,7 @@ public class DesignerController extends AbstractReportBasicController {
         String content = req.getParameter("content");
         content = decodeContent(content);
         InputStream inputStream = null;
-        try {
-            inputStream = IOUtils.toInputStream(content, "utf-8");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        inputStream = IOUtils.toInputStream(content, "utf-8");
         ReportDefinition reportDef = reportParser.parse(inputStream, "p");
         reportRender.rebuildReportDefinition(reportDef);
         IOUtils.closeQuietly(inputStream);
