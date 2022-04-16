@@ -755,7 +755,8 @@
             n > 0 && (window._currentPageIndex && (window._currentPageIndex > n && (window._currentPageIndex = 1), r += "&_i=" + window._currentPageIndex), $("#pageSelector").val(window._currentPageIndex)), $.ajax({
                 url: r,
                 type: "GET",
-                success: function (e) {
+                success: function (res) {
+                    let e = res.data;
                     const r = $("#_ureport_table");
                     r.empty(), window._totalPage = e.totalPageWithCol, r.append(e.content), _buildChartDatas(e.chartDatas), buildPaging(window._currentPageIndex, window._totalPage), window._currentPageIndex && window._currentPageIndex++, setTimeout(function () {
                         _refreshData(t)
@@ -917,7 +918,8 @@
             let n = window._server + "/html/loadData" + r;
             const i = $("#pageSelector");
             i.length > 0 && (n += "&_i=1"), $.ajax({
-                url: n, type: "POST", success: function (t) {
+                url: n, type: "POST", success: function (res) {
+                    let t = res.data;
                     window._currentPageIndex = 1;
                     const e = $("#_ureport_table");
                     e.empty(), e.append(t.content), _buildChartDatas(t.chartDatas);

@@ -211,7 +211,7 @@ public class HtmlPreviewController extends AbstractReportBasicController {
         return R.ok().success(paper);
     }
 
-    @RequestMapping(value = "/loadData", method = RequestMethod.POST)
+    @RequestMapping(value = "/loadData", method = RequestMethod.GET)
     @ResponseBody
     public R loadData(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HtmlReport htmlReport=loadReport(req);
