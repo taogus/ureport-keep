@@ -53,8 +53,8 @@
 			<ul class="dropdown-menu" role="menu">
 				<li th:if="${hasTools}"><a th:href="${'preview?_u=' + file + '&_t=' + _t + '&' + customParameters}" style="color:#337ab7">预览</a></li>
 				<li th:else><a th:href="${'preview?_u=' + file + '&' + customParameters}" style="color:#337ab7">预览</a></li>
-				<li th:if="${hasTools}"><a th:href="${'preview?_u=' + file + '&_t=1&' + customParameters}" style="color:#337ab7">分页预览</a></li>
-				<li th:else><a th:href="${'preview?_u=' + file + '&_t=1&' + customParameters}" style="color:#337ab7">分页预览</a></li>
+				<li th:if="${hasTools}"><a th:href="${'preview?_u=' + file + '&_i=1&_t=1&' + customParameters}" style="color:#337ab7">分页预览</a></li>
+				<li th:else><a th:href="${'preview?_u=' + file + '&_i=1&' + customParameters}" style="color:#337ab7">分页预览</a></li>
 			</ul>
 		</div>
 		<span id='pagingContainer' style="font-size:14px;margin-left:1px;color:#337ab7" th:if="${pageIndex>0}">
