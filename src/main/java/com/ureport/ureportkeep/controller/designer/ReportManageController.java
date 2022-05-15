@@ -1,12 +1,12 @@
 package com.ureport.ureportkeep.controller.designer;
 
 import com.ureport.ureportkeep.console.common.R;
+import com.ureport.ureportkeep.controller.designer.dto.ReportManageDto;
 import com.ureport.ureportkeep.core.init.ReportProvidersInit;
+import com.ureport.ureportkeep.core.provider.report.ReportProvider;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.thymeleaf.util.StringUtils;
 
 import java.util.stream.Collectors;
 
@@ -46,6 +46,21 @@ public class ReportManageController {
     @RequestMapping(value = "/loadReport", method = RequestMethod.GET)
     public R loadReport(@RequestParam String file) {
 
+
+        return R.ok();
+    }
+
+    /**
+     * 保存报表文件
+     *
+     * @param reportManageDto
+     * @return
+     */
+    @PostMapping("/save")
+    public R saveReport(@RequestBody ReportManageDto reportManageDto) {
+        String reportProvider = reportManageDto.getReportProvider();
+        ReportProvider provider = reportProvidersInit.getProvider(reportProvider);
+        provider.saveReport(StringUtils.randomAlphanumeric(8) + ".json", reportManageDto.getReportJson());
 
         return R.ok();
     }
