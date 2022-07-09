@@ -24,4 +24,11 @@ import com.ureport.ureportkeep.core.definition.ReportDefinition;
 public interface ReportDefinitionCache {
 	ReportDefinition getReportDefinition(String file);
 	void cacheReportDefinition(String file, ReportDefinition reportDefinition);
+
+	/**
+	 * 是否开启
+	 *
+	 * @return
+	 */
+	boolean disabled();
 }

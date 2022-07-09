@@ -15,12 +15,13 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.core.cache;
 
-import java.util.Collection;
-import java.util.Map;
-
+import com.ureport.ureportkeep.console.cache.CacheProperties;
 import com.ureport.ureportkeep.core.chart.ChartData;
 import com.ureport.ureportkeep.core.definition.ReportDefinition;
 import com.ureport.ureportkeep.core.utils.SpringContextUtils;
+
+import java.util.Collection;
+import java.util.Map;
 
 
 /**
@@ -80,11 +81,12 @@ public class CacheUtils {
                 break;
             }
         }
+
         Collection<ReportDefinitionCache> reportCaches = SpringContextUtils.getAllBeansOfType(ReportDefinitionCache.class);
-        if (reportCaches.size() == 0) {
-            reportDefinitionCache = new DefaultMemoryReportDefinitionCache();
+        if (CacheProperties.isEnableRedis()) {
+            reportDefinitionCache = reportCaches.stream().filter(r -> r instanceof RedisReportDefinitionCache).findFirst().get();
         } else {
-            reportDefinitionCache = reportCaches.iterator().next();
+            reportDefinitionCache = reportCaches.stream().filter(r -> r instanceof DefaultMemoryReportDefinitionCache).findFirst().get();
         }
     }
 }

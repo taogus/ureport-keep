@@ -15,6 +15,10 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.core.cache;
 
+import com.ureport.ureportkeep.console.cache.CacheProperties;
+import com.ureport.ureportkeep.core.utils.SpringContextUtils;
+import org.springframework.data.redis.core.RedisTemplate;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,9 +27,21 @@ import java.util.Map;
  * @since 2017年3月17日
  */
 public class ResourceCache {
+
+    private static RedisTemplate redisTemplate;
+
     private static Map<String, Object> map = new HashMap<String, Object>();
 
+    static {
+        redisTemplate = SpringContextUtils.getBean(RedisTemplate.class);
+    }
+
     public static void putObject(String key, Object obj) {
+        if (CacheProperties.isEnableRedis()) {
+            redisTemplate.opsForValue().set(key, obj);
+            return;
+        }
+
         if (map.containsKey(key)) {
             map.remove(key);
         }
@@ -33,6 +49,10 @@ public class ResourceCache {
     }
 
     public static Object getObject(String key) {
+        if (CacheProperties.isEnableRedis()) {
+            return redisTemplate.opsForValue().get(key);
+        }
+
         return map.get(key);
     }
 }
