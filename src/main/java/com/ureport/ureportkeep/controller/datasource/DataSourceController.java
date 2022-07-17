@@ -5,11 +5,9 @@ import com.ureport.ureportkeep.console.exception.ReportDesignException;
 import com.ureport.ureportkeep.controller.datasource.dto.DataSourceConnectDto;
 import com.ureport.ureportkeep.controller.datasource.enums.DataSourceType;
 import com.ureport.ureportkeep.core.Utils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.jdbc.support.JdbcUtils;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletException;
 import java.io.IOException;
@@ -99,6 +97,17 @@ public class DataSourceController {
             JdbcUtils.closeResultSet(rs);
             JdbcUtils.closeConnection(conn);
         }
+    }
+
+    @PostMapping(value = "/parseSqlParams")
+    public R parseSqlParams(@RequestBody Map<String, String> sqlInfo) {
+        String sql = sqlInfo.get("sql");
+        if (StringUtils.isEmpty(sql)) {
+            return R.ok().success();
+        }
+
+        String[] paramNames = StringUtils.substringsBetween(sql, "${", "}");
+        return R.ok().success(paramNames);
     }
 
     private Connection buildConnection(DataSourceConnectDto dataSourceConnectDto) throws Exception {
