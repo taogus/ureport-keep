@@ -1,13 +1,17 @@
 package com.ureport.ureportkeep.controller.datasource;
 
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.ureport.ureportkeep.console.common.R;
 import com.ureport.ureportkeep.console.designer.DataResult;
 import com.ureport.ureportkeep.console.exception.ReportDesignException;
 import com.ureport.ureportkeep.controller.datasource.dto.DataSourceConnectDto;
-import com.ureport.ureportkeep.controller.datasource.dto.PreviewDataDto;
+import com.ureport.ureportkeep.controller.datasource.dto.DatasetParamDto;
+import com.ureport.ureportkeep.controller.datasource.dto.DatasetWarpper;
 import com.ureport.ureportkeep.controller.datasource.enums.DataSourceType;
 import com.ureport.ureportkeep.core.Utils;
 import com.ureport.ureportkeep.core.build.Context;
+import com.ureport.ureportkeep.core.definition.dataset.Field;
+import com.ureport.ureportkeep.core.definition.datasource.DataType;
 import com.ureport.ureportkeep.core.expression.ExpressionUtils;
 import com.ureport.ureportkeep.core.expression.model.Expression;
 import com.ureport.ureportkeep.core.expression.model.data.ExpressionData;
@@ -15,21 +19,25 @@ import com.ureport.ureportkeep.core.expression.model.data.ObjectExpressionData;
 import com.ureport.ureportkeep.core.utils.ProcedureUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.json.JsonParseException;
 import org.springframework.context.ApplicationContext;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.dao.DataAccessException;
+import org.springframework.jdbc.core.PreparedStatementCallback;
+import org.springframework.jdbc.core.PreparedStatementCreator;
+import org.springframework.jdbc.core.PreparedStatementCreatorFactory;
+import org.springframework.jdbc.core.SqlParameter;
+import org.springframework.jdbc.core.namedparam.*;
 import org.springframework.jdbc.datasource.SingleConnectionDataSource;
 import org.springframework.jdbc.support.JdbcUtils;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
-import org.thymeleaf.util.ArrayUtils;
 
 import javax.servlet.ServletException;
 import javax.sql.DataSource;
 import java.io.IOException;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.Date;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -138,25 +146,17 @@ public class DataSourceController {
     /**
      * 预览sql数据
      *
-     * @param previewDataDto
+     * @param datasetWarpper
      * @return
      */
     @PostMapping(value = "/previewData")
-    public R previewData(@RequestBody PreviewDataDto previewDataDto) {
-        String sql = previewDataDto.getSql();
-        Map<String, Object> params = previewDataDto.getParams();
-
-        String[] paramNames = StringUtils.substringsBetween(sql, "${", "}");
-        if (!ArrayUtils.isEmpty(paramNames)) {
-            for (String paramName : paramNames) {
-                sql = StringUtils.replaceAll(sql, "${" + paramName + "}", ":" + paramName);
-            }
-        }
-
+    public R previewData(@RequestBody DatasetWarpper datasetWarpper) {
+        String sql = datasetWarpper.getSql();
+        Map<String, Object> params = datasetWarpper.getParams();
         sql = parseSql(sql, params);
         Connection connection = null;
         try {
-            connection = buildConnection(previewDataDto);
+            connection = buildConnection(datasetWarpper);
             List<Map<String, Object>> list = null;
             if (ProcedureUtils.isProcedure(sql)) {
                 list = ProcedureUtils.procedureQuery(sql, params, connection);
@@ -201,6 +201,113 @@ public class DataSourceController {
         }
 
         return R.ok().success();
+    }
+
+    /**
+     * 构建数据集字段
+     *
+     * @param datasetWarpper
+     * @return
+     */
+    @RequestMapping(value = "/buildFields", method = RequestMethod.POST)
+    public R buildFields(@RequestBody DatasetWarpper datasetWarpper) {
+        String sql = datasetWarpper.getSql();
+        List<DatasetParamDto> paramsValues = datasetWarpper.getParamsValues();
+
+        Connection connection = null;
+        final List<Field> fields = new ArrayList<>();
+        try {
+            connection = buildConnection(datasetWarpper);
+            Map<String, Object> map = buildParameters(paramsValues);
+            sql = parseSql(sql, map);
+            if (ProcedureUtils.isProcedure(sql)) {
+                List<Field> fieldsList = ProcedureUtils.procedureColumnsQuery(sql, map, connection);
+                fields.addAll(fieldsList);
+            } else {
+                DataSource dataSource = new SingleConnectionDataSource(connection, false);
+                NamedParameterJdbcTemplate jdbc = new NamedParameterJdbcTemplate(dataSource);
+                PreparedStatementCreator statementCreator = getPreparedStatementCreator(sql, new MapSqlParameterSource(map));
+                jdbc.getJdbcOperations().execute(statementCreator, new PreparedStatementCallback<Object>() {
+                    @Override
+                    public Object doInPreparedStatement(PreparedStatement ps) throws SQLException, DataAccessException {
+                        ResultSet rs = null;
+                        try {
+                            rs = ps.executeQuery();
+                            ResultSetMetaData metadata = rs.getMetaData();
+                            int columnCount = metadata.getColumnCount();
+                            for (int i = 0; i < columnCount; i++) {
+                                String columnName = metadata.getColumnLabel(i + 1);
+                                fields.add(new Field(columnName));
+                            }
+                            return null;
+                        } finally {
+                            JdbcUtils.closeResultSet(rs);
+                        }
+                    }
+                });
+            }
+
+            return R.ok().success(fields);
+        } catch (Exception e) {
+            throw new ReportDesignException(e);
+        }finally {
+            JdbcUtils.closeConnection(connection);
+        }
+
+    }
+
+    protected PreparedStatementCreator getPreparedStatementCreator(String sql, SqlParameterSource paramSource) {
+        ParsedSql parsedSql = NamedParameterUtils.parseSqlStatement(sql);
+        String sqlToUse = NamedParameterUtils.substituteNamedParameters(parsedSql, paramSource);
+        Object[] params = NamedParameterUtils.buildValueArray(parsedSql, paramSource, null);
+        List<SqlParameter> declaredParameters = NamedParameterUtils.buildSqlParameterList(parsedSql, paramSource);
+        PreparedStatementCreatorFactory pscf = new PreparedStatementCreatorFactory(sqlToUse, declaredParameters);
+        return pscf.newPreparedStatementCreator(params);
+    }
+
+    /**
+     * 解析参数
+     *
+     * @param paramsValues
+     * @return
+     * @throws IOException
+     * @throws JsonParseException
+     * @throws JsonMappingException
+     */
+    private Map<String, Object> buildParameters(List<DatasetParamDto> paramsValues) throws IOException, JsonParseException, JsonMappingException {
+        if (CollectionUtils.isEmpty(paramsValues)) {
+            return new HashMap<>();
+        }
+        HashMap<String, Object> paramValueMap = new HashMap<>();
+        for (DatasetParamDto param : paramsValues) {
+            String name = param.getName();
+            DataType type = param.getType();
+            String defaultValue = param.getDefaultValue();
+            if (defaultValue == null || defaultValue.equals("")) {
+                switch (type) {
+                    case Boolean:
+                        paramValueMap.put(name, false);
+                    case Date:
+                        paramValueMap.put(name, new Date());
+                    case Float:
+                        paramValueMap.put(name, new Float(0));
+                    case Integer:
+                        paramValueMap.put(name, 0);
+                    case String:
+                        if (defaultValue != null && defaultValue.equals("")) {
+                            paramValueMap.put(name, "");
+                        } else {
+                            paramValueMap.put(name, "null");
+                        }
+                        break;
+                    case List:
+                        paramValueMap.put(name, new ArrayList<Object>());
+                }
+            } else {
+                paramValueMap.put(name, type.parse(defaultValue));
+            }
+        }
+        return paramValueMap;
     }
 
     /**
