@@ -22,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.json.JsonParseException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.dao.DataAccessException;
+import org.springframework.jdbc.BadSqlGrammarException;
 import org.springframework.jdbc.core.PreparedStatementCallback;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.PreparedStatementCreatorFactory;
@@ -248,6 +249,8 @@ public class DataSourceController {
             }
 
             return R.ok().success(fields);
+        } catch (BadSqlGrammarException badSqlGrammarException) {
+            throw new ReportDesignException("SQL语法错误，请检查！");
         } catch (Exception e) {
             throw new ReportDesignException(e);
         }finally {
