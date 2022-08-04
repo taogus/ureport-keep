@@ -141,6 +141,10 @@ public class DataSourceController {
         }
 
         String[] paramNames = StringUtils.substringsBetween(sql, "${", "}");
+        long distinctSize = Arrays.stream(paramNames).distinct().count();
+        if (distinctSize != paramNames.length) {
+            throw new ReportDesignException("SQL参数存在重复变量名");
+        }
         return R.ok().success(paramNames);
     }
 
