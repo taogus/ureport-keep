@@ -14,12 +14,6 @@ public abstract class ReportParseFactory {
 
     private static Map<String, Parser> parseMap = new HashMap<>();
 
-    private static boolean init;
-
-    static {
-        init = false;
-    }
-
     /**
      * 注册解析器
      *
@@ -40,12 +34,5 @@ public abstract class ReportParseFactory {
      */
     public Parser getParse(String name) {
         return ReportParseFactory.parseMap.get(name);
-    }
-
-    /**
-     * 初始化完成
-     */
-    public void initFinish() {
-        ReportParseFactory.init = true;
     }
 }
