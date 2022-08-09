@@ -32,6 +32,7 @@ import org.springframework.jdbc.datasource.SingleConnectionDataSource;
 import org.springframework.jdbc.support.JdbcUtils;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
+import org.thymeleaf.util.ArrayUtils;
 
 import javax.servlet.ServletException;
 import javax.sql.DataSource;
@@ -141,6 +142,9 @@ public class DataSourceController {
         }
 
         String[] paramNames = StringUtils.substringsBetween(sql, "${", "}");
+        if (ArrayUtils.isEmpty(paramNames)) {
+            return R.ok().success(new String[0]);
+        }
         long distinctSize = Arrays.stream(paramNames).distinct().count();
         if (distinctSize != paramNames.length) {
             throw new ReportDesignException("SQL参数存在重复变量名");

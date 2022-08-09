@@ -1,6 +1,5 @@
 package com.ureport.ureportkeep.controller.datasource.dto;
 
-import com.ureport.ureportkeep.core.exception.ReportException;
 import org.apache.commons.lang3.StringUtils;
 import org.thymeleaf.util.ArrayUtils;
 
@@ -35,16 +34,14 @@ public class DatasetWarpper extends DataSourceConnectDto {
             return this.parseSql;
         }
 
+        this.parseSql = this.sql;
         String[] paramNames = StringUtils.substringsBetween(sql, "${", "}");
         if (!ArrayUtils.isEmpty(paramNames)) {
             for (String paramName : paramNames) {
-                if (!this.params.containsKey(paramName)) {
-                    throw new ReportException("[" + paramName + "]找不到参数定义");
-                }
-                this.parseSql = StringUtils.replace(sql, "${" + paramName + "}", ":" + paramName);
+                this.parseSql = StringUtils.replace(this.parseSql, "${" + paramName + "}", ":" + paramName);
             }
         }
-        return StringUtils.isEmpty(this.parseSql) ? this.sql : this.parseSql;
+        return this.parseSql;
     }
 
     public void setSql(String sql) {
