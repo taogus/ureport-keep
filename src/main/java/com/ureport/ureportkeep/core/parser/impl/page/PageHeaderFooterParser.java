@@ -13,12 +13,11 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  ******************************************************************************/
-package com.ureport.ureportkeep.core.parser.impl;
+package com.ureport.ureportkeep.core.parser.impl.page;
 
 import com.ureport.ureportkeep.core.definition.HeaderFooterDefinition;
 import com.ureport.ureportkeep.core.expression.ExpressionUtils;
 import com.ureport.ureportkeep.core.expression.model.Expression;
-import com.ureport.ureportkeep.core.parser.Parser;
 import org.apache.commons.lang3.StringUtils;
 import org.dom4j.Element;
 
@@ -27,9 +26,9 @@ import org.dom4j.Element;
  * @author Jacky.gao
  * @since 2017年4月14日
  */
-public class HeaderFooterParser implements Parser<HeaderFooterDefinition> {
-	@Override
-	public HeaderFooterDefinition parse(Element element) {
+public abstract class PageHeaderFooterParser {
+
+	public HeaderFooterDefinition pageParse(Element element) {
 		HeaderFooterDefinition hf=new HeaderFooterDefinition();
 		String margin=element.attributeValue("margin");
 		if(StringUtils.isNotBlank(margin)){

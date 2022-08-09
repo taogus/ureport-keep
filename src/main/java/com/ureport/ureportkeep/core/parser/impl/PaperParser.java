@@ -19,12 +19,14 @@ import com.ureport.ureportkeep.core.definition.*;
 import com.ureport.ureportkeep.core.parser.Parser;
 import org.apache.commons.lang3.StringUtils;
 import org.dom4j.Element;
+import org.springframework.stereotype.Component;
 
 
 /**
  * @author Jacky.gao
  * @since 2017年1月19日
  */
+@Component
 public class PaperParser implements Parser<Paper> {
 	@Override
 	public Paper parse(Element element) {
@@ -78,5 +80,10 @@ public class PaperParser implements Parser<Paper> {
 		}
 		paper.setBgImage(element.attributeValue("bg-image"));
 		return paper;
+	}
+
+	@Override
+	public String getName() {
+		return "paper";
 	}
 }

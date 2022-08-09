@@ -19,11 +19,13 @@ import com.ureport.ureportkeep.core.definition.ColumnDefinition;
 import com.ureport.ureportkeep.core.parser.Parser;
 import org.apache.commons.lang3.StringUtils;
 import org.dom4j.Element;
+import org.springframework.stereotype.Component;
 
 /**
  * @author Jacky.gao
  * @since 2016年12月5日
  */
+@Component
 public class ColumnParser implements Parser<ColumnDefinition> {
 	@Override
 	public ColumnDefinition parse(Element element) {
@@ -38,5 +40,10 @@ public class ColumnParser implements Parser<ColumnDefinition> {
 			col.setWidth(Integer.valueOf(width));
 		}
 		return col;
+	}
+
+	@Override
+	public String getName() {
+		return "column";
 	}
 }

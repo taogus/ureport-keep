@@ -15,14 +15,14 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.core.parser.impl.searchform;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.ureport.ureportkeep.core.definition.searchform.CheckboxInputComponent;
 import com.ureport.ureportkeep.core.definition.searchform.LabelPosition;
 import com.ureport.ureportkeep.core.definition.searchform.Option;
 import org.dom4j.Element;
 import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -56,8 +56,9 @@ public class CheckboxParser implements FormParser<CheckboxInputComponent> {
 		checkbox.setOptions(options);
 		return checkbox;
 	}
+
 	@Override
-	public boolean support(String name) {
-		return name.equals("input-checkbox");
+	public String getName() {
+		return "input-checkbox";
 	}
 }

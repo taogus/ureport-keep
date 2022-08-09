@@ -45,4 +45,9 @@ public class LinkParameterParser implements Parser<LinkParameter> {
 		}
 		return param;
 	}
+
+	@Override
+	public String getName() {
+		return "link-parameter";
+	}
 }

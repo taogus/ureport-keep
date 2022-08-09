@@ -15,11 +15,6 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.core.parser.impl;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import com.ureport.ureportkeep.core.definition.ConditionCellStyle;
 import com.ureport.ureportkeep.core.definition.ConditionPaging;
 import com.ureport.ureportkeep.core.definition.ConditionPropertyItem;
@@ -35,6 +30,11 @@ import com.ureport.ureportkeep.core.expression.model.condition.PropertyExpressio
 import com.ureport.ureportkeep.core.parser.Parser;
 import org.apache.commons.lang3.StringUtils;
 import org.dom4j.Element;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -107,7 +107,12 @@ public class ConditionParameterItemParser implements Parser<ConditionPropertyIte
 		item.setLinkParameters(parameters);
 		return item;
 	}
-	
+
+	@Override
+	public String getName() {
+		return "condition-property-item";
+	}
+
 	private BaseCondition parseCondition(Element ele) {
 		String type=ele.attributeValue("type");
 		if(type==null || type.equals("property")){

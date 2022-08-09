@@ -19,11 +19,13 @@ import com.ureport.ureportkeep.core.definition.ConditionPaging;
 import com.ureport.ureportkeep.core.definition.PagingPosition;
 import com.ureport.ureportkeep.core.parser.Parser;
 import org.dom4j.Element;
+import org.springframework.stereotype.Component;
 
 /**
  * @author Jacky.gao
  * @since 2017年6月21日
  */
+@Component
 public class ConditionPagingParser implements Parser<ConditionPaging> {
 	@Override
 	public ConditionPaging parse(Element element) {
@@ -33,5 +35,10 @@ public class ConditionPagingParser implements Parser<ConditionPaging> {
 		String line=element.attributeValue("line");
 		paging.setLine(Integer.valueOf(line));
 		return paging;
+	}
+
+	@Override
+	public String getName() {
+		return "paging";
 	}
 }

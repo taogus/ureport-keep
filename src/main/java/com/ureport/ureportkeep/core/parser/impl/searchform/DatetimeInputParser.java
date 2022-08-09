@@ -36,8 +36,9 @@ public class DatetimeInputParser implements FormParser<DateInputComponent> {
 		component.setFormat(element.attributeValue("format"));
 		return component;
 	}
+
 	@Override
-	public boolean support(String name) {
-		return name.equals("input-datetime");
+	public String getName() {
+		return "input-datetime";
 	}
 }

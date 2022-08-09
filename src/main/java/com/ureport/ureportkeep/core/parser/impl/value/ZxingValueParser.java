@@ -23,11 +23,13 @@ import com.ureport.ureportkeep.core.definition.value.ZxingValue;
 import com.ureport.ureportkeep.core.expression.ExpressionUtils;
 import com.ureport.ureportkeep.core.expression.model.Expression;
 import org.dom4j.Element;
+import org.springframework.stereotype.Component;
 
 /**
  * @author Jacky.gao
  * @since 2017年3月6日
  */
+@Component
 public class ZxingValueParser extends ValueParser {
 
 	@Override
@@ -60,5 +62,10 @@ public class ZxingValueParser extends ValueParser {
 			value.setExpression(expression);
 		}
 		return value;
+	}
+
+	@Override
+	public String getName() {
+		return "zxing-value";
 	}
 }

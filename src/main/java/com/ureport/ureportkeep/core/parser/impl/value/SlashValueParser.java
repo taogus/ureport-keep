@@ -20,6 +20,7 @@ import com.ureport.ureportkeep.core.definition.value.Slash;
 import com.ureport.ureportkeep.core.definition.value.SlashValue;
 import com.ureport.ureportkeep.core.definition.value.Value;
 import org.dom4j.Element;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +29,7 @@ import java.util.List;
  * @author Jacky.gao
  * @since 2017年3月6日
  */
+@Component
 public class SlashValueParser extends ValueParser {
 	@Override
 	public Value parse(Element element) {
@@ -56,5 +58,10 @@ public class SlashValueParser extends ValueParser {
 			}
 		}
 		return value;
+	}
+
+	@Override
+	public String getName() {
+		return "slash-value";
 	}
 }

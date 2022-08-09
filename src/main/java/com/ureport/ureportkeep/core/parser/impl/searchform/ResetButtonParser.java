@@ -33,8 +33,9 @@ public class ResetButtonParser implements FormParser<ResetButtonComponent>{
 		btn.setType(element.attributeValue("type"));
 		return btn;
 	}
+
 	@Override
-	public boolean support(String name) {
-		return name.equals("button-reset");
+	public String getName() {
+		return "button-reset";
 	}
 }
