@@ -29,6 +29,7 @@ import com.ureport.ureportkeep.core.expression.model.condition.Join;
 import com.ureport.ureportkeep.core.expression.model.condition.PropertyExpressionCondition;
 import org.apache.commons.lang3.StringUtils;
 import org.dom4j.Element;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +38,7 @@ import java.util.List;
  * @author Jacky.gao
  * @since 2016年12月21日
  */
+@Component
 public class DatasetValueParser extends ValueParser {
 	@Override
 	public Value parse(Element element) {
@@ -118,6 +120,11 @@ public class DatasetValueParser extends ValueParser {
 			value.setMappingItems(mappingItems);
 		}
 		return value;
+	}
+
+	@Override
+	public String getName() {
+		return "dataset-value";
 	}
 
 	private PropertyExpressionCondition parseCondition(Element ele) {

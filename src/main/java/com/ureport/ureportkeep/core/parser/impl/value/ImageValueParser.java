@@ -23,11 +23,13 @@ import com.ureport.ureportkeep.core.expression.ExpressionUtils;
 import com.ureport.ureportkeep.core.expression.model.Expression;
 import org.apache.commons.lang.StringUtils;
 import org.dom4j.Element;
+import org.springframework.stereotype.Component;
 
 /**
  * @author Jacky.gao
  * @since 2017年3月6日
  */
+@Component
 public class ImageValueParser extends ValueParser {
 
 	@Override
@@ -63,5 +65,10 @@ public class ImageValueParser extends ValueParser {
 			value.setExpression(expression);
 		}
 		return value;
+	}
+
+	@Override
+	public String getName() {
+		return "image-value";
 	}
 }

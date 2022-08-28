@@ -20,11 +20,13 @@ import com.ureport.ureportkeep.core.definition.RowDefinition;
 import com.ureport.ureportkeep.core.parser.Parser;
 import org.apache.commons.lang3.StringUtils;
 import org.dom4j.Element;
+import org.springframework.stereotype.Component;
 
 /**
  * @author Jacky.gao
  * @since 2016年12月5日
  */
+@Component
 public class RowParser implements Parser<RowDefinition> {
 	@Override
 	public RowDefinition parse(Element element) {
@@ -39,5 +41,10 @@ public class RowParser implements Parser<RowDefinition> {
 			row.setBand(Band.valueOf(band));
 		}
 		return row;
+	}
+
+	@Override
+	public String getName() {
+		return "row";
 	}
 }

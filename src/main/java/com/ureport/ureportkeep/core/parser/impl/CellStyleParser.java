@@ -20,12 +20,14 @@ import com.ureport.ureportkeep.core.definition.*;
 import com.ureport.ureportkeep.core.parser.Parser;
 import org.apache.commons.lang3.StringUtils;
 import org.dom4j.Element;
+import org.springframework.stereotype.Component;
 
 
 /**
  * @author Jacky.gao
  * @since 2017年1月19日
  */
+@Component
 public class CellStyleParser implements Parser<CellStyle> {
 	@Override
 	public CellStyle parse(Element element) {
@@ -137,7 +139,12 @@ public class CellStyleParser implements Parser<CellStyle> {
 		}
 		return style;
 	}
-	
+
+	@Override
+	public String getName() {
+		return "cell-style";
+	}
+
 	private Border parseBorder(Element element){
 		Border border=new Border();
 		border.setWidth(Integer.valueOf(element.attributeValue("width")));

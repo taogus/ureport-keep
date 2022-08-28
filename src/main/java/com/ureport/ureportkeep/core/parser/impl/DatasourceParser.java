@@ -15,21 +15,23 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.core.parser.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.ureport.ureportkeep.core.definition.dataset.*;
 import com.ureport.ureportkeep.core.definition.datasource.*;
 import com.ureport.ureportkeep.core.expression.ExpressionUtils;
 import com.ureport.ureportkeep.core.expression.model.Expression;
 import com.ureport.ureportkeep.core.parser.Parser;
 import org.dom4j.Element;
+import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
  * @author Jacky.gao
  * @since 2016年12月30日
  */
+@Component
 public class DatasourceParser implements Parser<DatasourceDefinition> {
 	@Override
 	public DatasourceDefinition parse(Element element) {
@@ -57,7 +59,12 @@ public class DatasourceParser implements Parser<DatasourceDefinition> {
 		}
 		return null;
 	}
-	
+
+	@Override
+	public String getName() {
+		return "datasource";
+	}
+
 	private List<DatasetDefinition> parseDatasets(Element element){
 		List<DatasetDefinition> list=new ArrayList<DatasetDefinition>();
 		for(Object obj:element.elements()){

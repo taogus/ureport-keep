@@ -38,8 +38,9 @@ public class SubmitButtonParser implements FormParser<SubmitButtonComponent> {
 		}
 		return btn;
 	}
+
 	@Override
-	public boolean support(String name) {
-		return name.equals("button-submit");
+	public String getName() {
+		return "button-submit";
 	}
 }

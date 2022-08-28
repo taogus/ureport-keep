@@ -22,5 +22,5 @@ import com.ureport.ureportkeep.core.parser.Parser;
  * @since 2017年10月24日
  */
 public interface FormParser<T> extends Parser<T> {
-	boolean support(String name);
+
 }

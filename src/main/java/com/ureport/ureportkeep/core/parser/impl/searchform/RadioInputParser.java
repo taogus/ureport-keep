@@ -15,14 +15,14 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.core.parser.impl.searchform;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.ureport.ureportkeep.core.definition.searchform.LabelPosition;
 import com.ureport.ureportkeep.core.definition.searchform.Option;
 import com.ureport.ureportkeep.core.definition.searchform.RadioInputComponent;
 import org.dom4j.Element;
 import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Jacky.gao
@@ -55,8 +55,9 @@ public class RadioInputParser implements FormParser<RadioInputComponent> {
 		radio.setOptions(options);
 		return radio;
 	}
+
 	@Override
-	public boolean support(String name) {
-		return name.equals("input-radio");
+	public String getName() {
+		return "input-radio";
 	}
 }

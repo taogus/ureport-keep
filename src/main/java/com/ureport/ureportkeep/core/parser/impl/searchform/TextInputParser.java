@@ -35,8 +35,9 @@ public class TextInputParser implements FormParser<TextInputComponent> {
 		component.setLabelPosition(LabelPosition.valueOf(element.attributeValue("label-position")));
 		return component;
 	}
+
 	@Override
-	public boolean support(String name) {
-		return name.equals("input-text");
+	public String getName() {
+		return "input-text";
 	}
 }

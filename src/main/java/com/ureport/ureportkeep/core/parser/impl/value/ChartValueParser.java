@@ -38,11 +38,13 @@ import com.ureport.ureportkeep.core.definition.value.Value;
 import com.ureport.ureportkeep.core.exception.ReportParseException;
 import org.apache.commons.lang.StringUtils;
 import org.dom4j.Element;
+import org.springframework.stereotype.Component;
 
 /**
  * @author Jacky.gao
  * @since 2017年6月28日
  */
+@Component
 public class ChartValueParser extends ValueParser {
 
 	@Override
@@ -80,7 +82,12 @@ public class ChartValueParser extends ValueParser {
 		}
 		return value;
 	}
-	
+
+	@Override
+	public String getName() {
+		return "chart-value";
+	}
+
 	private Option parseOption(Element element){
 		String type=element.attributeValue("type");
 		Option target=null;
