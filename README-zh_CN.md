@@ -24,6 +24,8 @@ Gitee Wiki: [https://gitee.com/summer-T/ureport-keep/wikis/pages](https://gitee.
 
 
 # 运行步骤
+
+## spring boot项目运行
 1、拉取代码
 ```
 git clone https://gitee.com/summer-T/ureport-keep.git
@@ -31,11 +33,21 @@ git clone https://gitee.com/summer-T/ureport-keep.git
 
 2、运行spring boot ``` UreportKeepApplication ``` main方法
 
-
-
 3、启动服务后访问地址：``` http://localhost:8888/ureport_keep/designer/designer ```
+## 前端项目构建（如需开发前端）
+前端项目路径``` ureport-keep-js ```
+
+1、安装npm
+```
+npm install
+```
+
+2、编译js
+```
+npm run build
+```
 
 # 交流
-| 微信扫码添加交流 |
-|--------|
-|![输入图片说明](docs/images/c98f97a2b4e9faf2caab984899246ab0.jpg)|
+| 微信扫码添加交流 | 付款码 |
+|--------|-------- |
+|![输入图片说明](docs/images/c98f97a2b4e9faf2caab984899246ab0.jpg)|![输入图片说明](docs/images/wepay.png)|

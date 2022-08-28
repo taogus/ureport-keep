@@ -1,0 +1,36 @@
+.handsontable tr{
+    background: transparent;
+}
+.handsontable td, .handsontable th{
+    background: transparent;
+}
+.handsontable table.htCore{
+    border-collapse:collapse
+}
+.ud-toolbar{
+    width: 100%;
+    background: #f8f8f8;
+}
+.ud-property-panel{
+    width: 400px;
+    border: solid 1px #999;
+    border-radius: 5px;
+    top: 35px;
+    left: 710px;
+    z-index: 105;
+    position: absolute;
+    background: #ffffff;
+    box-shadow: 5px 5px 5px #888888;
+}
+.ud-select-color{
+    background: #000000;
+    width: 14px;
+    height: 4px;
+    display: block;
+}
+.ud-select-bgcolor{
+    background: #fff;
+    width: 14px;
+    height: 4px;
+    display: block;
+}
