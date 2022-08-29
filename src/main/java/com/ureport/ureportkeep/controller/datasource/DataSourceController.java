@@ -12,6 +12,7 @@ import com.ureport.ureportkeep.core.Utils;
 import com.ureport.ureportkeep.core.build.Context;
 import com.ureport.ureportkeep.core.definition.dataset.Field;
 import com.ureport.ureportkeep.core.definition.datasource.DataType;
+import com.ureport.ureportkeep.core.exception.ReportException;
 import com.ureport.ureportkeep.core.expression.ExpressionUtils;
 import com.ureport.ureportkeep.core.expression.model.Expression;
 import com.ureport.ureportkeep.core.expression.model.data.ExpressionData;
@@ -172,7 +173,12 @@ public class DataSourceController {
             } else {
                 DataSource dataSource = new SingleConnectionDataSource(connection, false);
                 NamedParameterJdbcTemplate jdbc = new NamedParameterJdbcTemplate(dataSource);
-                list = jdbc.queryForList(sql, params);
+                try {
+                    list = jdbc.queryForList(sql, params);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    throw new ReportException("SQL查询失败：" + e.getMessage());
+                }
             }
             int size = list.size();
             int currentTotal = size;
@@ -199,6 +205,7 @@ public class DataSourceController {
             return R.ok().success(result);
         } catch (Exception e) {
             e.printStackTrace();
+            throw new ReportException("预览SQL失败：" + e.getLocalizedMessage());
         } finally {
             if (connection != null) {
                 try {
@@ -208,8 +215,6 @@ public class DataSourceController {
                 }
             }
         }
-
-        return R.ok().success();
     }
 
     /**
