@@ -46,7 +46,7 @@ export default class ImportDialog{
             if(!text || text===""){
                 return;
             }
-            const json=JSON.parse(text);
+            const json=JSON.parse(text).data;
             const result=json.result;
             if(result){
                 const url=window._server+"/designer/designer";
