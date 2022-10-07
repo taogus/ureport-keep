@@ -30,6 +30,7 @@ import com.ureport.ureportkeep.core.expression.model.condition.PropertyExpressio
 import com.ureport.ureportkeep.core.parser.Parser;
 import org.apache.commons.lang3.StringUtils;
 import org.dom4j.Element;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -41,6 +42,7 @@ import java.util.Map;
  * @author Jacky.gao
  * @since 2017年4月11日
  */
+@Component
 public class ConditionParameterItemParser implements Parser<ConditionPropertyItem> {
 	private Map<String,Parser<?>> parsers=new HashMap<String,Parser<?>>();
 	public ConditionParameterItemParser() {
