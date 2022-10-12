@@ -66,8 +66,8 @@
 		</span>
 	</div>
 </div>
-<div th:text="${downSearchFormHtml}"></div>
-<div id="_ureport_table" style="float:${reportAlign}" th:utext="${content}">
+<div th:utext="${downSearchFormHtml}"></div>
+<div id="_ureport_table" th:style="'float:' + ${reportAlign}" th:utext="${content}">
 </div>
 <iframe name="_print_frame" width="0" height="0" frameborder="0" src="about:blank"></iframe>
 <iframe name="_print_pdf_frame" width="0" height="0" frameborder="0" src="about:blank"></iframe>
