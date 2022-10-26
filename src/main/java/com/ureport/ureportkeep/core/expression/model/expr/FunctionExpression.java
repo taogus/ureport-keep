@@ -64,7 +64,7 @@ public class FunctionExpression extends BaseExpression {
         Object obj = targetFunction.execute(dataList, context, currentCell);
         if (obj instanceof List) {
             return new ObjectListExpressionData((List<?>) obj);
-        } else if (obj.getClass().isArray()) {
+        } else if (obj != null && obj.getClass().isArray()) {
             return new ObjectListExpressionData(CollectionUtils.arrayToList(obj));
         }
         return new ObjectExpressionData(obj);
