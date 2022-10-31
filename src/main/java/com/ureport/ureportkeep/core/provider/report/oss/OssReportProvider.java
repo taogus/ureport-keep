@@ -3,11 +3,14 @@ package com.ureport.ureportkeep.core.provider.report.oss;
 import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.services.s3.model.S3ObjectSummary;
 import com.ureport.ureportkeep.core.exception.ReportException;
+import com.ureport.ureportkeep.core.exception.ReportManageException;
 import com.ureport.ureportkeep.core.provider.report.ReportFile;
 import com.ureport.ureportkeep.core.provider.report.ReportProvider;
 import com.ureport.ureportkeep.core.utils.ReportProperties;
 import com.ureport.ureportkeep.core.utils.oss.OssUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -21,6 +24,8 @@ import java.util.*;
  **/
 @Component
 public class OssReportProvider implements ReportProvider {
+
+    private final Logger logger = LoggerFactory.getLogger(getClass());
 
     @Autowired
     private ReportProperties reportProperties;
@@ -45,7 +50,13 @@ public class OssReportProvider implements ReportProvider {
 
     @Override
     public List<ReportFile> getReportFiles() {
-        List<S3ObjectSummary> objects = ossUtils.getObjects(getPrefix());
+        List<S3ObjectSummary> objects = new ArrayList<>();
+        try {
+            objects = ossUtils.getObjects(getPrefix());
+        } catch (Exception e) {
+            logger.error("云储存获取资源失败请检查配置: {}", e);
+        }
+
         List<ReportFile> files = new ArrayList<>(objects.size());
         for (S3ObjectSummary object : objects) {
             files.add(new ReportFile(StringUtils.substringAfterLast(object.getKey(), "/"), object.getLastModified()));
@@ -65,7 +76,9 @@ public class OssReportProvider implements ReportProvider {
         try {
             ossUtils.putObject(getPrefix() + file, content);
         } catch (Exception e) {
-         }
+            logger.error("云储存保存报表文件错误，请检查配置: {}", e);
+            throw new ReportManageException("云储存保存报表文件错误，请检查配置");
+        }
     }
 
     @Override

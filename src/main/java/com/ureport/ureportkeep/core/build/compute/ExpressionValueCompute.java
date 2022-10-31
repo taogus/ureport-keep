@@ -158,7 +158,7 @@ public class ExpressionValueCompute implements ValueCompute {
 				if (!CollectionUtils.isEmpty(expressionList)) {
 					ParenExpression expression = (ParenExpression) expressionList.get(0);
 					List<BaseExpression> expressions = expression.getExpressions();
-					if (!CollectionUtils.isEmpty(expressions)) {
+					if (!CollectionUtils.isEmpty(expressions) && expressions.get(0) instanceof FunctionExpression) {
 						funExpr = (FunctionExpression) expressions.get(0);
 					}
 				}

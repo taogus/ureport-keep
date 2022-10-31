@@ -27,6 +27,7 @@ import com.ureport.ureportkeep.core.expression.model.data.ObjectExpressionData;
 import com.ureport.ureportkeep.core.expression.model.data.ObjectListExpressionData;
 import com.ureport.ureportkeep.core.expression.model.expr.set.CellExpression;
 import com.ureport.ureportkeep.core.model.Cell;
+import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,6 +64,8 @@ public class FunctionExpression extends BaseExpression {
         Object obj = targetFunction.execute(dataList, context, currentCell);
         if (obj instanceof List) {
             return new ObjectListExpressionData((List<?>) obj);
+        } else if (obj != null && obj.getClass().isArray()) {
+            return new ObjectListExpressionData(CollectionUtils.arrayToList(obj));
         }
         return new ObjectExpressionData(obj);
     }

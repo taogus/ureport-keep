@@ -5,6 +5,7 @@ import Tool from './Tool.js';
 import {tableToXml} from '../Utils.js';
 import {alert} from '../MsgBox.js';
 
+
 export default class PreviewTool extends Tool{
     execute(){
     }
@@ -39,7 +40,7 @@ export default class PreviewTool extends Tool{
         return group;
     }
     doPreview(withPaging){
-        let targetUrl=window._server+"/html/preview?_u=p";
+        let targetUrl=window._server+ `/html/preview?_u=${getFileNameParam()}`;
         if(withPaging){
             targetUrl+='&_i=1&_r=1';
         }
@@ -63,4 +64,15 @@ export default class PreviewTool extends Tool{
     getIcon(){
         return `<i class="ureport ureport-preview" style="color: #0e90d2;"></i>`;
     }
+}
+
+function getFileNameParam() {
+    let _uParam = "p";
+    let reg = new RegExp("(^|&)_u=([^&]*)(&|$)");
+    let r = window.location.search.substr(1).match(reg);
+    if (r != null) {
+        _uParam = unescape(r[2]);
+    }
+
+    return _uParam;
 }
