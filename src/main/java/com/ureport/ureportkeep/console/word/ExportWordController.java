@@ -16,9 +16,9 @@
 package com.ureport.ureportkeep.console.word;
 
 import com.ureport.ureportkeep.console.AbstractReportBasicController;
-import com.ureport.ureportkeep.console.cache.TempObjectCache;
 import com.ureport.ureportkeep.console.exception.ReportDesignException;
 import com.ureport.ureportkeep.core.build.ReportBuilder;
+import com.ureport.ureportkeep.core.cache.CacheUtils;
 import com.ureport.ureportkeep.core.definition.ReportDefinition;
 import com.ureport.ureportkeep.core.exception.ReportComputeException;
 import com.ureport.ureportkeep.core.exception.ReportException;
@@ -77,7 +77,7 @@ public class ExportWordController extends AbstractReportBasicController {
             resp.setHeader("Content-Disposition", "attachment;filename=\"" + fileName + "\"");
             Map<String, Object> parameters = buildParameters(req);
             if (file.equals(PREVIEW_KEY)) {
-                ReportDefinition reportDefinition = (ReportDefinition) TempObjectCache.getObject(PREVIEW_KEY);
+                ReportDefinition reportDefinition = CacheUtils.getReportDefinition(PREVIEW_KEY);
                 if (reportDefinition == null) {
                     throw new ReportDesignException("Report data has expired,can not do export word.");
                 }

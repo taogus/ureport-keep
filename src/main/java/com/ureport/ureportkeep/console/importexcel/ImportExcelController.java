@@ -16,8 +16,8 @@
 package com.ureport.ureportkeep.console.importexcel;
 
 import com.ureport.ureportkeep.console.AbstractReportBasicController;
-import com.ureport.ureportkeep.console.cache.TempObjectCache;
 import com.ureport.ureportkeep.console.common.R;
+import com.ureport.ureportkeep.core.cache.CacheUtils;
 import com.ureport.ureportkeep.core.definition.ReportDefinition;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -99,7 +99,7 @@ public class ImportExcelController extends AbstractReportBasicController {
         Map<String, Object> result = new HashMap<String, Object>();
         if (report != null) {
             result.put("result", true);
-            TempObjectCache.putObject("classpath:static/template/template.ureport.xml", report);
+            CacheUtils.cacheReportDefinition("classpath:static/template/template.ureport.xml", report);
         } else {
             result.put("result", false);
             if (errorInfo != null) {

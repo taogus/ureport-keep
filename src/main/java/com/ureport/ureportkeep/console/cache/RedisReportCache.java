@@ -25,7 +25,7 @@ public class RedisReportCache implements ReportCache {
 
     @Override
     public void storeObject(String file, Object obj) {
-        redisTemplate.opsForValue().set(file, obj, CacheProperties.getCacheExpire(), TimeUnit.SECONDS);
+        redisTemplate.opsForValue().set(file, obj, CacheProperties.getCacheExpire(), TimeUnit.MINUTES);
 
     }
 
