@@ -1,7 +1,6 @@
 package com.ureport.ureportkeep.console.designer;
 
 import com.ureport.ureportkeep.console.AbstractReportBasicController;
-import com.ureport.ureportkeep.console.cache.TempObjectCache;
 import com.ureport.ureportkeep.console.common.R;
 import com.ureport.ureportkeep.console.exception.ReportDesignException;
 import com.ureport.ureportkeep.core.cache.CacheUtils;
@@ -81,18 +80,16 @@ public class DesignerController extends AbstractReportBasicController {
         }
 
         file = ReportUtils.decodeFileName(file);
-        Object obj = TempObjectCache.getObject(file);
+        ReportDefinition reportDefinition = CacheUtils.getReportDefinition(file);
         try {
-            ReportDefinition reportDef = null;
-            if (obj != null && obj instanceof ReportDefinition) {
-                reportDef = (ReportDefinition) obj;
-                TempObjectCache.removeObject(file);
+            if (reportDefinition != null) {
+                CacheUtils.removeReportDefinition(file);
 
             } else {
-                reportDef = reportRender.parseReport(file);
+                reportDefinition = reportRender.parseReport(file);
             }
 
-            return R.ok().success(Optional.ofNullable(reportDef).map(r -> new ReportDefinitionWrapper(r)).orElse(null));
+            return R.ok().success(Optional.ofNullable(reportDefinition).map(r -> new ReportDefinitionWrapper(r)).orElse(null));
         } catch (Exception e) {
             e.printStackTrace();
             return R.error(e.getMessage());
@@ -106,15 +103,16 @@ public class DesignerController extends AbstractReportBasicController {
     @ResponseBody
     public R savePreviewData(HttpServletRequest req) {
         String content = req.getParameter("content");
+        String fileName = req.getParameter("_u");
         content = decodeContent(content);
         InputStream inputStream = null;
         inputStream = IOUtils.toInputStream(content, "utf-8");
-        ReportDefinition reportDef = reportParser.parse(inputStream, "p");
+        ReportDefinition reportDef = reportParser.parse(inputStream, fileName);
         reportRender.rebuildReportDefinition(reportDef);
         IOUtils.closeQuietly(inputStream);
 
         try {
-            TempObjectCache.putObject(PREVIEW_KEY, reportDef);
+            CacheUtils.cacheReportDefinition(fileName, reportDef);
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -46,7 +46,7 @@ export default class PreviewTool extends Tool{
         }
         const content=tableToXml(this.context);
         $.ajax({
-            url:window._server+"/designer/savePreviewData",
+            url:window._server+"/designer/savePreviewData?_u=" + getFileNameParam(),
             type:'POST',
             data:{content},
             success:function(){

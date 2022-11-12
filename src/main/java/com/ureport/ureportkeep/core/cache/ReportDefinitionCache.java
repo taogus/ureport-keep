@@ -15,7 +15,9 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.core.cache;
 
+import com.ureport.ureportkeep.console.exception.ReportDesignException;
 import com.ureport.ureportkeep.core.definition.ReportDefinition;
+import org.springframework.web.context.request.RequestContextHolder;
 
 /**
  * @author Jacky.gao
@@ -23,7 +25,10 @@ import com.ureport.ureportkeep.core.definition.ReportDefinition;
  */
 public interface ReportDefinitionCache {
 	ReportDefinition getReportDefinition(String file);
+
 	void cacheReportDefinition(String file, ReportDefinition reportDefinition);
+
+	void removeReportDefinition(String file);
 
 	/**
 	 * 是否开启
@@ -31,4 +36,19 @@ public interface ReportDefinitionCache {
 	 * @return
 	 */
 	boolean disabled();
+
+	/**
+	 * 获取sessionId
+	 *
+	 * @return
+	 */
+	default String sessionId() {
+		try {
+			String sessionId = RequestContextHolder.getRequestAttributes().getSessionId();
+			return sessionId;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new ReportDesignException("sessionId获取失败");
+		}
+	}
 }

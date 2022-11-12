@@ -3,7 +3,6 @@ package com.ureport.ureportkeep.console.html;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ureport.ureportkeep.console.AbstractReportBasicController;
 import com.ureport.ureportkeep.console.MobileUtils;
-import com.ureport.ureportkeep.console.cache.TempObjectCache;
 import com.ureport.ureportkeep.console.common.R;
 import com.ureport.ureportkeep.console.exception.ReportDesignException;
 import com.ureport.ureportkeep.core.build.Context;
@@ -129,6 +128,7 @@ public class HtmlPreviewController extends AbstractReportBasicController {
             model.addAttribute("tools", tools);
         }
 
+        System.out.println("==================" + request.getSession().getId());
         return "html-preview.html";
     }
 
@@ -143,7 +143,7 @@ public class HtmlPreviewController extends AbstractReportBasicController {
         Map<String, Object> parameters = buildParameters(req);
         ReportDefinition reportDefinition = null;
         if (file.equals(PREVIEW_KEY)) {
-            reportDefinition = (ReportDefinition) TempObjectCache.getObject(PREVIEW_KEY);
+            reportDefinition = CacheUtils.getReportDefinition(PREVIEW_KEY);
             if (reportDefinition == null) {
                 throw new ReportDesignException("Report data has expired,can not do export excel.");
             }
@@ -199,7 +199,7 @@ public class HtmlPreviewController extends AbstractReportBasicController {
         }
         ReportDefinition report = null;
         if (file.equals(PREVIEW_KEY)) {
-            report = (ReportDefinition) TempObjectCache.getObject(PREVIEW_KEY);
+            report = CacheUtils.getReportDefinition(PREVIEW_KEY);
             if (report == null) {
                 throw new ReportDesignException("Report data has expired.");
             }
@@ -229,7 +229,7 @@ public class HtmlPreviewController extends AbstractReportBasicController {
             throw new ReportComputeException("Report file can not be null.");
         }
         if (file.equals(PREVIEW_KEY)) {
-            ReportDefinition reportDefinition = (ReportDefinition) TempObjectCache.getObject(PREVIEW_KEY);
+            ReportDefinition reportDefinition = CacheUtils.getReportDefinition(PREVIEW_KEY);
             if (reportDefinition == null) {
                 throw new ReportDesignException("Report data has expired,can not do preview.");
             }

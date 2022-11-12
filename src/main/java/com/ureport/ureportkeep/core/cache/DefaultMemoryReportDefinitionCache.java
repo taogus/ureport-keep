@@ -33,18 +33,23 @@ public class DefaultMemoryReportDefinitionCache implements ReportDefinitionCache
 
     @Override
     public ReportDefinition getReportDefinition(String file) {
-        return reportMap.get(file);
+        return reportMap.get(sessionId() + file);
     }
 
     @Override
     public void cacheReportDefinition(String file, ReportDefinition reportDefinition) {
-        if (reportMap.containsKey(file)) {
-            reportMap.remove(file);
+        if (reportMap.containsKey(sessionId() + file)) {
+            reportMap.remove(sessionId() + file);
         }
-        reportMap.put(file, reportDefinition);
+        reportMap.put(sessionId() + file, reportDefinition);
     }
 
-	@Override
+    @Override
+    public void removeReportDefinition(String file) {
+        reportMap.remove(sessionId() + file);
+    }
+
+    @Override
 	public boolean disabled() {
 		return !CacheProperties.isEnableRedis();
 	}

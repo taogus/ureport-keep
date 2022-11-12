@@ -73,6 +73,10 @@ public class CacheUtils {
         reportDefinitionCache.cacheReportDefinition(file, reportDefinition);
     }
 
+    public static void removeReportDefinition(String file) {
+        reportDefinitionCache.removeReportDefinition(file);
+    }
+
     static {
         Collection<ReportCache> coll = SpringContextUtils.getAllBeansOfType(ReportCache.class);
         for (ReportCache cache : coll) {
