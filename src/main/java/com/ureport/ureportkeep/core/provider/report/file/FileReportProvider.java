@@ -143,7 +143,7 @@ public class FileReportProvider implements ReportProvider, ApplicationContextAwa
             return;
         }
         if (applicationContext instanceof WebApplicationContext) {
-            String basePath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\";
+            String basePath = ReportProperties.BASE_STORE_DIR;
             fileStoreDir = basePath + fileStoreDir;
             file = new File(fileStoreDir);
             if (!file.exists()) {

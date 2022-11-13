@@ -17,11 +17,15 @@ spring:
     port: 6379
     password:
     connect-timeout: 300000
+  servlet:
+    multipart:
+      max-file-size: 10MB
 
 ureport:
   disableHttpSessionReportCache: false
   # 是否开启文件储存系统
   disableFileProvider: true
+  # 保存报表文件文件夹
   fileStoreDir: ureportfiles
   debug: true
   # 是否使用redis作为缓存

@@ -13,6 +13,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class ReportProperties {
 
+    /**
+     * 保存路径
+     */
+    public static final String BASE_STORE_DIR = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\";
+
     private boolean disableHttpSessionReportCache;
 
     private boolean disableFileProvider;
