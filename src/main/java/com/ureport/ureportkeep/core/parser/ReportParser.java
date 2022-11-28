@@ -15,17 +15,22 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.core.parser;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ureport.ureportkeep.core.definition.*;
 import com.ureport.ureportkeep.core.definition.datasource.DatasourceDefinition;
 import com.ureport.ureportkeep.core.definition.searchform.SearchForm;
 import com.ureport.ureportkeep.core.exception.ReportException;
 import com.ureport.ureportkeep.core.exception.ReportParseException;
 import com.ureport.ureportkeep.core.exception.ReportStartupException;
+import com.ureport.ureportkeep.core.parser.json.ParseDispatch;
+import com.ureport.ureportkeep.core.parser.json.ReportModel;
 import org.apache.commons.lang3.StringUtils;
 import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
@@ -41,6 +46,40 @@ import java.util.*;
 @Component
 public class ReportParser extends ReportParseFactory implements ApplicationContextAware {
 
+    private final ObjectMapper objectMapper = new ObjectMapper();
+
+    @Autowired
+    private ParseDispatch parseDispatch;
+
+    /**
+     * 解析json报表文件
+     *
+     * @param json
+     * @param file
+     * @return
+     */
+    public ReportDefinition parse(String json, String file) {
+        if (StringUtils.isEmpty(json)) {
+            throw new ReportParseException("找不到报表文件");
+        }
+
+        ReportModel reportModel = null;
+        try {
+            reportModel = objectMapper.readValue(json, ReportModel.class);
+        } catch (JsonProcessingException e) {
+            throw new ReportParseException(e);
+        }
+
+        return parseDispatch.dispatch(reportModel);
+    }
+
+    /**
+     * 解析xml报表文件
+     *
+     * @param inputStream
+     * @param file
+     * @return
+     */
     public ReportDefinition parse(InputStream inputStream, String file) {
         ReportDefinition report = new ReportDefinition();
         report.setReportFullName(file);
