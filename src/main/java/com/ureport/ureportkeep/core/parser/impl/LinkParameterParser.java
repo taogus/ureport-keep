@@ -26,6 +26,7 @@ import org.dom4j.Element;
  * @author Jacky.gao
  * @since 2017年3月31日
  */
+@Component
 public class LinkParameterParser implements Parser<LinkParameter> {
 	@Override
 	public LinkParameter parse(Element element) {
