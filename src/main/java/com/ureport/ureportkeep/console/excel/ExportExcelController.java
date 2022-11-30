@@ -58,7 +58,20 @@ public class ExportExcelController extends AbstractReportBasicController {
     private ExcelProducer excelProducer = new ExcelProducer();
 
     /**
-     * 分页到处excel
+     * 导出excel
+     *
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
+    @RequestMapping(value = "", method = RequestMethod.GET)
+    public void export(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        buildExcel(req, resp, false, false);
+    }
+
+    /**
+     * 分页导出excel
      *
      * @param req
      * @param resp
@@ -71,14 +84,14 @@ public class ExportExcelController extends AbstractReportBasicController {
     }
 
     /**
-     * 分sheet到处excel
+     * 分sheet导出excel
      *
      * @param req
      * @param resp
      * @throws ServletException
      * @throws IOException
      */
-    @RequestMapping(value = {"/sheet", ""}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/sheet"}, method = RequestMethod.GET)
     public void sheet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         buildExcel(req, resp, false, true);
     }
