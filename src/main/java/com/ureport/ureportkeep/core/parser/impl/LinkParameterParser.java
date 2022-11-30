@@ -20,6 +20,7 @@ import com.ureport.ureportkeep.core.expression.ExpressionUtils;
 import com.ureport.ureportkeep.core.expression.model.Expression;
 import com.ureport.ureportkeep.core.parser.Parser;
 import org.dom4j.Element;
+import org.springframework.stereotype.Component;
 
 
 /**
