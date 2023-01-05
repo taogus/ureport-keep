@@ -49,7 +49,7 @@ public class ExportManagerImpl implements ExportManager {
 	private Excel97Producer excel97Producer=new Excel97Producer();
 	private PdfProducer pdfProducer=new PdfProducer();
 	@Override
-	public HtmlReport exportHtml(String file, String contextPath, Map<String, Object> parameters) {
+	public HtmlReport exportHtml(String file, Map<String, Object> parameters) {
 		ReportDefinition reportDefinition=reportRender.getReportDefinition(file);
 		Report report=reportRender.render(reportDefinition, parameters);
 		Map<String, ChartData> chartMap=report.getContext().getChartDataMap();
@@ -71,7 +71,7 @@ public class ExportManagerImpl implements ExportManager {
 	}
 	
 	@Override
-	public HtmlReport exportHtml(String file,String contextPath,Map<String, Object> parameters, int pageIndex) {
+	public HtmlReport exportHtml(String file,Map<String, Object> parameters, int pageIndex) {
 		ReportDefinition reportDefinition=reportRender.getReportDefinition(file);
 		Report report=reportRender.render(reportDefinition, parameters);
 		Map<String, ChartData> chartMap=report.getContext().getChartDataMap();

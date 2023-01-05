@@ -1,6 +1,7 @@
 package com.ureport.ureportkeep.core.parser.json.cell.model.value.filter;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.ureport.ureportkeep.core.expression.model.condition.Join;
 import com.ureport.ureportkeep.core.parser.json.JsonModel;
 
 /**
@@ -13,7 +14,7 @@ public class CellFilterModel implements JsonModel {
 
     private String property;
 
-    private String join;
+    private Join join;
 
     private String op;
 
@@ -28,11 +29,11 @@ public class CellFilterModel implements JsonModel {
         this.property = property;
     }
 
-    public String getJoin() {
+    public Join getJoin() {
         return join;
     }
 
-    public void setJoin(String join) {
+    public void setJoin(Join join) {
         this.join = join;
     }
 

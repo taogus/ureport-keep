@@ -1,12 +1,16 @@
 package com.ureport.ureportkeep.core.parser.json.cell.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.ureport.ureportkeep.core.definition.Expand;
 import com.ureport.ureportkeep.core.parser.json.JsonModel;
 import com.ureport.ureportkeep.core.parser.json.cell.model.barcode.BarCodeConfig;
 import com.ureport.ureportkeep.core.parser.json.cell.model.image.ImageConfigModel;
 import com.ureport.ureportkeep.core.parser.json.cell.model.link.LinkConfigModel;
 import com.ureport.ureportkeep.core.parser.json.cell.model.value.ValueModel;
 import com.ureport.ureportkeep.core.parser.json.cell.model.value.property.ConditionPropertyItemModel;
+import com.ureport.ureportkeep.core.parser.json.cell.model.value.style.CellStyleModel;
 import com.ureport.ureportkeep.core.parser.json.enums.CellType;
+import com.ureport.ureportkeep.core.parser.json.utils.CellJsonParseUtils;
 
 import java.util.List;
 
@@ -21,9 +25,14 @@ public class CellModel implements JsonModel {
 
     private String cellName;
 
-    private CellType cellType;
+    private CellType cellType = CellType.SIMPLE;
 
-    private FontStyleModel fontStyle;
+    private Expand expand = Expand.None;
+
+    @JsonProperty("style")
+    private CellStyleModel cellStyle;
+
+    private FrontStyleModel frontStyle;
 
     private ParentCellModel leftCell;
 
@@ -56,6 +65,25 @@ public class CellModel implements JsonModel {
      */
     private List<ConditionPropertyItemModel> conditionPropertyItems;
 
+    public CellStyleModel getCellStyle() {
+        if (cellStyle == null) {
+            cellStyle = new CellStyleModel();
+        }
+        return cellStyle;
+    }
+
+    public void setCellStyle(CellStyleModel cellStyle) {
+        this.cellStyle = cellStyle;
+    }
+
+    public Expand getExpand() {
+        return expand;
+    }
+
+    public void setExpand(Expand expand) {
+        this.expand = expand;
+    }
+
     public String getCellName() {
         return cellName;
     }
@@ -72,12 +100,15 @@ public class CellModel implements JsonModel {
         this.cellType = cellType;
     }
 
-    public FontStyleModel getFontStyle() {
-        return fontStyle;
+    public FrontStyleModel getFrontStyle() {
+        if (frontStyle == null) {
+            frontStyle = new FrontStyleModel();
+        }
+        return frontStyle;
     }
 
-    public void setFontStyle(FontStyleModel fontStyle) {
-        this.fontStyle = fontStyle;
+    public void setFrontStyle(FrontStyleModel frontStyle) {
+        this.frontStyle = frontStyle;
     }
 
     public ParentCellModel getLeftCell() {
@@ -142,5 +173,43 @@ public class CellModel implements JsonModel {
 
     public void setConditionPropertyItems(List<ConditionPropertyItemModel> conditionPropertyItems) {
         this.conditionPropertyItems = conditionPropertyItems;
+    }
+
+    public String getLeftCellName() {
+        if (leftCell == null) {
+            return null;
+        }
+
+        return convertCellName(leftCell.getRow(), leftCell.getCol());
+    }
+
+    public String getTopCellName() {
+        if (topCell == null) {
+            return null;
+        }
+
+        return convertCellName(topCell.getRow(), topCell.getCol());
+    }
+
+    /**
+     * 转换单元格名称
+     *
+     * @param row
+     * @param col
+     * @return
+     */
+    private String convertCellName(int row, int col) {
+        return CellJsonParseUtils.convertCellName(row, col);
+    }
+
+    public CellModel(int row, int col) {
+        PositionModel positionModel = new PositionModel();
+        positionModel.setRow(row);
+        positionModel.setCol(col);
+        this.position = positionModel;
+        this.cellName = convertCellName(row + 1, col);
+    }
+
+    public CellModel() {
     }
 }

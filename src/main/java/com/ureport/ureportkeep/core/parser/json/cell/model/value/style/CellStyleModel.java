@@ -15,6 +15,11 @@ public class CellStyleModel implements JsonModel {
     private boolean blankLine;
 
     /**
+     * 补充空白行倍数
+     */
+    private int multiple;
+
+    /**
      * 自动换行
      */
     private boolean wrapCompute;
@@ -23,6 +28,14 @@ public class CellStyleModel implements JsonModel {
      * 格式化
      */
     private String format;
+
+    public int getMultiple() {
+        return multiple;
+    }
+
+    public void setMultiple(int multiple) {
+        this.multiple = multiple;
+    }
 
     public boolean isBlankLine() {
         return blankLine;

@@ -29,6 +29,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -45,6 +47,8 @@ import java.util.*;
  */
 @Component
 public class ReportParser extends ReportParseFactory implements ApplicationContextAware {
+
+    private final Logger logger = LoggerFactory.getLogger(getClass());
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 
@@ -66,6 +70,7 @@ public class ReportParser extends ReportParseFactory implements ApplicationConte
         ReportModel reportModel = null;
         try {
             reportModel = objectMapper.readValue(json, ReportModel.class);
+            reportModel.setReportName(file);
         } catch (JsonProcessingException e) {
             throw new ReportParseException(e);
         }

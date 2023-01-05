@@ -15,6 +15,8 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.core.definition;
 
+import com.ureport.ureportkeep.core.parser.json.config.border.BorderJsonModel;
+
 import java.io.Serializable;
 
 /**
@@ -26,6 +28,16 @@ public class Border implements Serializable{
 	private int width;
 	private String color;
 	private BorderStyle style;
+	private BorderJsonModel.BorderStyle borderStyle;
+
+	public BorderJsonModel.BorderStyle getBorderStyle() {
+		return borderStyle;
+	}
+
+	public void setBorderStyle(BorderJsonModel.BorderStyle borderStyle) {
+		this.borderStyle = borderStyle;
+	}
+
 	public int getWidth() {
 		return width;
 	}

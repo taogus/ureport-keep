@@ -3,7 +3,6 @@ package com.ureport.ureportkeep.core.parser.json.cell.model.value;
 import com.ureport.ureportkeep.core.definition.value.AggregateType;
 import com.ureport.ureportkeep.core.parser.json.JsonModel;
 import com.ureport.ureportkeep.core.parser.json.cell.model.value.filter.CellFilterModel;
-import com.ureport.ureportkeep.core.parser.json.cell.model.value.style.CellStyleModel;
 
 import java.util.List;
 
@@ -30,19 +29,6 @@ public class ValueModel implements JsonModel {
      * 过滤条件
      */
     private List<CellFilterModel> filters;
-
-    /**
-     * 单元格样式配置
-     */
-    private CellStyleModel style;
-
-    public CellStyleModel getStyle() {
-        return style;
-    }
-
-    public void setStyle(CellStyleModel style) {
-        this.style = style;
-    }
 
     public String getDatasetName() {
         return datasetName;

@@ -38,4 +38,14 @@ public interface FontRegister {
 	 * @return 返回字体所在位置
 	 */
 	String getFontPath();
+
+	/**
+	 * 对应前端字体下标
+	 * <p>
+	 *     未知为：-1
+	 * </p>
+	 *
+	 * @return
+	 */
+	int getIndex();
 }

@@ -18,4 +18,9 @@ public class ComicSansMSFontRegister implements FontRegister {
 	public String getFontPath() {
 		return path() + "comicsansms/COMIC.TTF";
 	}
+
+	@Override
+	public int getIndex() {
+		return -1;
+	}
 }

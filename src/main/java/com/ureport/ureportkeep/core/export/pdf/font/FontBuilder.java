@@ -15,19 +15,6 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.core.export.pdf.font;
 
-import java.awt.GraphicsEnvironment;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.context.ApplicationContext;
-
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.FontFactory;
@@ -35,6 +22,15 @@ import com.itextpdf.text.pdf.BaseFont;
 import com.ureport.ureportkeep.core.exception.ReportComputeException;
 import com.ureport.ureportkeep.core.exception.ReportException;
 import com.ureport.ureportkeep.core.utils.SpringContextUtils;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.context.ApplicationContext;
+
+import java.awt.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.List;
+import java.util.*;
 
 /**
  * @author Jacky.gao
@@ -43,6 +39,7 @@ import com.ureport.ureportkeep.core.utils.SpringContextUtils;
 public class FontBuilder  {
     private static final Map<String, BaseFont> fontMap = new HashMap<String, BaseFont>();
     public static final Map<String, String> fontPathMap = new HashMap<String, String>();
+    public static final Map<Integer, String> fontIndexMap = new HashMap<>();
     private static List<String> systemFontNameList = new ArrayList<String>();
 
     public static Font getFont(String fontName, int fontSize, boolean fontBold, boolean fontItalic, boolean underLine) {
@@ -112,6 +109,7 @@ public class FontBuilder  {
         }
         Collection<FontRegister> fontRegisters = SpringContextUtils.getAllBeansOfType(FontRegister.class);
         for (FontRegister fontReg : fontRegisters) {
+            int index = fontReg.getIndex();
             String fontName = fontReg.getFontName();
             String fontPath = fontReg.getFontPath();
             if (StringUtils.isEmpty(fontPath) || StringUtils.isEmpty(fontName)) {
@@ -123,6 +121,9 @@ public class FontBuilder  {
                     throw new ReportComputeException("Font " + fontPath + " does not exist");
                 }
                 fontMap.put(fontName, baseFont);
+                if (index > -1) {
+                    fontIndexMap.put(index, fontName);
+                }
             } catch (Exception e) {
                 e.printStackTrace();
                 throw new ReportComputeException(e);

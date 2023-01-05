@@ -18,4 +18,9 @@ public class ArialFontRegister implements FontRegister {
 	public String getFontPath() {
 		return path() + "arial/ARIAL.TTF";
 	}
+
+	@Override
+	public int getIndex() {
+		return 1;
+	}
 }

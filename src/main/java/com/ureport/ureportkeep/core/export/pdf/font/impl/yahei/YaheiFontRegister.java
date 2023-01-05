@@ -17,4 +17,9 @@ public class YaheiFontRegister implements FontRegister {
 	public String getFontPath() {
 		return path() + "fangsong/SIMFANG.TTF";
 	}
+
+	@Override
+	public int getIndex() {
+		return 4;
+	}
 }

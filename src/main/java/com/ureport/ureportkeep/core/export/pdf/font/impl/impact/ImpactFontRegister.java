@@ -18,4 +18,9 @@ public class ImpactFontRegister implements FontRegister {
 	public String getFontPath() {
 		return path() + "impact/IMPACT.TTF";
 	}
+
+	@Override
+	public int getIndex() {
+		return -1;
+	}
 }

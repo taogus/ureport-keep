@@ -20,4 +20,30 @@ package com.ureport.ureportkeep.core.definition;
  */
 public enum Alignment {
 	left,right,center,top,middle,bottom;
+
+	public static Alignment vParse(int type) {
+		switch (type) {
+			case 0 :
+				return Alignment.middle;
+			case 1 :
+				return Alignment.top;
+			case 2 :
+				return Alignment.bottom;
+		}
+
+		return Alignment.top;
+	}
+
+	public static Alignment hParse(int type) {
+		switch (type) {
+			case 0 :
+				return Alignment.center;
+			case 1 :
+				return Alignment.left;
+			case 2 :
+				return Alignment.right;
+		}
+
+		return Alignment.left;
+	}
 }

@@ -5,8 +5,8 @@ package com.ureport.ureportkeep.core.parser.json;
  * @Date: 2022/11/27 10:44
  * @Description:
  **/
-public interface JsonParse<Definition, Model extends JsonModel> {
+public interface JsonParse<Definition, T> {
 
-    Definition parse(Model model);
+    Definition parse(T parseModel);
 
 }

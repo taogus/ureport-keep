@@ -18,4 +18,9 @@ public class HeiTiFontRegister implements FontRegister {
 	public String getFontPath() {
 		return path() + "heiti/SIMHEI.TTF";
 	}
+
+	@Override
+	public int getIndex() {
+		return 6;
+	}
 }

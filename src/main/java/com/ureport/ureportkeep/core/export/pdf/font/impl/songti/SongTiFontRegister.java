@@ -17,4 +17,9 @@ public class SongTiFontRegister implements FontRegister {
 	public String getFontPath() {
 		return path() + "songti/SIMSUN.TTC";
 	}
+
+	@Override
+	public int getIndex() {
+		return 5;
+	}
 }

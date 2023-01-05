@@ -18,4 +18,9 @@ public class TimesNewRomanFontRegister implements FontRegister {
 	public String getFontPath() {
 		return path() + "timesnewroman/TIMES.TTF";
 	}
+
+	@Override
+	public int getIndex() {
+		return 0;
+	}
 }

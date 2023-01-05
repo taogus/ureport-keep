@@ -18,4 +18,9 @@ public class KaiTiFontRegister implements FontRegister {
 	public String getFontPath() {
 		return path() + "kaiti/SIMKAI.TTF";
 	}
+
+	@Override
+	public int getIndex() {
+		return 7;
+	}
 }

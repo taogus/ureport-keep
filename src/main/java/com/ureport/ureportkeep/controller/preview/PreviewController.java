@@ -44,7 +44,6 @@ public class PreviewController {
             return R.error("报表数据不存在");
         }
 
-
         ReportDefinition reportDefinition = reportParser.parse(data, file);
         reportRender.rebuildReportDefinition(reportDefinition);
 

@@ -18,4 +18,9 @@ public class CourierNewFontRegister implements FontRegister {
 	public String getFontPath() {
 		return path() + "couriernew/COUR.TTF";
 	}
+
+	@Override
+	public int getIndex() {
+		return -1;
+	}
 }

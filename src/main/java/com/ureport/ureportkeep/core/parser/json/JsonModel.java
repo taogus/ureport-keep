@@ -3,6 +3,8 @@ package com.ureport.ureportkeep.core.parser.json;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @Author: summer
@@ -16,19 +18,37 @@ public interface JsonModel extends Serializable {
      * 超级链接打开窗口类型
      */
     enum WindowOption {
-        CURRENT_WINDOW(1),
-        NEW_WINDOW(2),
-        PARENT_WINDOW(3),
-        TOP_WINDOW(4)
+        CURRENT_WINDOW(1, "_self"),
+        NEW_WINDOW(2, "_blank"),
+        PARENT_WINDOW(3, "_parent"),
+        TOP_WINDOW(4, "_top")
         ;
         private int type;
 
-        WindowOption(int type) {
+        private String target;
+
+        public String getTarget() {
+            return target;
+        }
+
+        WindowOption(int type, String target) {
             this.type = type;
+            this.target = target;
         }
 
         public int getType() {
             return type;
+        }
+
+        public static WindowOption parse(int type) {
+            WindowOption[] values = WindowOption.values();
+            for (WindowOption value : values) {
+                if (type == value.type) {
+                    return value;
+                }
+            }
+
+            return CURRENT_WINDOW;
         }
     }
 

@@ -42,12 +42,21 @@ public class CellStyle implements Serializable{
 	private Boolean italic;
 	private Boolean underline;
 	private Boolean wrapCompute;
+	private Boolean dropLine;
 	private Border leftBorder;
 	private Border rightBorder;
 	private Border topBorder;
 	private Border bottomBorder;
 
 	private Font font;
+
+	public Boolean getDropLine() {
+		return dropLine;
+	}
+
+	public void setDropLine(Boolean dropLine) {
+		this.dropLine = dropLine;
+	}
 
 	public Border getLeftBorder() {
 		return leftBorder;

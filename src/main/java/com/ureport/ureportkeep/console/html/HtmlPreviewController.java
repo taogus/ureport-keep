@@ -45,9 +45,6 @@ import java.util.*;
 public class HtmlPreviewController extends AbstractReportBasicController {
 
     @Autowired
-    private ExportManager exportManager;
-
-    @Autowired
     private ReportBuilder reportBuilder;
 
     @Autowired
@@ -60,7 +57,10 @@ public class HtmlPreviewController extends AbstractReportBasicController {
         HtmlReport htmlReport = null;
         String errorMsg = null;
         try {
-            htmlReport = loadReport(request);
+            String file = request.getParameter("_u");
+            file = decode(file);
+            String pageIndex = request.getParameter("_i");
+            htmlReport=super.loadReport(file, pageIndex, buildParameters(request));
         } catch (Exception ex) {
             if (!(ex instanceof ReportDesignException)) {
                 ex.printStackTrace();
@@ -128,7 +128,6 @@ public class HtmlPreviewController extends AbstractReportBasicController {
             model.addAttribute("tools", tools);
         }
 
-        System.out.println("==================" + request.getSession().getId());
         return "html-preview.html";
     }
 
@@ -213,68 +212,13 @@ public class HtmlPreviewController extends AbstractReportBasicController {
 
     @RequestMapping(value = "/loadData")
     @ResponseBody
-    public R loadData(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        HtmlReport htmlReport=loadReport(req);
-
-        return R.ok().success(htmlReport);
-    }
-
-    private HtmlReport loadReport(HttpServletRequest req) {
-        Map<String, Object> parameters = buildParameters(req);
-        HtmlReport htmlReport = null;
+    public R loadData(HttpServletRequest req) throws ServletException, IOException {
         String file = req.getParameter("_u");
         file = decode(file);
         String pageIndex = req.getParameter("_i");
-        if (StringUtils.isBlank(file)) {
-            throw new ReportComputeException("Report file can not be null.");
-        }
-        if (file.equals(PREVIEW_KEY)) {
-            ReportDefinition reportDefinition = CacheUtils.getReportDefinition(PREVIEW_KEY);
-            if (reportDefinition == null) {
-                throw new ReportDesignException("Report data has expired,can not do preview.");
-            }
-            Report report = reportBuilder.buildReport(reportDefinition, parameters);
-            Map<String, ChartData> chartMap = report.getContext().getChartDataMap();
-            if (chartMap.size() > 0) {
-                CacheUtils.storeChartDataMap(chartMap);
-            }
-            htmlReport = new HtmlReport();
-            String html = null;
-            if (StringUtils.isNotBlank(pageIndex) && !pageIndex.equals("0")) {
-                Context context = report.getContext();
-                int index = Integer.valueOf(pageIndex);
-                SinglePageData pageData = PageBuilder.buildSinglePageData(index, report);
-                List<Page> pages = pageData.getPages();
-                if (pages.size() == 1) {
-                    Page page = pages.get(0);
-                    html = htmlProducer.produce(context, page, false);
-                } else {
-                    html = htmlProducer.produce(context, pages, pageData.getColumnMargin(), false);
-                }
-                htmlReport.setTotalPage(pageData.getTotalPages());
-                htmlReport.setPageIndex(index);
-            } else {
-                html = htmlProducer.produce(report);
-            }
-            if (report.getPaper().isColumnEnabled()) {
-                htmlReport.setColumn(report.getPaper().getColumnCount());
-            }
-            htmlReport.setChartDatas(report.getContext().getChartDataMap().values());
-            htmlReport.setContent(html);
-            htmlReport.setTotalPage(report.getPages().size());
-            htmlReport.setStyle(reportDefinition.getStyle());
-            htmlReport.setSearchFormData(reportDefinition.buildSearchFormData(report.getContext().getDatasetMap(), parameters));
-            htmlReport.setReportAlign(report.getPaper().getHtmlReportAlign().name());
-            htmlReport.setHtmlIntervalRefreshValue(report.getPaper().getHtmlIntervalRefreshValue());
-        } else {
-            if (StringUtils.isNotBlank(pageIndex) && !pageIndex.equals("0")) {
-                int index = Integer.valueOf(pageIndex);
-                htmlReport = exportManager.exportHtml(file, req.getContextPath(), parameters, index);
-            } else {
-                htmlReport = exportManager.exportHtml(file, req.getContextPath(), parameters);
-            }
-        }
-        return htmlReport;
+        HtmlReport htmlReport=super.loadReport(file, pageIndex, buildParameters(req));
+
+        return R.ok().success(htmlReport);
     }
 
     protected Map<String, Object> buildParameters(HttpServletRequest req) {

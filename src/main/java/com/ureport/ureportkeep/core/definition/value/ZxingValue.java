@@ -16,6 +16,7 @@
 package com.ureport.ureportkeep.core.definition.value;
 
 import com.ureport.ureportkeep.core.expression.model.Expression;
+import com.ureport.ureportkeep.core.parser.json.JsonModel;
 
 /**
  * @author Jacky.gao
@@ -28,6 +29,8 @@ public class ZxingValue implements Value {
 	private int width;
 	private int height;
 	private Source source;
+	private JsonModel.BarCodeSource barCodeSource;
+	private JsonModel.BarCodeFormat barCodeFormat;
 	private String text;
 	private String expr;
 	private String format;
@@ -115,5 +118,21 @@ public class ZxingValue implements Value {
 
 	public void setCodeDisplay(boolean codeDisplay) {
 		this.codeDisplay = codeDisplay;
+	}
+
+	public JsonModel.BarCodeSource getBarCodeSource() {
+		return barCodeSource;
+	}
+
+	public void setBarCodeSource(JsonModel.BarCodeSource barCodeSource) {
+		this.barCodeSource = barCodeSource;
+	}
+
+	public JsonModel.BarCodeFormat getBarCodeFormat() {
+		return barCodeFormat;
+	}
+
+	public void setBarCodeFormat(JsonModel.BarCodeFormat barCodeFormat) {
+		this.barCodeFormat = barCodeFormat;
 	}
 }

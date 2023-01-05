@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta name ="viewport" content ="initial-scale=1, maximum-scale=3, minimum-scale=1, user-scalable=no">
+    <title th:text="${title + '-' + file}"></title>
+    <style type="text/css" th:text="${style}"></style>
+
+    <link th:href="@{/static/keep-report/css/layui.css}" rel="stylesheet" type="text/css" />
+</head>
+<body style="margin:5px">
+<div th:utext="${upSearchFormHtml}"></div>
+<div th:utext="${downSearchFormHtml}"></div>
+<div id="_ureport_table" th:style="'float:' + ${reportAlign}" th:utext="${content}"></div>
+
+<script type="text/javascript" th:src="@{/static/ureport-asserts/venderjs/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/static/keep-report/js/layui.js}"></script>
+</body>
+</html>

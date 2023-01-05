@@ -49,6 +49,9 @@ public class BorderInfoModel implements BorderJsonModel {
     }
 
     public void setColor(String color) {
+        if ("#000".equals(color)) {
+            color = "#000000";
+        }
         this.color = color;
     }
 
