@@ -75,7 +75,9 @@ public class ReportParser extends ReportParseFactory implements ApplicationConte
             throw new ReportParseException(e);
         }
 
-        return parseDispatch.dispatch(reportModel);
+        ReportDefinition report = parseDispatch.dispatch(reportModel);
+        rebuild(report);
+        return report;
     }
 
     /**

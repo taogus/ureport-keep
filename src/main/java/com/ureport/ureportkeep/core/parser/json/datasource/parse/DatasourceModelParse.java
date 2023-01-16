@@ -14,6 +14,7 @@ import com.ureport.ureportkeep.core.parser.json.datasource.dataset.DatasetInfoMo
 import com.ureport.ureportkeep.core.parser.json.datasource.dataset.DatasetModel;
 import com.ureport.ureportkeep.core.parser.json.datasource.dataset.DatasetParamModel;
 import com.ureport.ureportkeep.core.parser.json.datasource.model.DataSourceModel;
+import com.ureport.ureportkeep.core.parser.json.utils.DatasetJsonParseUtils;
 import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
@@ -119,7 +120,7 @@ public class DatasourceModelParse implements JsonParse<List<DatasourceDefinition
      */
     private String parseSql(String sql, SqlDatasetDefinition dataset) {
         String parseSql = sql.trim();
-
+        parseSql = DatasetJsonParseUtils.convertSQL(parseSql);
         if (parseSql.startsWith(ExpressionUtils.EXPR_PREFIX) && parseSql.endsWith(ExpressionUtils.EXPR_SUFFIX)) {
             parseSql = parseSql.substring(2, parseSql.length() - 1);
             Expression expr = ExpressionUtils.parseExpression(parseSql);

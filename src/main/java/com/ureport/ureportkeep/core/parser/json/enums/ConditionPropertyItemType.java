@@ -2,7 +2,6 @@ package com.ureport.ureportkeep.core.parser.json.enums;
 
 import com.ureport.ureportkeep.core.definition.*;
 import com.ureport.ureportkeep.core.expression.ExpressionUtils;
-import com.ureport.ureportkeep.core.parser.json.JsonModel;
 import com.ureport.ureportkeep.core.parser.json.cell.model.value.property.PropertyConfigModel;
 
 import java.util.ArrayList;
@@ -242,7 +241,7 @@ public enum ConditionPropertyItemType {
             if (value != null) {
                 Map<String, Object> linkConfig = (Map<String, Object>) value;
                 item.setLinkUrl((String) linkConfig.get("link"));
-                item.setLinkTargetWindow(JsonModel.WindowOption.parse((Integer) linkConfig.get("window")).getTarget());
+                item.setLinkTargetWindow(WindowOption.parse((Integer) linkConfig.get("window")).getTarget());
 
                 List<Map<String, Object>> params = (List<Map<String, Object>>) linkConfig.get("params");
                 List<LinkParameter> linkParameters = new ArrayList<>();

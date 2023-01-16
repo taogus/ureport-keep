@@ -1,6 +1,7 @@
 package com.ureport.ureportkeep.core.parser.json.cell.model.link;
 
 import com.ureport.ureportkeep.core.parser.json.JsonModel;
+import com.ureport.ureportkeep.core.parser.json.enums.WindowOption;
 
 import java.util.List;
 

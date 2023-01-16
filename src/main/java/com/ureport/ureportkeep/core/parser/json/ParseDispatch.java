@@ -9,7 +9,10 @@ import com.ureport.ureportkeep.core.parser.json.config.rowcol.RowColConfig;
 import com.ureport.ureportkeep.core.parser.json.config.rowcol.col.ColumnModelParse;
 import com.ureport.ureportkeep.core.parser.json.config.rowcol.row.RowModelParse;
 import com.ureport.ureportkeep.core.parser.json.datasource.parse.DatasourceModelParse;
+import com.ureport.ureportkeep.core.parser.json.parameter.parse.ParameterFormJsonParse;
 import org.springframework.stereotype.Component;
+
+import java.util.Collections;
 
 /**
  * @Author: summer
@@ -26,6 +29,7 @@ public class ParseDispatch {
     private PaperJsonParse paperJsonParse = new PaperJsonParse();
     private PageHeaderJsonParse pageHeaderJsonParse = new PageHeaderJsonParse();
     private PageFooterJsonParse pageFooterJsonParse = new PageFooterJsonParse();
+    private ParameterFormJsonParse parameterFormJsonParse = new ParameterFormJsonParse();
 
     public ReportDefinition dispatch(ReportModel reportModel) {
         RowColConfig rowColConfig = reportModel.getRowColConfig();
@@ -39,6 +43,10 @@ public class ParseDispatch {
         reportDefinition.setPaper(paperJsonParse.parse(reportModel.getReportConfig()));
         reportDefinition.setHeader(pageHeaderJsonParse.parse(reportModel.getReportConfig().getHeaderConfig()));
         reportDefinition.setFooter(pageFooterJsonParse.parse(reportModel.getReportConfig().getFooterConfig()));
+        reportDefinition.setSearchForm(parameterFormJsonParse.parse(reportModel.getParameterFormModels()));
+
+        Collections.sort(reportDefinition.getRows());
+        Collections.sort(reportDefinition.getColumns());
         return reportDefinition;
     }
 }

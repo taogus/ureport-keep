@@ -5,7 +5,6 @@ import com.ureport.ureportkeep.core.definition.value.Value;
 import com.ureport.ureportkeep.core.export.pdf.font.FontBuilder;
 import com.ureport.ureportkeep.core.expression.ExpressionUtils;
 import com.ureport.ureportkeep.core.expression.model.Expression;
-import com.ureport.ureportkeep.core.parser.json.JsonModel;
 import com.ureport.ureportkeep.core.parser.json.JsonParse;
 import com.ureport.ureportkeep.core.parser.json.ReportModel;
 import com.ureport.ureportkeep.core.parser.json.cell.model.CellModel;
@@ -23,6 +22,7 @@ import com.ureport.ureportkeep.core.parser.json.config.border.BorderJsonModel;
 import com.ureport.ureportkeep.core.parser.json.config.border.BorderRangeModel;
 import com.ureport.ureportkeep.core.parser.json.enums.CellType;
 import com.ureport.ureportkeep.core.parser.json.enums.ConditionPropertyItemType;
+import com.ureport.ureportkeep.core.parser.json.enums.WindowOption;
 import com.ureport.ureportkeep.core.parser.json.utils.CellJsonParseUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.CollectionUtils;
@@ -126,7 +126,7 @@ public class CellModelParse implements JsonParse<List<CellDefinition>, ReportMod
         if (linkConfig != null) {
             String url = linkConfig.getUrl();
 
-            cell.setLinkTargetWindow(JsonModel.WindowOption.parse(linkConfig.getTargetWindow()).getTarget());
+            cell.setLinkTargetWindow(WindowOption.parse(linkConfig.getTargetWindow()).getTarget());
             cell.setLinkUrl(url);
             if (StringUtils.isNotBlank(url)) {
                 if (url.startsWith(ExpressionUtils.EXPR_PREFIX) && url.endsWith(ExpressionUtils.EXPR_SUFFIX)) {

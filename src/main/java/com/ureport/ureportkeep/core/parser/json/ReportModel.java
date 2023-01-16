@@ -1,11 +1,13 @@
 package com.ureport.ureportkeep.core.parser.json;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.ureport.ureportkeep.core.parser.json.cell.model.CellModel;
 import com.ureport.ureportkeep.core.parser.json.config.border.BorderInfoModel;
 import com.ureport.ureportkeep.core.parser.json.config.global.ReportConfigModel;
 import com.ureport.ureportkeep.core.parser.json.config.rowcol.RowColConfig;
 import com.ureport.ureportkeep.core.parser.json.datasource.dataset.DatasetModel;
 import com.ureport.ureportkeep.core.parser.json.datasource.model.DataSourceModel;
+import com.ureport.ureportkeep.core.parser.json.parameter.model.ParameterFormJsonModel;
 import com.ureport.ureportkeep.core.parser.json.utils.CellJsonParseUtils;
 
 import java.util.List;
@@ -52,6 +54,20 @@ public class ReportModel implements JsonModel {
      * 数据集
      */
     private List<DatasetModel> datasetDatas;
+
+    /**
+     * 参数表单
+     */
+    @JsonProperty("paramFormConfig")
+    private List<ParameterFormJsonModel> parameterFormModels;
+
+    public List<ParameterFormJsonModel> getParameterFormModels() {
+        return parameterFormModels;
+    }
+
+    public void setParameterFormModels(List<ParameterFormJsonModel> parameterFormModels) {
+        this.parameterFormModels = parameterFormModels;
+    }
 
     public String getReportName() {
         return reportName;

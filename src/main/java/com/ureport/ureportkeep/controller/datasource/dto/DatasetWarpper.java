@@ -1,7 +1,7 @@
 package com.ureport.ureportkeep.controller.datasource.dto;
 
+import com.ureport.ureportkeep.core.parser.json.utils.DatasetJsonParseUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.thymeleaf.util.ArrayUtils;
 
 import java.util.List;
 import java.util.Map;
@@ -34,13 +34,7 @@ public class DatasetWarpper extends DataSourceConnectDto {
             return this.parseSql;
         }
 
-        this.parseSql = this.sql;
-        String[] paramNames = StringUtils.substringsBetween(sql, "${", "}");
-        if (!ArrayUtils.isEmpty(paramNames)) {
-            for (String paramName : paramNames) {
-                this.parseSql = StringUtils.replace(this.parseSql, "${" + paramName + "}", ":" + paramName);
-            }
-        }
+        this.parseSql = DatasetJsonParseUtils.convertSQL(this.sql);
         return this.parseSql;
     }
 

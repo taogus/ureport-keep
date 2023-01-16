@@ -16,7 +16,7 @@
 package com.ureport.ureportkeep.core.definition.value;
 
 import com.ureport.ureportkeep.core.expression.model.Expression;
-import com.ureport.ureportkeep.core.parser.json.JsonModel;
+import com.ureport.ureportkeep.core.parser.json.enums.ImageSource;
 
 /**
  * @author Jacky.gao
@@ -30,7 +30,7 @@ public class ImageValue implements Value {
 	private String expr;
 	private Expression expression;
 	private Source source;
-	private JsonModel.ImageSource imageSource;
+	private ImageSource imageSource;
 	private int width;
 	private int height;
 	@Override
@@ -79,11 +79,11 @@ public class ImageValue implements Value {
 		this.height = height;
 	}
 
-	public JsonModel.ImageSource getImageSource() {
+	public ImageSource getImageSource() {
 		return imageSource;
 	}
 
-	public void setImageSource(JsonModel.ImageSource imageSource) {
+	public void setImageSource(ImageSource imageSource) {
 		this.imageSource = imageSource;
 	}
 }

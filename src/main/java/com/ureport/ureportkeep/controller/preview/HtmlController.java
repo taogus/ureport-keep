@@ -1,17 +1,18 @@
 package com.ureport.ureportkeep.controller.preview;
 
 import com.ureport.ureportkeep.console.AbstractReportBasicController;
+import com.ureport.ureportkeep.console.common.R;
 import com.ureport.ureportkeep.core.exception.ReportComputeException;
 import com.ureport.ureportkeep.core.export.html.HtmlReport;
+import com.ureport.ureportkeep.core.export.html.SearchFormData;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * @Author: summer
@@ -22,38 +23,82 @@ import java.util.Map;
 @RequestMapping("/view/html")
 public class HtmlController extends AbstractReportBasicController {
 
+    /**
+     * 输出HTML格式
+     *
+     * @param model
+     * @param file
+     * @param parameters
+     * @return
+     */
     @GetMapping("/{file}")
     public String html(Model model, @PathVariable("file") String file, @RequestParam Map<String, Object> parameters) {
+        Map<String, Object> result = htmlBuild(file, parameters);
+        model.addAllAttributes(result);
+        return "html-view";
+    }
+
+    /**
+     * 加载报表
+     *
+     * @param file
+     * @param parameters
+     * @return
+     */
+    @PostMapping("/load/{file}")
+    public R load(@PathVariable("file") String file, @RequestParam Map<String, Object> parameters) {
+        Map<String, Object> result = htmlBuild(file, parameters);
+        return R.ok().success(result);
+    }
+
+    /**
+     * html结构构建
+     *
+     * @param file
+     * @param parameters
+     * @return
+     */
+    private Map<String, Object> htmlBuild(@PathVariable("file") String file, @RequestParam Map<String, Object> parameters) {
         if (StringUtils.isBlank(file)) {
             throw new ReportComputeException("报表文件为空");
         }
 
+        Map<String, Object> htmlResult = new HashMap<>();
         HtmlReport htmlReport = null;
         try {
-            model.addAttribute("title", "报表");
+            htmlResult.put("title", "报表");
             htmlReport = super.loadReport(file, "0", parameters);
         } catch (Exception e) {
             e.printStackTrace();
 
-            model.addAttribute("content", "<div style='color:red'><strong>报表计算出错，错误信息如下：</strong><br><div style=\"margin:10px\">" + e.getLocalizedMessage() + "</div></div>");
-            model.addAttribute("error", true);
-            model.addAttribute("searchFormJs", "");
-            model.addAttribute("downSearchFormHtml", "");
-            model.addAttribute("upSearchFormHtml", "");
+            htmlResult.put("content",
+                    "<fieldset class=\"layui-elem-field\">\n" +
+                            "  <legend>错误信息如下</legend>\n" +
+                            "  <div class=\"layui-field-box\">\n" +
+                            "    " + e.getLocalizedMessage() + "\n" +
+                            "  </div>\n" +
+                            "</fieldset>");
+            htmlResult.put("error", true);
+            htmlResult.put("formJs", "");
+            htmlResult.put("formHtml", "");
 
-            return "html-view";
+            return htmlResult;
         }
+        SearchFormData formData = htmlReport.getSearchFormData();
+        htmlResult.put("formHtml", Optional.ofNullable(formData).map(SearchFormData::getHtml).orElse(""));
+        htmlResult.put("formJs", Optional.ofNullable(formData).map(SearchFormData::getJs).orElse(""));
 
-        model.addAttribute("content", htmlReport.getContent());
-        model.addAttribute("style", htmlReport.getStyle());
-        model.addAttribute("reportAlign", htmlReport.getReportAlign());
-        model.addAttribute("totalPage", htmlReport.getTotalPage());
-        model.addAttribute("totalPageWithCol", htmlReport.getTotalPageWithCol());
-        model.addAttribute("pageIndex", htmlReport.getPageIndex());
-        model.addAttribute("error", false);
-        model.addAttribute("file", file);
-        model.addAttribute("intervalRefreshValue", htmlReport.getHtmlIntervalRefreshValue());
-        return "html-view";
+        htmlResult.put("content", htmlReport.getContent());
+        htmlResult.put("style", htmlReport.getStyle());
+        htmlResult.put("reportAlign", htmlReport.getReportAlign());
+        htmlResult.put("totalPage", htmlReport.getTotalPage());
+        htmlResult.put("totalPageWithCol", htmlReport.getTotalPageWithCol());
+        htmlResult.put("pageIndex", htmlReport.getPageIndex());
+        htmlResult.put("error", false);
+        htmlResult.put("file", file);
+        htmlResult.put("intervalRefreshValue", htmlReport.getHtmlIntervalRefreshValue());
+
+        return htmlResult;
     }
 
 }

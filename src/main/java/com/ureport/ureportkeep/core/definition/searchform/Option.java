@@ -34,4 +34,12 @@ public class Option {
 	public void setValue(String value) {
 		this.value = value;
 	}
+
+	public Option(String label, String value) {
+		this.label = label;
+		this.value = value;
+	}
+
+	public Option() {
+	}
 }

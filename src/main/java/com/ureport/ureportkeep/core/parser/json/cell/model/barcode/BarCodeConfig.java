@@ -3,6 +3,8 @@ package com.ureport.ureportkeep.core.parser.json.cell.model.barcode;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.ureport.ureportkeep.core.definition.Expand;
 import com.ureport.ureportkeep.core.parser.json.JsonModel;
+import com.ureport.ureportkeep.core.parser.json.enums.BarCodeFormat;
+import com.ureport.ureportkeep.core.parser.json.enums.BarCodeSource;
 
 /**
  * @Author: summer
