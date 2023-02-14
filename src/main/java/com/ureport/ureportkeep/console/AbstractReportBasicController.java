@@ -33,7 +33,7 @@ public abstract class AbstractReportBasicController {
 
     public final String PREVIEW_KEY="p";
 
-    protected final String KEEP_REPORT_VIEW_FILE = "k";
+    public static final String KEEP_REPORT_VIEW_FILE = "k";
 
     @Autowired
     private ExportManager exportManager;

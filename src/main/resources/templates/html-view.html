@@ -10,21 +10,39 @@
     <style type="text/css" th:text="${style}"></style>
     <style type="text/css">
         .icon {
-            width: 1em; height: 1em;
+            width: 1em;
+            height: 1em;
             vertical-align: -0.15em;
             fill: currentColor;
             overflow: hidden;
         }
+
+        .layui-form-checked[lay-skin=primary] i {
+            border-color: #1E9FFF !important;
+            background-color: #1E9FFF !important;
+            color: white !important;
+            font-weight: bold;
+        }
+
+        .layui-form-checkbox[lay-skin=primary]:hover i {
+            border-color: #1E9FFF !important;
+        }
+
+        .layui-form-radio > i:hover, .layui-form-radioed > i {
+            color: #1E9FFF !important;
+        }
     </style>
 
     <link th:href="@{/static/keep-report/css/layui.css}" rel="stylesheet" type="text/css"/>
-    <script type="text/javascript" src="https://at.alicdn.com/t/c/font_3863392_r1svbjsargg.js?spm=a313x.7781069.1998910419.77&file=font_3863392_r1svbjsargg.js"></script>
+    <script type="text/javascript"
+            src="https://at.alicdn.com/t/c/font_3863392_r1svbjsargg.js?spm=a313x.7781069.1998910419.77&file=font_3863392_r1svbjsargg.js"></script>
 </head>
 <body style="margin:5px">
 <div class="layui-row layui-col-space10">
     <div class="layui-col-md3">
         <blockquote class="layui-elem-quote layui-quote-nm" style="padding: 5px;">
-            <button type="button" class="layui-btn layui-btn-primary layui-border-blue layui-btn-sm">
+            <button type="button" class="layui-btn layui-btn-primary layui-border-blue layui-btn-sm"
+                    id="pdfExportButton">
                 <svg class="icon" aria-hidden="true" style="font-size: 25px;">
                     <use xlink:href="#icon-PDF"></use>
                 </svg>
@@ -37,7 +55,8 @@
                 <span style="font-size: 18px;">EXCEL</span>
             </button>
 
-            <button type="button" class="layui-btn layui-btn-primary layui-border-blue layui-btn-sm">
+            <button type="button" class="layui-btn layui-btn-primary layui-border-blue layui-btn-sm"
+                    id="wordExportButton">
                 <svg class="icon" aria-hidden="true" style="font-size: 25px;">
                     <use xlink:href="#icon-word"></use>
                 </svg>
@@ -55,24 +74,30 @@
         <div id="pagePlug"></div>
     </div>
 </div>
-
-<div class="layui-bg-gray layui-row" style="padding: 30px;" th:utext="${formHtml}"></div>
-<div id="_ureport_table" th:style="'float:' + ${reportAlign}" th:utext="${content}"></div>
+<hr class="layui-border-blue">
+<div class="layui-bg-gray layui-row" style="padding: 30px;" th:utext="${formHtml}"
+     th:if="${formHtml != null && formHtml != ''}"></div>
+<div id="keep_report_table" th:style="'float:' + ${reportAlign}" th:utext="${content}"></div>
 
 <script type="text/javascript" th:src="@{/static/ureport-asserts/venderjs/jquery.min.js}"></script>
 <script type="text/javascript" th:src="@{/static/keep-report/js/layui.js}"></script>
+<script type="text/javascript" th:src="@{/static/keep-report/js/control.js}"></script>
 <script type="text/javascript" th:inline="javascript">
     $(document).ready(function () {
+        window.file = [[${file}]]
+        window.serverPath = [[#{context-path}]] + "";
+
         layui.use(['laypage', 'layer'], function () {
             var layer = layui.layer;
             var laypage = layui.laypage;
+            var laydate = layui.laydate;
 
             //执行一个laypage实例
             laypage.render({
                 elem: 'pagePlug'
                 , count: 100
                 , layout: ['prev', 'next', 'skip']
-                ,theme: '#1E9FFF'
+                , theme: '#1E9FFF'
                 , jump: function (obj) {
                     console.log(obj)
                 }

@@ -46,6 +46,7 @@ public class HtmlController extends AbstractReportBasicController {
      * @return
      */
     @PostMapping("/load/{file}")
+    @ResponseBody
     public R load(@PathVariable("file") String file, @RequestParam Map<String, Object> parameters) {
         Map<String, Object> result = htmlBuild(file, parameters);
         return R.ok().success(result);
@@ -72,7 +73,7 @@ public class HtmlController extends AbstractReportBasicController {
             e.printStackTrace();
 
             htmlResult.put("content",
-                    "<fieldset class=\"layui-elem-field\">\n" +
+                            "<fieldset class=\"layui-elem-field\">\n" +
                             "  <legend>错误信息如下</legend>\n" +
                             "  <div class=\"layui-field-box\">\n" +
                             "    " + e.getLocalizedMessage() + "\n" +
