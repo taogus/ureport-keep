@@ -34,6 +34,7 @@ public class ChnFunction extends MathFunction {
 	private static final String CN_NEGATIVE = "负";
 	private static final int NUMBER_PRECISION = 2;
 	private static final String CN_ZEOR = "零";
+	private static final String CN_ZEOR_POINT = "零点";
 	@Override
 	public Object execute(List<ExpressionData<?>> dataList, Context context, Cell currentCell) {
 		BigDecimal data = buildBigDecimal(dataList);
@@ -110,6 +111,9 @@ public class ChnFunction extends MathFunction {
 		    }
 		    number = number / 10;
 		    ++numIndex;
+		}
+		if (numberData.setScale(0, BigDecimal.ROUND_DOWN).signum() == 0) {
+			sb.insert(0, CN_ZEOR_POINT);
 		}
 		if (signum == -1) {
 		    sb.insert(0, CN_NEGATIVE);
