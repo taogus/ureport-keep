@@ -15,17 +15,6 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.core;
 
-import java.math.BigDecimal;
-import java.sql.Connection;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-
-import org.apache.commons.beanutils.PropertyUtils;
-
 import com.ureport.ureportkeep.core.build.Context;
 import com.ureport.ureportkeep.core.definition.datasource.BuildinDatasource;
 import com.ureport.ureportkeep.core.exception.ConvertException;
@@ -34,6 +23,12 @@ import com.ureport.ureportkeep.core.model.Cell;
 import com.ureport.ureportkeep.core.model.Report;
 import com.ureport.ureportkeep.core.provider.image.ImageProvider;
 import com.ureport.ureportkeep.core.utils.SpringContextUtils;
+import org.apache.commons.beanutils.PropertyUtils;
+
+import java.math.BigDecimal;
+import java.sql.Connection;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 
 /**
@@ -209,7 +204,7 @@ public class Utils {
 			}
 		}else if(obj instanceof Number){
 			Number n=(Number)obj;
-			return new BigDecimal(n.doubleValue());
+			return new BigDecimal(n.toString());
 		}
 		throw new ConvertException("Can not convert "+obj+" to BigDecimal.");
 	}
