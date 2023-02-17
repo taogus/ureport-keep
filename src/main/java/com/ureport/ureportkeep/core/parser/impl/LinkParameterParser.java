@@ -20,12 +20,14 @@ import com.ureport.ureportkeep.core.expression.ExpressionUtils;
 import com.ureport.ureportkeep.core.expression.model.Expression;
 import com.ureport.ureportkeep.core.parser.Parser;
 import org.dom4j.Element;
+import org.springframework.stereotype.Component;
 
 
 /**
  * @author Jacky.gao
  * @since 2017年3月31日
  */
+@Component
 public class LinkParameterParser implements Parser<LinkParameter> {
 	@Override
 	public LinkParameter parse(Element element) {

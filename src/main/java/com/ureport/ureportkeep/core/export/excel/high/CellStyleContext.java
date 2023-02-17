@@ -25,10 +25,7 @@ import org.apache.poi.ss.usermodel.FillPatternType;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
-import org.apache.poi.xssf.usermodel.DefaultIndexedColorMap;
-import org.apache.poi.xssf.usermodel.XSSFCellStyle;
-import org.apache.poi.xssf.usermodel.XSSFColor;
-import org.apache.poi.xssf.usermodel.XSSFFont;
+import org.apache.poi.xssf.usermodel.*;
 
 import java.awt.*;
 import java.util.HashMap;
@@ -41,7 +38,7 @@ import java.util.Map;
  */
 public class CellStyleContext {
 	private Map<String,XSSFCellStyle> styleMap=new HashMap<String,XSSFCellStyle>();
-	public XSSFCellStyle produceXSSFCellStyle(SXSSFWorkbook wb, Cell cell){
+	public XSSFCellStyle produceXSSFCellStyle(XSSFWorkbook wb, Cell cell){
 		String name=cell.getName();
 		if(cell.getCustomCellStyle()==null && cell.getRow().getCustomCellStyle()==null){
 			if(styleMap.containsKey(name)){
@@ -63,7 +60,7 @@ public class CellStyleContext {
 		}
 	}
 	
-	private XSSFCellStyle createNewCellStyle(SXSSFWorkbook wb,Cell cell) {
+	private XSSFCellStyle createNewCellStyle(XSSFWorkbook wb,Cell cell) {
 		CellStyle cellStyle=cell.getCellStyle();
 		CellStyle customStyle=cell.getCustomCellStyle();
 		CellStyle rowStyle=cell.getRow().getCustomCellStyle();
