@@ -30,6 +30,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFPrintSetup;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 
 /**
@@ -62,7 +63,7 @@ public abstract class ExcelBuilder {
 		return h;
 	}
 	
-	protected Sheet createSheet(SXSSFWorkbook wb, Paper paper, String name){
+	protected Sheet createSheet(XSSFWorkbook wb, Paper paper, String name){
 		Sheet sheet = null;
 		if(name==null){
 			sheet=wb.createSheet();
