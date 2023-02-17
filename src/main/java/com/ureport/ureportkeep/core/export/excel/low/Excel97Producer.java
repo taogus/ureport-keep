@@ -171,7 +171,7 @@ public class Excel97Producer {
                                     IOUtils.closeQuietly(inputStream);
                                     inputStream = ImageUtils.base64DataToInputStream(img.getBase64Data());
                                     try {
-                                        XSSFClientAnchor anchor = (XSSFClientAnchor) creationHelper.createClientAnchor();
+                                        ClientAnchor anchor = creationHelper.createClientAnchor();
                                         byte[] bytes = IOUtils.toByteArray(inputStream);
                                         int pictureFormat = buildImageFormat(img);
                                         int pictureIndex = wb.addPicture(bytes, pictureFormat);
