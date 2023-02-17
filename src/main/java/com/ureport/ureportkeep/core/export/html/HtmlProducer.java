@@ -204,7 +204,13 @@ public class HtmlProducer{
 							imageType="image/gif";
 						}
 					}
+
+					StringBuffer imgStyle = new StringBuffer();
+					imgStyle.append("style=").append("\"").append("width: ").append(col.getWidth()).append("pt;");
+					imgStyle.append(" height: ").append(height).append("pt;\"");
+
 					sb.append("<img src=\"data:"+imageType+";base64,"+img.getBase64Data()+"\"");
+					sb.append(imgStyle);
 					sb.append(">");
 				}else if(obj instanceof ChartData){
 					ChartData chartData=(ChartData)obj;
