@@ -27,13 +27,10 @@ import com.ureport.ureportkeep.core.model.Row;
 import com.ureport.ureportkeep.core.utils.ImageUtils;
 import com.ureport.ureportkeep.core.utils.UnitUtils;
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang.StringUtils;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.util.Units;
-import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
-import org.apache.poi.xssf.usermodel.XSSFClientAnchor;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import javax.imageio.ImageIO;
@@ -146,14 +143,11 @@ public class ExcelBuilderDirect extends ExcelBuilder {
                     if (obj != null) {
                         if (obj instanceof String) {
                             cell.setCellValue((String) obj);
-                            cell.setCellType(CellType.STRING);
                         } else if (obj instanceof Number) {
                             BigDecimal bigDecimal = Utils.toBigDecimal(obj);
                             cell.setCellValue(bigDecimal.doubleValue());
-                            cell.setCellType(CellType.NUMERIC);
                         } else if (obj instanceof Boolean) {
                             cell.setCellValue((Boolean) obj);
-                            cell.setCellType(CellType.BOOLEAN);
                         } else if (obj instanceof Image) {
                             Image img = (Image) obj;
                             InputStream inputStream = ImageUtils.base64DataToInputStream(img.getBase64Data());

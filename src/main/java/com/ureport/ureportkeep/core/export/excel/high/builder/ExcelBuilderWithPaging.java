@@ -144,15 +144,12 @@ public class ExcelBuilderWithPaging extends ExcelBuilder{
 		        		Object obj=cellInfo.getFormatData();
 		        		if(obj!=null){
 			        		if(obj instanceof String){
-			        			cell.setCellValue((String)obj);     
-			        			cell.setCellType(CellType.STRING);
+			        			cell.setCellValue((String)obj);
 			        		}else if(obj instanceof Number){
 			        			BigDecimal bigDecimal= Utils.toBigDecimal(obj);
-			        			cell.setCellValue(bigDecimal.floatValue());
-			        			cell.setCellType(CellType.NUMERIC);
+			        			cell.setCellValue(bigDecimal.doubleValue());
 			        		}else if(obj instanceof Boolean){
 			        			cell.setCellValue((Boolean)obj);
-			        			cell.setCellType(CellType.BOOLEAN);
 			        		}else if(obj instanceof Image){
 			        			Image img=(Image)obj;
 			        			InputStream inputStream= ImageUtils.base64DataToInputStream(img.getBase64Data());
