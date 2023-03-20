@@ -1,5 +1,6 @@
 package com.ureport.ureportkeep.core.parser.json.cell.model.value;
 
+import com.ureport.ureportkeep.core.definition.Order;
 import com.ureport.ureportkeep.core.definition.value.AggregateType;
 import com.ureport.ureportkeep.core.parser.json.JsonModel;
 import com.ureport.ureportkeep.core.parser.json.cell.model.value.filter.CellFilterModel;
@@ -25,10 +26,20 @@ public class ValueModel implements JsonModel {
 
     private AggregateType aggregate;
 
+    private Order order = Order.none;
+
     /**
      * 过滤条件
      */
     private List<CellFilterModel> filters;
+
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
+    }
 
     public String getDatasetName() {
         return datasetName;

@@ -17,7 +17,7 @@ import java.util.Collections;
 /**
  * @Author: summer
  * @Date: 2022/11/27 10:42
- * @Description:
+ * @Description: 报表解析调度器
  **/
 @Component
 public class ParseDispatch {
@@ -31,6 +31,12 @@ public class ParseDispatch {
     private PageFooterJsonParse pageFooterJsonParse = new PageFooterJsonParse();
     private ParameterFormJsonParse parameterFormJsonParse = new ParameterFormJsonParse();
 
+    /**
+     * 报表解析调度
+     *
+     * @param reportModel
+     * @return
+     */
     public ReportDefinition dispatch(ReportModel reportModel) {
         RowColConfig rowColConfig = reportModel.getRowColConfig();
 

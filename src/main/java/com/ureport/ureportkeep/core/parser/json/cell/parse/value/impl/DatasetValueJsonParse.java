@@ -1,6 +1,5 @@
 package com.ureport.ureportkeep.core.parser.json.cell.parse.value.impl;
 
-import com.ureport.ureportkeep.core.definition.Order;
 import com.ureport.ureportkeep.core.definition.value.DatasetValue;
 import com.ureport.ureportkeep.core.definition.value.Value;
 import com.ureport.ureportkeep.core.expression.ExpressionUtils;
@@ -30,7 +29,7 @@ public class DatasetValueJsonParse implements ValueJsonParse {
         value.setDatasetName(valueModel.getDatasetName());
         value.setProperty(valueModel.getProperty());
         // 缺少排序配置
-        value.setOrder(Order.none);
+        value.setOrder(valueModel.getOrder());
 
         List<Condition> conditions=new ArrayList<Condition>();
         PropertyExpressionCondition topCondition=null;
