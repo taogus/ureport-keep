@@ -66,6 +66,9 @@ public class DownDuplicate {
 	}
 	
 	public int getRowSize() {
+		if (index == 1) {
+			return rowSize * 2;
+		}
 		return rowSize;
 	}
 	

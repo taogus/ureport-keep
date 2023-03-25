@@ -141,11 +141,8 @@ public class CellDownDuplicator {
 	
 	
 	private void processIncreaseSpanCell(DownDuplicate downDuplicate){
-		int rowSpan=cell.getRowSpan();
-		rowSpan+=downDuplicate.getRowSize();
-		if(rowSpan==1){
-			rowSpan++;
-		}
+		int rowSpan = cell.getRowSpan();
+		rowSpan += downDuplicate.getRowSize();
 		cell.setRowSpan(rowSpan);
 	}
 	
