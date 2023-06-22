@@ -72,7 +72,7 @@ export default class UReportDesigner{
     buildPropertyPanel(){
         const propContainerId='_prop_container';
         const dsContainerId='_datasource_container';
-        const propertyPanel=$('<div class="ud-property-panel" style="z-index: 100;"/>');
+        const propertyPanel=$('<div class="ud-property-panel"/>');
         this.container.prepend(propertyPanel);
         const propertyTab=$(`<ul class="nav nav-tabs">
             <li class="active">
