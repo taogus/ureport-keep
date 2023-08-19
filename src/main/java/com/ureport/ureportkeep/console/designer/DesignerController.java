@@ -130,7 +130,7 @@ public class DesignerController extends AbstractReportBasicController {
     @ResponseBody
     public R loadReportProviders() throws ServletException, IOException {
         return R.ok().success(
-                reportProvidersInit.getReportProviders().stream().filter(r -> r.getName() != null && r.disabled()).collect(Collectors.toList())
+                reportProvidersInit.getReportProviders().stream().filter(r -> r.getName() != null && r.enabled()).collect(Collectors.toList())
         );
     }
 

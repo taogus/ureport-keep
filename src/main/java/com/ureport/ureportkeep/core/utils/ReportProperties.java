@@ -15,7 +15,7 @@ public class ReportProperties {
 
     private boolean disableHttpSessionReportCache;
 
-    private boolean disableFileProvider;
+    private boolean enableFileProvider;
 
     private String fileStoreDir;
 
@@ -65,12 +65,12 @@ public class ReportProperties {
         this.disableHttpSessionReportCache = disableHttpSessionReportCache;
     }
 
-    public boolean isDisableFileProvider() {
-        return disableFileProvider;
+    public boolean isEnableFileProvider() {
+        return enableFileProvider;
     }
 
-    public void setDisableFileProvider(boolean disableFileProvider) {
-        this.disableFileProvider = disableFileProvider;
+    public void setEnableFileProvider(boolean enableFileProvider) {
+        this.enableFileProvider = enableFileProvider;
     }
 
     public String getFileStoreDir() {

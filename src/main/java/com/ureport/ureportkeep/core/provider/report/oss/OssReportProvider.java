@@ -87,7 +87,7 @@ public class OssReportProvider implements ReportProvider {
     }
 
     @Override
-    public boolean disabled() {
+    public boolean enabled() {
         return reportProperties.isOssEnable();
     }
 

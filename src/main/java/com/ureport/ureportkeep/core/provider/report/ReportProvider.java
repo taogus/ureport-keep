@@ -50,9 +50,9 @@ public interface ReportProvider {
 	 */
 	String getName();
 	/**
-	 * @return 返回是否禁用
+	 * @return 返回是否启用
 	 */
-	boolean disabled();
+	boolean enabled();
 	/**
 	 * @return 返回报表文件名前缀
 	 */

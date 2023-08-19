@@ -15,17 +15,16 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.core.provider.report.classpath;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.List;
-
-import org.springframework.core.io.Resource;
-import org.springframework.stereotype.Component;
-
 import com.ureport.ureportkeep.core.exception.ReportException;
 import com.ureport.ureportkeep.core.provider.report.ReportFile;
 import com.ureport.ureportkeep.core.provider.report.ReportProvider;
 import com.ureport.ureportkeep.core.utils.SpringContextUtils;
+import org.springframework.core.io.Resource;
+import org.springframework.stereotype.Component;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.List;
 
 /**
  * @author Jacky.gao
@@ -72,7 +71,7 @@ public class ClasspathReportProvider implements ReportProvider  {
     }
 
     @Override
-    public boolean disabled() {
+    public boolean enabled() {
         return false;
     }
 

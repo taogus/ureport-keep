@@ -44,7 +44,7 @@ public class FileReportProvider implements ReportProvider, ApplicationContextAwa
 
     private String fileStoreDir;
 
-    private boolean disabled;
+    private boolean enabled;
 
     @Override
     public InputStream loadReport(String file) {
@@ -120,12 +120,12 @@ public class FileReportProvider implements ReportProvider, ApplicationContextAwa
     }
 
     @Override
-    public boolean disabled() {
-        return disabled;
+    public boolean enabled() {
+        return enabled;
     }
 
-    public void setDisabled(boolean disabled) {
-        this.disabled = disabled;
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
     public void setFileStoreDir(String fileStoreDir) {
@@ -136,14 +136,15 @@ public class FileReportProvider implements ReportProvider, ApplicationContextAwa
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         ReportProperties reportProperties = applicationContext.getBean(ReportProperties.class);
         this.fileStoreDir = reportProperties.getFileStoreDir();
-        this.disabled = reportProperties.isDisableFileProvider();
+        this.enabled = reportProperties.isEnableFileProvider();
 
         File file = new File(fileStoreDir);
         if (file.exists()) {
             return;
         }
         if (applicationContext instanceof WebApplicationContext) {
-            String basePath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\";
+            String basePath = System.getProperty("user.dir") + File.separator + "src" + File.separator
+                    + "main" + File.separator + "resources" + File.separator + "static" + File.separator;
             fileStoreDir = basePath + fileStoreDir;
             file = new File(fileStoreDir);
             if (!file.exists()) {
