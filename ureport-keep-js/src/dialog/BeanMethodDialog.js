@@ -79,7 +79,7 @@ export default class BeanMethodDialog{
                     let datasets=datasource.datasets;
                     for(let dataset of datasets){
                         if(dataset.name===name){
-                            alert(`${window.i18n.dialog.bean.dataset}["+name+"]${window.i18n.dialog.bean.datasetExist}`);
+                            alert(`${window.i18n.dialog.bean.dataset}[${name}]${window.i18n.dialog.bean.datasetExist}`);
                             return;
                         }
                     }
