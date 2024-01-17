@@ -189,7 +189,11 @@ public class HtmlProducer {
                     }
                     String target = cell.getLinkTargetWindow();
                     if (StringUtils.isBlank(target)) target = "_self";
-                    sb.append("<a href=\"" + linkURL + "\" target=\"" + target + "\" class='_" + cell.getName() + "' " + style + ">");
+
+                    // 字体颜色
+                    String linkStyle = buildLinkStyle(cell);
+
+                    sb.append("<a href=\"" + linkURL + "\" target=\"" + target + "\"" + linkStyle + ">");
                 }
                 Object obj = (cell.getFormatData() == null) ? "" : cell.getFormatData();
                 if (obj instanceof Image) {
@@ -267,6 +271,41 @@ public class HtmlProducer {
             height += row.getRealHeight();
         }
         return height;
+    }
+
+    private String buildLinkStyle(Cell cell) {
+        CellStyle style = cell.getCustomCellStyle();
+        CellStyle rowStyle = cell.getRow().getCustomCellStyle();
+        CellStyle colStyle = cell.getColumn().getCustomCellStyle();
+        CellStyle cellStyleDefinition = cell.getCellStyle();
+        if (style == null && rowStyle == null && colStyle == null && cellStyleDefinition == null) return "";
+
+        StringBuilder sb = new StringBuilder();
+        String forecolor = null;
+        if (cellStyleDefinition != null) {
+            forecolor = cellStyleDefinition.getForecolor();
+        }
+        if (style != null) {
+            forecolor = style.getForecolor();
+        }
+        if (rowStyle != null) {
+            forecolor = rowStyle.getForecolor();
+        }
+        if (colStyle != null) {
+            forecolor = colStyle.getForecolor();
+        }
+        if (StringUtils.isNotBlank(forecolor)) {
+            sb.append("color:rgb(" + forecolor + ");");
+        }
+
+        if (sb.length() > 0) {
+            int colWidth = cell.getColumn().getWidth();
+            sb.append("width:" + colWidth + "pt");
+            sb.insert(0, "style=\"");
+            sb.append("\"");
+        }
+
+        return sb.toString();
     }
 
     private String buildCustomStyle(Cell cell) {
