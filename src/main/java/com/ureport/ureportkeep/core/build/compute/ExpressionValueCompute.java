@@ -153,18 +153,17 @@ public class ExpressionValueCompute implements ValueCompute {
 		} else if (expr instanceof ExpressionBlock) {
 			FunctionExpression funExpr = null;
 
-			try {
-				List<Expression> expressionList = ((ExpressionBlock) expr).getExpressionList();
-				if (!CollectionUtils.isEmpty(expressionList)) {
-					ParenExpression expression = (ParenExpression) expressionList.get(0);
-					List<BaseExpression> expressions = expression.getExpressions();
+			List<Expression> expressionList = ((ExpressionBlock) expr).getExpressionList();
+			if (!CollectionUtils.isEmpty(expressionList)) {
+				Expression expression = expressionList.get(0);
+				if (expression instanceof ParenExpression) {
+					List<BaseExpression> expressions = ((ParenExpression) expression).getExpressions();
 					if (!CollectionUtils.isEmpty(expressions) && expressions.get(0) instanceof FunctionExpression) {
 						funExpr = (FunctionExpression) expressions.get(0);
 					}
 				}
-			} catch (Exception e) {
-				e.printStackTrace();
 			}
+
 			if (funExpr == null) {
 				return false;
 			}
