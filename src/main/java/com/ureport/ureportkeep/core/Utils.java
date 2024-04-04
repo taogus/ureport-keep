@@ -22,6 +22,7 @@ import com.ureport.ureportkeep.core.exception.ReportComputeException;
 import com.ureport.ureportkeep.core.model.Cell;
 import com.ureport.ureportkeep.core.model.Report;
 import com.ureport.ureportkeep.core.provider.image.ImageProvider;
+import com.ureport.ureportkeep.core.utils.ReportProperties;
 import com.ureport.ureportkeep.core.utils.SpringContextUtils;
 import org.apache.commons.beanutils.PropertyUtils;
 
@@ -47,6 +48,8 @@ public class Utils {
 		buildinDatasources.addAll(SpringContextUtils.getAllBeansOfType(BuildinDatasource.class));
 		imageProviders=new ArrayList<ImageProvider>();
 		imageProviders.addAll(SpringContextUtils.getAllBeansOfType(ImageProvider.class));
+
+		 Utils.debug = Optional.ofNullable(SpringContextUtils.getBean(ReportProperties.class)).map(v -> v.isDebug()).orElse(false);
 	}
 	
 	public static boolean isDebug() {
