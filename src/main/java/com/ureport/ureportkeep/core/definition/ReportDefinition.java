@@ -211,6 +211,13 @@ public class ReportDefinition implements Serializable{
 			if(border!=null){
 				sb.append("border-bottom:"+border.getStyle().name()+" "+border.getWidth()+"px rgb("+border.getColor()+");");				
 			}
+			Boolean wrapCompute = cellStyle.getWrapCompute();
+			if (wrapCompute != null && wrapCompute) {
+				sb.append("word-wrap:break-word;word-break:break-all;");
+			} else {
+				sb.append("overflow:hidden;white-space: nowrap;");
+			}
+
 			sb.append("}");
 		}
 		return sb.toString();

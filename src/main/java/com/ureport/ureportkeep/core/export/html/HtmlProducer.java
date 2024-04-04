@@ -96,9 +96,9 @@ public class HtmlProducer {
             bgStyle = ";background:url(" + bgImage + ") no-repeat";
         }
         if (breakPage) {
-            sb.append("<table class='page-break' border='0' style='margin:auto;border-collapse:collapse;width:" + tableWidth + "pt" + bgStyle + "'>");
+            sb.append("<table class='page-break' border='0' style='table-layout: fixed;margin:auto;border-collapse:collapse;width:" + tableWidth + "pt" + bgStyle + "'>");
         } else {
-            sb.append("<table border='0' style='margin:auto;border-collapse:collapse;width:" + tableWidth + "pt" + bgStyle + "'>");
+            sb.append("<table border='0' style='table-layout: fixed;margin:auto;border-collapse:collapse;width:" + tableWidth + "pt" + bgStyle + "'>");
         }
         int colSize = columns.size();
         int rowSize = rows.size();
