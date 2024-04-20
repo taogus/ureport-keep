@@ -21,7 +21,7 @@ spring:
 ureport:
   disableHttpSessionReportCache: false
   # 是否开启文件储存系统
-  enableFileProvider: false
+  enableFileProvider: true
   fileStoreDir: ureportfiles
   debug: true
   # 是否使用redis作为缓存
