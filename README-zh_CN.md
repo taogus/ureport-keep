@@ -4,9 +4,10 @@ UReport-kepp是UReport的替代项目，因为发现UReport项目作者不再维
 
 ### 目前已将ureport2改为Spring-boot架构，开发、配置、部署更简单！后期将更换前端界面，让界面交互更友好。
 
-
 UReport2是一款高性能的架构在Spring之上纯Java报表引擎，通过迭代单元格可以实现任意复杂的中国式报表。  
 在UReport2中，提供了全新的基于网页的报表设计器，可以在Chrome、Firefox、Edge等各种主流浏览器运行（IE浏览器除外）,打开浏览器即可完成各种复杂报表的设计制作。
+
+## 新版报表项目：[keepReport](https://gitee.com/march-x/keepReport)
 
 ## 文档视频教程地址：
 1.  BSDN WIKI： [http://wiki.bsdn.org/display/UR/ureport2+Home](http://wiki.bsdn.org/display/UR/ureport2+Home)
@@ -52,7 +53,8 @@ npm run build
 |--------|-------- |
 |![输入图片说明](docs/images/c98f97a2b4e9faf2caab984899246ab0.jpg)|![输入图片说明](docs/images/wepay.png)|
 
-# 新版报表部分界面(开发中)
+# 新版报表界面
+## 进入查看：[keepReport](https://gitee.com/march-x/keepReport)
 | 预览 | 
 |--------|
 |![输入图片说明](docs/images/20220828122010.png)
