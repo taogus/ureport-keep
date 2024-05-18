@@ -49,9 +49,9 @@ npm run build
 ```
 
 # 交流
-| 微信扫码添加交流 | 请开发者喝一杯奶茶吧 |
-|--------|-------- |
-|![输入图片说明](docs/images/c98f97a2b4e9faf2caab984899246ab0.jpg)|![输入图片说明](docs/images/wepay.png)|
+| 微信扫码添加交流 | 微信扫码加入交流群 | 付款码 |
+|--------|--------|--------|
+|![输入图片说明](docs/images/c98f97a2b4e9faf2caab984899246ab0.jpg)| ![输入图片说明](docs/images/wx_group.jpg) |![输入图片说明](docs/images/wepay.png)|
 
 # 新版报表界面
 ## 进入查看：[keepReport](https://gitee.com/march-x/keepReport)
@@ -59,5 +59,5 @@ npm run build
 |--------|
 |![输入图片说明](docs/images/20220828122010.png)
 |![输入图片说明](docs/images/微信截图_20220828122110.png)
-| ![输入图片说明](docs/images/微信截图_20220828122246.png)|
+|![输入图片说明](docs/images/微信截图_20220828122246.png)
 
