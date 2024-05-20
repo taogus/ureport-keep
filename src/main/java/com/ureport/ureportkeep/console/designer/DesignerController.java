@@ -58,7 +58,7 @@ public class DesignerController extends AbstractReportBasicController {
      * @param request
      * @return
      */
-    @RequestMapping(value = "/designer", method = RequestMethod.GET)
+    @RequestMapping(value = "", method = RequestMethod.GET)
     public String designer(HttpServletRequest request, Model model) {
         //application
         model.addAttribute("contextPath", request.getContextPath());
