@@ -66,7 +66,7 @@ export default class OpenDialog{
                 openIcon.click(function(){
                     confirm(`${window.i18n.dialog.open.openConfirm}[${file.name}]？`,function(){
                         let fullFile=value+encodeURI(encodeURI(file.name));
-                        let path=window._server+"/designer/designer?_u="+fullFile;
+                        let path=window._server+"/designer?_u="+fullFile;
                         window.open(path,"_self");
                     });
                 });
