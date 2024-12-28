@@ -520,6 +520,9 @@ export function tableToXml(context){
     if(paper.columnEnabled){
         xml+=` column-count="${paper.columnCount}" column-margin="${paper.columnMargin}"`;
     }
+    if(paper.watermarkEnabled) {
+        xml += ` watermark-text="${paper.watermarkText}" watermark-color="${paper.watermarkColor}"`
+    }
     xml+=`></paper>`;
     if(context.reportDef.searchFormXml){
         xml+=context.reportDef.searchFormXml;

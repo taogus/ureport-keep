@@ -3,9 +3,13 @@ target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
+.gitignore
 
 ### reportFiles ###
 !**/urportfiles/
+
+### report-js ###
+package-lock.json
 
 ### STS ###
 .apt_generated

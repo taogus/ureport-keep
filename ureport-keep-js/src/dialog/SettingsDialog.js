@@ -2,7 +2,7 @@
  * Created by Jacky.Gao on 2017-02-07.
  */
 import {alert} from '../MsgBox.js';
-import {pointToMM,mmToPoint,buildPageSizeList,setDirty} from '../Utils.js';
+import {pointToMM, mmToPoint, buildPageSizeList, setDirty, undoManager} from '../Utils.js';
 import FontSettingDialog from './FontSettingDialog.js';
 
 export default class SettingsDialog{
@@ -34,6 +34,7 @@ export default class SettingsDialog{
         <li><a href="#__header_footer" data-toggle="tab">${window.i18n.dialog.setting.headerFooterSetting}</a></li>
         <li><a href="#__paging" data-toggle="tab">${window.i18n.dialog.setting.pagingSetting}</a></li>
         <li><a href="#__column" data-toggle="tab">${window.i18n.dialog.setting.columnSetting}</a></li>
+        <li><a href="#__watermark" data-toggle="tab">${window.i18n.dialog.setting.watermarkSetting}</a></li>
         </ul>`);
         body.append(tabHeader);
         const tabContent=$(`<div class="tab-content"></div>`);
@@ -46,13 +47,18 @@ export default class SettingsDialog{
         tabContent.append(pagingTab);
         const columnTab=$(`<div class="tab-pane fade" id="__column"></div>`);
         tabContent.append(columnTab);
-        //const exportTab=$(`<div class="tab-pane fade" id="__export"></div>`);
-        //tabContent.append(exportTab);
+        const watermarkTab=$(`<div class="tab-pane fade" id="__watermark"></div>`);
+        tabContent.append(watermarkTab);
+
+        const exportTab=$(`<div class="tab-pane fade" id="__export"></div>`);
+        tabContent.append(exportTab);
+
         this.initPageSetting(pageTab);
         this.initHeaderFootSetting(headerFooterTab);
         this.initPagingSetting(pagingTab);
         this.initColumnSetting(columnTab);
-        //this.initExportSetting(exportTab);
+        this.initWatermarkSetting(watermarkTab)
+        this.initExportSetting(exportTab);
     }
     initExportSetting(exportTab){
         const excelGroup=$(`<div class="form-group" style="margin-top: 12px;display: inline-block"><label>${window.i18n.dialog.setting.sheetExport}</label></div>`);
@@ -507,6 +513,92 @@ export default class SettingsDialog{
             setDirty();
         });
     }
+    initWatermarkSetting(watermarkTab) {
+        watermarkTab.append(`<div style="margin-top: 12px;color:#999999;font-size: 12px">${window.i18n.dialog.setting.watermarkDesc}</div>`);
+
+        const _this=this;
+        const group=$(`<div class="form-group" style="margin-top: 8px;"><label>${window.i18n.dialog.setting.watermarkOpen}：</label></div>`);
+        watermarkTab.append(group);
+        this.disabledWatermarkRadio=$(`<label class="checkbox-inline" style="padding-left: 5px">
+            <input type="radio" name="useWatermark" value="true"> ${window.i18n.dialog.setting.disable}
+        </label>`);
+        group.append(this.disabledWatermarkRadio);
+        this.enabledWatermarkRadio=$(`<label class="checkbox-inline">
+            <input type="radio" name="useWatermark" value="true"> ${window.i18n.dialog.setting.enable}
+        </label>`);
+        group.append(this.enabledWatermarkRadio);
+
+        this.disabledWatermarkRadio.children('input').click(function(){
+            _this.paper.watermarkEnabled=false;
+            _this.watermarkEditor.prop('readonly',true);
+
+            setDirty();
+        });
+        this.enabledWatermarkRadio.children('input').click(function(){
+            _this.paper.watermarkEnabled=true;
+            _this.watermarkEditor.prop('readonly',false);
+
+            setDirty();
+        });
+
+        // 表达式
+        const watermarkExpression=$(`<div class="form-group"><label>${window.i18n.dialog.setting.watermarkName}：</label></div>`);
+        watermarkTab.append(watermarkExpression);
+        this.watermarkEditor=$(`<input type="text" class="form-control" style="display: inline-block;width: 470px;" placeholder="${window.i18n.dialog.setting.watermarkTip}">`);
+        watermarkExpression.append(this.watermarkEditor);
+        this.watermarkEditor.change(function(){
+            let value=$(this).val();
+            _this.paper.watermarkText=value;
+
+            setDirty();
+        });
+
+        // 字体颜色
+        const watermarkColor=$(`<div class="form-group"><label>${window.i18n.dialog.setting.watermarkColor}：</label></div>`);
+        watermarkTab.append(watermarkColor);
+        this.nameButton=$(`<button type="button" class="btn btn-default"
+            style="border:none;border-radius:0;background: #f8f8f8;padding: 2px 1px 6px 5px;color: #0e90d2;" title="${window.i18n.tools.foreColor.color}">
+                <i class="ureport ureport-forecolor" style="color: #0e90d2;font-size: 14px"></i>
+                <span class="ud-select-waterColor"></span>
+            </button>`);
+        watermarkColor.append(this.nameButton);
+        this.mainBtn=$(`<button type="button" class="btn btn-default dropdown-toggle" style="border:none;border-radius:0;background: #f8f8f8;padding: 6px 5px;" data-toggle="dropdown" title="${window.i18n.tools.foreColor.color}">
+            <span class="caret"></span>
+            <span class="sr-only">${window.i18n.tools.foreColor.changeMenu}</span>
+        </button>`);
+        const ul=$(`<ul class="dropdown-menu" role="menu" style="padding: 1px;"></ul>`);
+        this.colorContainer=$(`<li></li>`);
+        ul.append(this.colorContainer);
+        watermarkColor.append(this.mainBtn);
+        this.colorContainer.colorpicker({
+            color: '#000',
+            container: true,
+            inline: true,
+            colorSelectors: {
+                'black': '#000000',
+                'white': '#FFFFFF',
+                'gray1': '#efefef',
+                'gray': '#CCCCCC',
+                'red': '#FF0000',
+                'default': '#777777',
+                'primary': '#337ab7',
+                'success': '#5cb85c',
+                'info': '#5bc0de',
+                'warning': '#f0ad4e',
+                'danger': '#d9534f'
+            }
+        });
+        // 切换颜色
+        this.colorContainer.colorpicker().on("changeColor",function(e){
+            let rgb=e.color.toRGB();
+            let color=rgb.r+","+rgb.g+","+rgb.b;
+            $('.ud-select-waterColor').css("background-color","rgb("+color+")");
+            _this.paper.watermarkColor = color;
+            setDirty();
+        });
+
+        watermarkColor.append(ul);
+    }
     show(context){
         this.context=context;
         this.reportDef=this.context.reportDef;
@@ -534,12 +626,24 @@ export default class SettingsDialog{
         this.orientationSelect.val(this.paper.orientation);
         this.columnMarginEditor.val(pointToMM(this.paper.columnMargin));
         this.columnCountSelect.val(this.paper.columnCount);
+        this.watermarkEditor.val(this.paper.watermarkText || '');
+        if(this.paper.watermarkColor) {
+            this.colorContainer.colorpicker("setValue","rgb("+this.paper.watermarkColor+")");
+        }
+
         if(this.paper.columnEnabled){
             this.enabledColumnRadio.children('input').trigger('click');
             this.enabledColumnRadio.children('input').prop('checked',true);
         }else{
             this.disabledColumnRadio.children('input').trigger('click');
             this.disabledColumnRadio.children('input').prop('checked',true);
+        }
+        if(this.paper.watermarkEnabled) {
+            this.enabledWatermarkRadio.children('input').trigger('click');
+            this.enabledWatermarkRadio.children('input').prop('checked',true);
+        } else {
+            this.disabledWatermarkRadio.children('input').trigger('click');
+            this.disabledWatermarkRadio.children('input').prop('checked',true);
         }
 
         this.headerMarginEditor.val(pointToMM(this.header.margin));
