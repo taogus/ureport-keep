@@ -49,7 +49,7 @@ export default class ImportDialog{
             const json=JSON.parse(text).data;
             const result=json.result;
             if(result){
-                const url=window._server+"/designer/designer";
+                const url=window._server+"/designer";
                 window.open(url,"_self");
             }else{
                 const errorInfo=json.errorInfo;
