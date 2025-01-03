@@ -16,6 +16,7 @@
  	<script type="text/javascript" th:src="@{/static/ureport-asserts/venderjs/chartjs-plugin-datalabels.min.js}"></script>
  	<script type="text/javascript" th:src="@{/static/ureport-asserts/venderjs/bootstrap-datetimepicker.js}"></script>
  	<script type="text/javascript" th:src="@{/static/ureport-asserts/js/preview.bundle.js}"></script>
+	<script type="text/javascript" th:src="@{/static/ureport-asserts/venderjs/watermark.js}"></script>
 </head>
 <body style="margin:5px">
 <div th:utext="${upSearchFormHtml}"></div>
@@ -75,7 +76,7 @@
 window._server= [[#{context-path}]] + "";
 window.formElements=[];
 $(document).ready(function(){
-	
+
 	buildPaging([[${pageIndex}]],[[${totalPageWithCol}]]);
 
 	var refVal = [[${intervalRefreshValue}]];
@@ -93,6 +94,9 @@ $(document).ready(function(){
 	function doSearch(){
 		submitSearchForm([[${file}]],[[${customParameters}]]);
 	}
+
+	// 水印
+	window.reportWatermark([[${watermarkConfig}]]);
 });
 </script>
 </body>

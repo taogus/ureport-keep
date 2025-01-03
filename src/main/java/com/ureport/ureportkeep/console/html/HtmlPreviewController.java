@@ -18,8 +18,9 @@ import com.ureport.ureportkeep.core.export.*;
 import com.ureport.ureportkeep.core.export.html.HtmlProducer;
 import com.ureport.ureportkeep.core.export.html.HtmlReport;
 import com.ureport.ureportkeep.core.export.html.SearchFormData;
+import com.ureport.ureportkeep.core.export.html.WatermarkHtmlData;
 import com.ureport.ureportkeep.core.model.Report;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -103,6 +104,7 @@ public class HtmlPreviewController extends AbstractReportBasicController {
             String customParameters = buildCustomParameters(request);
             model.addAttribute("customParameters", customParameters);
             model.addAttribute("_t", "");
+            model.addAttribute("watermarkConfig", htmlReport.getWatermarkHtmlData());
             Tools tools = null;
             if (MobileUtils.isMobile(request)) {
                 tools = new Tools(false);
@@ -259,6 +261,8 @@ public class HtmlPreviewController extends AbstractReportBasicController {
             if (report.getPaper().isColumnEnabled()) {
                 htmlReport.setColumn(report.getPaper().getColumnCount());
             }
+
+            Paper paper = report.getPaper();
             htmlReport.setChartDatas(report.getContext().getChartDataMap().values());
             htmlReport.setContent(html);
             htmlReport.setTotalPage(report.getPages().size());
@@ -266,6 +270,9 @@ public class HtmlPreviewController extends AbstractReportBasicController {
             htmlReport.setSearchFormData(reportDefinition.buildSearchFormData(report.getContext().getDatasetMap(), parameters));
             htmlReport.setReportAlign(report.getPaper().getHtmlReportAlign().name());
             htmlReport.setHtmlIntervalRefreshValue(report.getPaper().getHtmlIntervalRefreshValue());
+            if (!StringUtils.isEmpty(paper.getWatermarkText())) {
+                htmlReport.setWatermarkHtmlData(WatermarkHtmlData.builder(paper.getWatermarkText(), paper.getWatermarkColor()));
+            }
         } else {
             if (StringUtils.isNotBlank(pageIndex) && !pageIndex.equals("0")) {
                 int index = Integer.valueOf(pageIndex);

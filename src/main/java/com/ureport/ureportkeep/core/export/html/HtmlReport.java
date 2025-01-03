@@ -1,12 +1,12 @@
 /*******************************************************************************
  * Copyright 2017 Bstek
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License.  You may obtain a copy
  * of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the
@@ -33,6 +33,7 @@ public class HtmlReport {
 	private Collection<ChartData> chartDatas;
 	private int htmlIntervalRefreshValue;
 	private SearchFormData searchFormData;
+	private WatermarkHtmlData watermarkHtmlData;
 	public String getContent() {
 		return content;
 	}
@@ -63,7 +64,7 @@ public class HtmlReport {
 	public void setColumn(int column) {
 		this.column = column;
 	}
-	
+
 	public int getTotalPageWithCol() {
 		int totalPageWithCol=totalPage;
 		if(column>0){
@@ -71,7 +72,7 @@ public class HtmlReport {
 			int m=totalPage % column;
 			if(m>0){
 				totalPageWithCol++;
-			}			
+			}
 		}
 		return totalPageWithCol;
 	}
@@ -98,5 +99,13 @@ public class HtmlReport {
 	}
 	public void setSearchFormData(SearchFormData searchFormData) {
 		this.searchFormData = searchFormData;
+	}
+
+	public WatermarkHtmlData getWatermarkHtmlData() {
+		return watermarkHtmlData;
+	}
+
+	public void setWatermarkHtmlData(WatermarkHtmlData watermarkHtmlData) {
+		this.watermarkHtmlData = watermarkHtmlData;
 	}
 }

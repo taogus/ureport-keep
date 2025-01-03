@@ -521,7 +521,7 @@ export function tableToXml(context){
         xml+=` column-count="${paper.columnCount}" column-margin="${paper.columnMargin}"`;
     }
     if(paper.watermarkEnabled) {
-        xml += ` watermark-text="${paper.watermarkText}" watermark-color="${paper.watermarkColor}"`
+        xml += ` watermark-enabled="${paper.watermarkEnabled}" watermark-text="${paper.watermarkText}" watermark-color="${paper.watermarkColor}" `
     }
     xml+=`></paper>`;
     if(context.reportDef.searchFormXml){

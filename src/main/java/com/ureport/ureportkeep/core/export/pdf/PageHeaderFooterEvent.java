@@ -1,12 +1,12 @@
 /*******************************************************************************
  * Copyright 2017 Bstek
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License.  You may obtain a copy
  * of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the
@@ -15,18 +15,8 @@
  ******************************************************************************/
 package com.ureport.ureportkeep.core.export.pdf;
 
-import java.util.List;
-
-import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Element;
-import com.itextpdf.text.Font;
-import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.Rectangle;
-import com.itextpdf.text.pdf.PdfPCell;
-import com.itextpdf.text.pdf.PdfPTable;
-import com.itextpdf.text.pdf.PdfPageEventHelper;
-import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.*;
 import com.ureport.ureportkeep.core.build.paging.HeaderFooter;
 import com.ureport.ureportkeep.core.build.paging.Page;
 import com.ureport.ureportkeep.core.definition.Orientation;
@@ -34,14 +24,17 @@ import com.ureport.ureportkeep.core.definition.Paper;
 import com.ureport.ureportkeep.core.exception.ReportComputeException;
 import com.ureport.ureportkeep.core.export.pdf.font.FontBuilder;
 import com.ureport.ureportkeep.core.model.Report;
+import com.ureport.ureportkeep.core.utils.UnitUtils;
 import org.apache.commons.lang3.StringUtils;
+
+import java.util.List;
 
 /**
  * @author Jacky.gao
  * @since 2014年4月22日
  */
 public class PageHeaderFooterEvent extends PdfPageEventHelper {
-	private Report report;
+	private final Report report;
 	public PageHeaderFooterEvent(Report report) {
 		this.report=report;
 	}
@@ -56,12 +49,73 @@ public class PageHeaderFooterEvent extends PdfPageEventHelper {
 		HeaderFooter header=page.getHeader();
 		HeaderFooter footer=page.getFooter();
 		if(header!=null){
-			buildTable(writer,header,true,report);			
+			buildTable(writer,header,true,report);
 		}
 		if(footer!=null){
-			buildTable(writer,footer,false,report);						
+			buildTable(writer,footer,false,report);
 		}
+		// 水印
+		buildWatermark(writer);
 	}
+
+	/**
+	 * 水印
+	 *
+	 * @param writer
+	 */
+	private void buildWatermark(PdfWriter writer) {
+		Paper paper = report.getPaper();
+		String content = paper.getWatermarkText();
+		if (StringUtils.isEmpty(content)) {
+			return;
+		}
+
+		int[] color = paper.getWatermarkColor();
+		Rectangle pageSize = writer.getPageSize();
+		float pageHeight = pageSize.getHeight();
+		float pageWidth = pageSize.getWidth();
+
+		int waterMarkHeight = 30;
+		int watermarkWeight = 60;
+		float alpha = 0.4F;
+		int size = 12;
+		int tiltAngle = 30;
+		int hSpace = UnitUtils.pointToPixel(80);
+		int vSpace = UnitUtils.pointToPixel(50);
+
+		Font font = FontBuilder.getFont("微软雅黑", size, false, false, false);
+		PdfGState pdfGraPhicState = new PdfGState();
+		// 填充透明度
+		pdfGraPhicState.setFillOpacity(alpha);
+
+		PdfContentByte pdfContent = writer.getDirectContentUnder();
+		pdfContent.saveState();
+		pdfContent.setGState(pdfGraPhicState);
+		pdfContent.beginText();
+		pdfContent.setFontAndSize(font.getBaseFont(), size);
+		pdfContent.setRGBColorFill(color[0], color[1], color[2]);
+
+		for (int height = waterMarkHeight; height < pageHeight; height = height + vSpace) {
+			for (int width = watermarkWeight; width < pageWidth + watermarkWeight;
+				 width = width + hSpace) {
+				pdfContent.showTextAligned(Element.ALIGN_LEFT, content, width - watermarkWeight,
+						height - waterMarkHeight, tiltAngle);
+
+			}
+		}
+
+		pdfContent.endText();
+		pdfContent.restoreState();
+	}
+
+	/**
+	 * 构建表格
+	 *
+	 * @param writer
+	 * @param hf
+	 * @param header
+	 * @param report
+	 */
 	private void buildTable(PdfWriter writer,HeaderFooter hf,boolean header,Report report) {
 		Paper paper=report.getPaper();
 		int width=paper.getWidth();
@@ -133,7 +187,7 @@ public class PageHeaderFooterEvent extends PdfPageEventHelper {
 		    	int y=height-margin;
 		    	table.writeSelectedRows(0, -1, leftMargin,y, writer.getDirectContent());
 		    }else{
-		    	table.writeSelectedRows(0, -1, leftMargin,margin+hfHeight, writer.getDirectContent());            	 
+		    	table.writeSelectedRows(0, -1, leftMargin,margin+hfHeight, writer.getDirectContent());
 		    }
 		}catch(DocumentException de) {
 		   throw new ReportComputeException(de);
@@ -147,7 +201,7 @@ public class PageHeaderFooterEvent extends PdfPageEventHelper {
 		String fontColor=phf.getForecolor();
 		if(StringUtils.isNotEmpty(fontColor)){
 			String[] color=fontColor.split(",");
-			font.setColor(Integer.valueOf(color[0]), Integer.valueOf(color[1]), Integer.valueOf(color[2]));			
+			font.setColor(Integer.valueOf(color[0]), Integer.valueOf(color[1]), Integer.valueOf(color[2]));
 		}
 		Paragraph graph=new Paragraph(text,font);
 		cell.setPhrase(graph);

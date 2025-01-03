@@ -1,12 +1,12 @@
 /*******************************************************************************
  * Copyright 2017 Bstek
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License.  You may obtain a copy
  * of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the
@@ -39,6 +39,37 @@ public class Paper implements Serializable{
 	private int columnCount=2;
 	private int columnMargin=5;
 	private int htmlIntervalRefreshValue=0;
+
+	private boolean watermarkEnabled = false;
+
+	private String watermarkText;
+
+	private int[] watermarkColor;
+
+	public String getWatermarkText() {
+		return watermarkText;
+	}
+
+	public void setWatermarkText(String watermarkText) {
+		this.watermarkText = watermarkText;
+	}
+
+	public int[] getWatermarkColor() {
+		return watermarkColor;
+	}
+
+	public void setWatermarkColor(int[] watermarkColor) {
+		this.watermarkColor = watermarkColor;
+	}
+
+	public boolean isWatermarkEnabled() {
+		return watermarkEnabled;
+	}
+
+	public void setWatermarkEnabled(boolean watermarkEnabled) {
+		this.watermarkEnabled = watermarkEnabled;
+	}
+
 	public int getLeftMargin() {
 		return leftMargin;
 	}
@@ -70,7 +101,7 @@ public class Paper implements Serializable{
 	public void setBottomMargin(int bottomMargin) {
 		this.bottomMargin = bottomMargin;
 	}
-	
+
 	public PaperType getPaperType() {
 		return paperType;
 	}
@@ -89,7 +120,7 @@ public class Paper implements Serializable{
 	public void setHeight(int height) {
 		this.height = height;
 	}
-	
+
 	public Orientation getOrientation() {
 		return orientation;
 	}

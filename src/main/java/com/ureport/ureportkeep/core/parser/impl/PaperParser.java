@@ -1,12 +1,12 @@
 /*******************************************************************************
  * Copyright 2017 Bstek
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License.  You may obtain a copy
  * of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the
@@ -44,19 +44,19 @@ public class PaperParser implements Parser<Paper> {
 		}
 		String leftMargin=element.attributeValue("left-margin");
 		if(StringUtils.isNotBlank(leftMargin)){
-			paper.setLeftMargin(Integer.valueOf(leftMargin));			
+			paper.setLeftMargin(Integer.valueOf(leftMargin));
 		}
 		String rightMargin=element.attributeValue("right-margin");
 		if(StringUtils.isNotBlank(rightMargin)){
-			paper.setRightMargin(Integer.valueOf(rightMargin));			
+			paper.setRightMargin(Integer.valueOf(rightMargin));
 		}
 		String topMargin=element.attributeValue("top-margin");
 		if(StringUtils.isNotBlank(topMargin)){
-			paper.setTopMargin(Integer.valueOf(topMargin));			
+			paper.setTopMargin(Integer.valueOf(topMargin));
 		}
 		String bottomMargin=element.attributeValue("bottom-margin");
 		if(StringUtils.isNotBlank(bottomMargin)){
-			paper.setBottomMargin(Integer.valueOf(bottomMargin));			
+			paper.setBottomMargin(Integer.valueOf(bottomMargin));
 		}
 		paper.setPagingMode(PagingMode.valueOf(element.attributeValue("paging-mode")));
 		if(paper.getPagingMode().equals(PagingMode.fixrows)){
@@ -79,7 +79,41 @@ public class PaperParser implements Parser<Paper> {
 			paper.setHtmlIntervalRefreshValue(Integer.valueOf(htmlIntervalRefreshValue));
 		}
 		paper.setBgImage(element.attributeValue("bg-image"));
+		watermarkParse(element, paper);
 		return paper;
+	}
+
+	/**
+	 * 水印内容解析
+	 *
+	 * @param element
+	 * @param paper
+	 */
+	private void watermarkParse(Element element, Paper paper) {
+		String watermarkEnabled = element.attributeValue("watermark-enabled");
+		if (!StringUtils.isEmpty(watermarkEnabled)) {
+			String watermarkText = element.attributeValue("watermark-text");
+			String watermarkColor = element.attributeValue("watermark-color");
+			if (!StringUtils.isEmpty(watermarkText)) {
+				String color = watermarkColor;
+				if (StringUtils.isEmpty(color)) {
+					color = "0,0,0";
+				}
+				String[] colorNum = color.split(",");
+				if (colorNum.length < 3) {
+					colorNum = new String[]{"0", "0", "0"};
+				}
+				int[] rgbColor = new int[]{
+						Integer.parseInt(colorNum[0].trim()),
+						Integer.parseInt(colorNum[1].trim()),
+						Integer.parseInt(colorNum[2].trim())
+				};
+
+				paper.setWatermarkEnabled(Boolean.parseBoolean(watermarkEnabled));
+				paper.setWatermarkText(watermarkText);
+				paper.setWatermarkColor(rgbColor);
+			}
+		}
 	}
 
 	@Override

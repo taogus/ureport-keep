@@ -1,12 +1,12 @@
 /*******************************************************************************
  * Copyright 2017 Bstek
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License.  You may obtain a copy
  * of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the
@@ -50,9 +50,9 @@ import java.util.*;
 public class ReportBuilder extends BasePagination implements ApplicationContextAware{
 	public static final String BEAN_ID="ureport.reportBuilder";
 	private ApplicationContext applicationContext;
-	private Map<String, DatasourceProvider> datasourceProviderMap=new HashMap<String,DatasourceProvider>();
-	private Map<Expand, CellBuilder> cellBuildersMap=new HashMap<Expand,CellBuilder>();
-	private NoneExpandBuilder noneExpandBuilder=new NoneExpandBuilder();
+	private final Map<String, DatasourceProvider> datasourceProviderMap=new HashMap<String,DatasourceProvider>();
+	private final Map<Expand, CellBuilder> cellBuildersMap=new HashMap<Expand,CellBuilder>();
+	private final NoneExpandBuilder noneExpandBuilder=new NoneExpandBuilder();
 
 	@Autowired
 	private HideRowColumnBuilder hideRowColumnBuilder;
@@ -68,21 +68,22 @@ public class ReportBuilder extends BasePagination implements ApplicationContextA
 		long start=System.currentTimeMillis();
 		List<Cell> cells=new ArrayList<Cell>();
 		cells.add(report.getRootCell());
-		do {			
+		do {
 			buildCell(context,cells);
 			cells = context.nextUnprocessedCells();
 		} while (cells != null);
 		doFillBlankRows(report,context);
 		recomputeCells(report,context);
+		computeWatermarkContent(report);
 		long end=System.currentTimeMillis();
 		String msg="~~~ Report compute completed:"+(end-start)+"ms";
 		Utils.logToConsole(msg);
 		return report;
 	}
-	
+
 	public void buildCell(Context context,List<Cell> cells){
 		if(cells==null){
-			cells=context.nextUnprocessedCells();			
+			cells=context.nextUnprocessedCells();
 		}
 		if(cells==null){
 			return;
@@ -96,7 +97,7 @@ public class ReportBuilder extends BasePagination implements ApplicationContextA
 				lastCell=noneExpandBuilder.buildCell(dataList, cell, context);
 			}else if(size>1){
 				CellBuilder cellBuilder=cellBuildersMap.get(cell.getExpand());
-				lastCell=cellBuilder.buildCell(dataList,cell, context);				
+				lastCell=cellBuilder.buildCell(dataList,cell, context);
 			}
 			if(lastCell.isFillBlankRows() && lastCell.getMultiple()>0){
 				int result=size % lastCell.getMultiple();
@@ -107,7 +108,7 @@ public class ReportBuilder extends BasePagination implements ApplicationContextA
 			}
 		}
 	}
-	
+
 	private Map<String,Dataset> buildDatasets(ReportDefinition reportDefinition,Map<String,Object> parameters,ApplicationContext applicationContext){
 		Map<String,Dataset> datasetMap=new HashMap<String,Dataset>();
 		List<DatasourceDefinition> datasources=reportDefinition.getDatasources();
@@ -127,7 +128,7 @@ public class ReportBuilder extends BasePagination implements ApplicationContextA
 					if(ls!=null){
 						for(Dataset dataset:ls){
 							datasetMap.put(dataset.getName(), dataset);
-						}					
+						}
 					}
 				}finally{
 					if(conn!=null){
@@ -162,7 +163,7 @@ public class ReportBuilder extends BasePagination implements ApplicationContextA
 					}
 					BuildinDatasourceDefinition ds=(BuildinDatasourceDefinition)dsDef;
 					List<Dataset> ls=ds.buildDatasets(conn, parameters);
-					if(ls!=null){					
+					if(ls!=null){
 						for(Dataset dataset:ls){
 							datasetMap.put(dataset.getName(), dataset);
 						}
@@ -178,7 +179,7 @@ public class ReportBuilder extends BasePagination implements ApplicationContextA
 		}
 		return datasetMap;
 	}
-	
+
 	private void doFillBlankRows(Report report,Context context){
 		Map<Row, Integer> map=context.getFillBlankRowsMap();
 		List<Row> newRowList=new ArrayList<Row>();
@@ -196,7 +197,7 @@ public class ReportBuilder extends BasePagination implements ApplicationContextA
 			}
 		}
 	}
-	
+
 	private Row buildNewRow(Row row,Report report){
 		Row newRow=row.newRow();
 		newRow.setBand(null);
@@ -206,7 +207,7 @@ public class ReportBuilder extends BasePagination implements ApplicationContextA
 		Map<Row, Map<Column, Cell>> rowMap=report.getRowColCellMap();
 		Map<Column,Cell> newCellMap=new HashMap<Column,Cell>();
 		rowMap.put(newRow, newCellMap);
-		
+
 		Map<Column, Cell> colMap=rowMap.get(row);
 		for(int index=0;index<colSize;index++){
 			Column column=columns.get(index);
@@ -247,7 +248,7 @@ public class ReportBuilder extends BasePagination implements ApplicationContextA
 		}
 		return newRow;
 	}
-	
+
 	private Row findLastRow(Row row,Report report){
 		List<Row> rows=report.getRows();
 		List<Cell> cells=row.getCells();
@@ -270,8 +271,8 @@ public class ReportBuilder extends BasePagination implements ApplicationContextA
 		}
 		return lastRow;
 	}
-	
-	
+
+
 	private Cell newBlankCell(Cell cell,Column column,Report report){
 		Cell newCell=new Cell();
 		newCell.setData("");
@@ -290,11 +291,11 @@ public class ReportBuilder extends BasePagination implements ApplicationContextA
 		Cell topParent=cell.getTopParentCell();
 		if(topParent!=null){
 			newCell.setTopParentCell(topParent);
-			topParent.addColumnChild(newCell);					
+			topParent.addColumnChild(newCell);
 		}
 		return newCell;
 	}
-	
+
 	private void recomputeCells(Report report,Context context){
 		List<Cell> lazyCells=report.getLazyComputeCells();
 		for(Cell cell:lazyCells){
@@ -354,7 +355,7 @@ public class ReportBuilder extends BasePagination implements ApplicationContextA
 						}
 						pageRepeatFooters.remove(index);
 						pageRepeatFooters.add(index,row);
-					} 
+					}
 					continue;
 				}
 				rowHeight+=rowRealHeight+1;
@@ -442,11 +443,18 @@ public class ReportBuilder extends BasePagination implements ApplicationContextA
 		PagingBuilder.computeExistPageFunctionCells(report);
 		report.setPages(pages);
 	}
-	
-	public void setHideRowColumnBuilder(HideRowColumnBuilder hideRowColumnBuilder) {
-		this.hideRowColumnBuilder = hideRowColumnBuilder;
+
+	/**
+	 * 计算水印内容
+	 *
+	 * @param report
+	 */
+	private void computeWatermarkContent(Report report) {
+		Paper paper = report.getPaper();
+		String content = WatermarkBuilder.builderContent(report);
+		paper.setWatermarkText(content);
 	}
-	
+
 	@Override
 	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
 		this.applicationContext=applicationContext;
